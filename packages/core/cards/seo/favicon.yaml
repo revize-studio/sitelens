@@ -1,0 +1,44 @@
+id: seo/favicon
+priority: minor
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Strona ma ikonę (favicon), którą widać na karcie przeglądarki.
+  en: The site has an icon (favicon) that shows on the browser tab.
+pl:
+  title: Brakuje ikony strony (favicon)
+  summary: Na karcie przeglądarki, w zakładkach i w wynikach Google nie widać ikony Twojej strony.
+  whatIsWrong: >
+    Strona nie ma ikony (favicon) albo jej plik się nie otwiera. To mały obrazek, który przeglądarka
+    pokazuje na karcie i w zakładkach, a Google obok wyniku wyszukiwania.
+  whyItMatters: >
+    Ikona pomaga klientom szybko rozpoznać Twoją stronę wśród otwartych kart, zakładek i wyników
+    wyszukiwania.
+  howToFix:
+    - Przygotuj kwadratową ikonę na podstawie logo, np. 512 × 512 pikseli, i dodaj ją w ustawieniach strony.
+    - Sprawdź, czy ikona pojawia się na karcie przeglądarki. Google może potrzebować od kilku dni do kilku tygodni, żeby pokazać ją w wynikach.
+  short: >
+    Brakuje ikony strony (favicon), więc nie widać jej na karcie przeglądarki ani w wynikach Google.
+    Dodaj kwadratową ikonę z logo w ustawieniach strony.
+  technical: >
+    Plik ikony nie zwraca 200. Sprawdzany jest pierwszy <link rel="icon"> lub apple-touch-icon ze
+    strony głównej, a bez nich /favicon.ico.
+en:
+  title: The site icon (favicon) is missing
+  summary: Your site's icon does not show on the browser tab, in bookmarks or in Google results.
+  whatIsWrong: >
+    The site has no icon (favicon), or its file does not open. This is the small image the browser
+    shows on the tab and in bookmarks, and Google shows next to the search result.
+  whyItMatters: >
+    The icon helps customers recognise your site quickly among open tabs, bookmarks and search
+    results.
+  howToFix:
+    - Make a square icon from your logo, for example 512 × 512 pixels, and add it in the site settings.
+    - Check that the icon shows on the browser tab. Google can take from a few days to a few weeks to show it in search results.
+  short: >
+    The site icon (favicon) is missing, so it does not show on the browser tab or in Google results.
+    Add a square icon made from your logo in the site settings.
+  technical: >
+    The icon file does not return 200. Checked: the first <link rel="icon"> or apple-touch-icon on the
+    homepage, otherwise /favicon.ico.

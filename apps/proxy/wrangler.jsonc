@@ -1,0 +1,19 @@
+{
+  "name": "sitelens-proxy",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  // One public address only: no extra preview address per version
+  "preview_urls": false,
+  "send_metrics": false,
+  "vars": {
+    "ALLOWED_ORIGINS": "https://sitelens.pl,https://www.sitelens.pl",
+  },
+  // Nothing about audits is logged: no request logs, no traces
+  "observability": { "enabled": false },
+  // Best effort: the limits are counted per Cloudflare location and are not guaranteed on the Free plan
+  "ratelimits": [
+    { "name": "SESSION_LIMITER", "namespace_id": "1101", "simple": { "limit": 10, "period": 60 } },
+    { "name": "FETCH_LIMITER", "namespace_id": "1102", "simple": { "limit": 240, "period": 60 } },
+  ],
+}

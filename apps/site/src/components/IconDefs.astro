@@ -1,0 +1,92 @@
+---
+// Shared SVG definitions: gradients for Icon3D and DockIcon, and the Liquid Glass lens filters.
+// Icon stop colours come from CSS (global.css), so they follow the theme.
+
+// Displacement maps: neutral grey (0.5) in the middle, pushing outwards near the edges,
+// so the backdrop bends only at the rim, the way Apple's glass does. Red bends x, green bends y.
+const band = (axis: 'x' | 'y', edge: number) => {
+  const channel = (v: number) => (axis === 'x' ? `rgb(${v},0,0)` : `rgb(0,${v},0)`); // lint-colors-ignore: displacement data
+  const end = axis === 'x' ? 'x2="1" y2="0"' : 'x2="0" y2="1"';
+  return encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" preserveAspectRatio="none"><defs><linearGradient id="g" ${end}><stop offset="0" stop-color="${channel(255)}"/><stop offset="${edge}" stop-color="${channel(128)}"/><stop offset="${1 - edge}" stop-color="${channel(128)}"/><stop offset="1" stop-color="${channel(0)}"/></linearGradient></defs><rect width="100" height="100" fill="url(#g)"/></svg>`,
+  );
+};
+const lenses = [
+  { id: 'sl-lens', x: band('x', 0.16), y: band('y', 0.2), scale: 34 },
+  { id: 'sl-lens-wide', x: band('x', 0.03), y: band('y', 0.26), scale: 24 },
+];
+---
+
+<svg class="icon-defs" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="ig-plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="ig-p1"></stop>
+      <stop offset="0.52" class="ig-p2"></stop>
+      <stop offset="1" class="ig-p3"></stop>
+    </linearGradient>
+    <radialGradient id="ig-sheen" cx="0.5" cy="0" r="0.78">
+      <stop offset="0" class="ig-sheen"></stop>
+      <stop offset="0.55" class="ig-sheen-mid"></stop>
+      <stop offset="1" class="ig-clear"></stop>
+    </radialGradient>
+    <linearGradient id="ig-rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="ig-rim-top"></stop>
+      <stop offset="0.5" class="ig-rim-mid"></stop>
+      <stop offset="1" class="ig-rim-bottom"></stop>
+    </linearGradient>
+    <linearGradient id="ig-glyph" gradientUnits="userSpaceOnUse" x1="0" y1="10" x2="0" y2="54">
+      <stop offset="0" class="ig-hi"></stop>
+      <stop offset="1" class="ig-lo"></stop>
+    </linearGradient>
+    <linearGradient id="da-files" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="da-files-hi"></stop>
+      <stop offset="1" class="da-files-lo"></stop>
+    </linearGradient>
+    <linearGradient id="da-mail" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="da-mail-hi"></stop>
+      <stop offset="1" class="da-mail-lo"></stop>
+    </linearGradient>
+    <linearGradient id="da-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="da-sky-hi"></stop>
+      <stop offset="1" class="da-sky-lo"></stop>
+    </linearGradient>
+    <linearGradient id="da-plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="da-plate-hi"></stop>
+      <stop offset="1" class="da-plate-lo"></stop>
+    </linearGradient>
+    <linearGradient id="da-ink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="da-ink-hi"></stop>
+      <stop offset="1" class="da-ink-lo"></stop>
+    </linearGradient>
+    <linearGradient id="da-yellow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="da-yellow-hi"></stop>
+      <stop offset="1" class="da-yellow-lo"></stop>
+    </linearGradient>
+    <linearGradient id="da-gear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="da-gear-hi"></stop>
+      <stop offset="1" class="da-gear-lo"></stop>
+    </linearGradient>
+    <linearGradient id="da-compass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" class="da-sky-hi"></stop>
+      <stop offset="1" class="da-sky-lo"></stop>
+    </linearGradient>
+    <linearGradient id="da-gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="da-gloss-a"></stop>
+      <stop offset="0.5" class="da-gloss-b"></stop>
+    </linearGradient>
+    <clipPath id="da-squircle"><rect x="4" y="4" width="56" height="56" rx="13.5"></rect></clipPath>
+    <filter id="ig-shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow class="ig-drop" dx="0" dy="1.6" stdDeviation="1.4"></feDropShadow>
+    </filter>
+    {
+      lenses.map((lens) => (
+        <filter id={lens.id} x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+          <feImage href={`data:image/svg+xml,${lens.x}`} preserveAspectRatio="none" result="x" />
+          <feImage href={`data:image/svg+xml,${lens.y}`} preserveAspectRatio="none" result="y" />
+          <feComposite in="x" in2="y" operator="arithmetic" k2="1" k3="1" result="map" />
+          <feDisplacementMap in="SourceGraphic" in2="map" scale={lens.scale} xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      ))
+    }
+  </defs>
+</svg>

@@ -1,0 +1,46 @@
+id: sec/clickjacking
+priority: minor
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Serwer ogranicza, które strony mogą wyświetlać Twoją stronę w ramce.
+  en: The server limits which sites can show your site in a frame.
+pl:
+  title: Twoją stronę można osadzić na cudzej stronie
+  summary: Inna strona może wczytać Twoją w niewidocznej ramce i nakłonić odwiedzających do kliknięć, których nie planowali.
+  whatIsWrong: >
+    Serwer nie zabrania innym stronom wyświetlania Twojej strony w ramce: brakuje nagłówka
+    X-Frame-Options i reguły frame-ancestors w polityce bezpieczeństwa treści (CSP).
+  whyItMatters: >
+    Oszust może wczytać Twoją stronę na swojej jako niewidoczną warstwę, tak że klient, klikając w coś
+    na stronie oszusta, w rzeczywistości kliknie przycisk na Twojej. Ma to znaczenie głównie tam, gdzie
+    kliknięcie coś zmienia, np. w sklepie z kontem klienta.
+  howToFix:
+    - "Dodaj w ustawieniach serwera nagłówek X-Frame-Options: SAMEORIGIN oraz regułę frame-ancestors 'self' w nagłówku Content-Security-Policy."
+    - Dopisz do reguły frame-ancestors adres zaufanej strony, jeśli Twoja strona ma być na niej osadzana.
+  short: >
+    Inne strony mogą wczytać Twoją w niewidocznej ramce i nakłaniać odwiedzających do niechcianych
+    kliknięć. Dodaj nagłówek X-Frame-Options: SAMEORIGIN albo regułę frame-ancestors 'self' w CSP.
+  technical: >
+    Brak nagłówka X-Frame-Options (DENY lub SAMEORIGIN) i dyrektywy frame-ancestors w
+    Content-Security-Policy.
+en:
+  title: Your site can be embedded in someone else's site
+  summary: Another site can load yours in an invisible frame and trick visitors into clicks they did not intend.
+  whatIsWrong: >
+    The server does not stop other sites from showing your site in a frame: there is no X-Frame-Options
+    header and no frame-ancestors rule in the content security policy (CSP).
+  whyItMatters: >
+    A fraudster can load your site as an invisible layer on their own, so that a customer who clicks
+    something on the fraudster's page actually clicks a button on yours. This matters mostly where a
+    click changes something, for example in a shop with customer accounts.
+  howToFix:
+    - "Add the X-Frame-Options: SAMEORIGIN header in the server settings, plus a frame-ancestors 'self' rule in the Content-Security-Policy header."
+    - Add the address of a trusted site to the frame-ancestors rule if your site is meant to be embedded there.
+  short: >
+    Other sites can load yours in an invisible frame and trick visitors into unwanted clicks. Add an
+    X-Frame-Options: SAMEORIGIN header or a frame-ancestors 'self' rule in the CSP.
+  technical: >
+    No X-Frame-Options header (DENY or SAMEORIGIN) and no frame-ancestors directive in
+    Content-Security-Policy.

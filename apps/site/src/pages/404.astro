@@ -1,0 +1,31 @@
+---
+import PageHero from '../components/PageHero.astro';
+import { routes, useTranslations } from '../i18n';
+import Base from '../layouts/Base.astro';
+
+const t = useTranslations('pl').notFound;
+const en = useTranslations('en').notFound;
+---
+
+<Base lang="pl" title={t.title} description={t.description} noindex>
+  <section class="container missing">
+    <PageHero icon="seo" heading={t.heading} meta="404" lead={t.text} />
+    <a class="btn btn-primary" href={routes.home.pl}>{t.home}</a>
+    <p class="other" lang="en">{en.heading}. <a href={routes.home.en}>{en.home}</a></p>
+  </section>
+</Base>
+
+<style>
+  .missing {
+    display: grid;
+    justify-items: center;
+    gap: var(--sl-space-5);
+    max-width: 40rem;
+    padding-bottom: var(--sl-section-pad);
+    text-align: center;
+  }
+  .other {
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+  }
+</style>

@@ -1,0 +1,28 @@
+{
+  "description": "Signs that a page is a bot check instead of the site. Titles and HTML snippets, matched case-insensitively.",
+  "titles": [
+    "just a moment",
+    "attention required! | cloudflare",
+    "checking your browser",
+    "please wait... | cloudflare",
+    "verifying you are human",
+    "ddos-guard",
+    "pardon our interruption",
+    "access denied",
+    "request unsuccessful",
+    "security check",
+    "are you a robot"
+  ],
+  "html": [
+    "/cdn-cgi/challenge-platform/",
+    "cf-browser-verification",
+    "cf_chl_opt",
+    "_incapsula_resource",
+    "px-captcha",
+    "captcha-delivery.com",
+    "datadome",
+    "ddos-guard.net",
+    "sucuri website firewall",
+    "awswaf"
+  ]
+}

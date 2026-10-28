@@ -1,0 +1,53 @@
+{
+  "name": "sitelens",
+  "version": "0.3.1",
+  "description": "Website audit with a plain-language PDF report: performance, SEO, accessibility and security.",
+  "keywords": [
+    "website audit",
+    "seo",
+    "accessibility",
+    "wcag",
+    "lighthouse",
+    "performance",
+    "security",
+    "pdf report",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": "Revize Studio (https://revize.pl)",
+  "homepage": "https://sitelens.pl",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/revize-studio/sitelens.git"
+  },
+  "bugs": {
+    "url": "https://github.com/revize-studio/sitelens/issues"
+  },
+  "type": "module",
+  "bin": {
+    "sitelens": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "prepack": "node build.mjs"
+  },
+  "dependencies": {
+    "axe-core": "4.14.0",
+    "chrome-launcher": "1.2.2",
+    "lighthouse": "13.5.0",
+    "playwright-core": "1.64.1"
+  },
+  "devDependencies": {
+    "@sitelens/brand": "workspace:*",
+    "@sitelens/collect-node": "workspace:*",
+    "@sitelens/core": "workspace:*",
+    "@sitelens/report": "workspace:*",
+    "fflate": "0.8.3"
+  }
+}

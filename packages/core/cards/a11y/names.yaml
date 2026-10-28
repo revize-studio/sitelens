@@ -1,0 +1,46 @@
+id: a11y/names
+priority: important
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Linki i przyciski mają nazwy czytelne dla czytników ekranu.
+  en: Links and buttons have names that screen readers can read out.
+pl:
+  title: Część linków i przycisków nie ma nazwy dla czytników ekranu
+  summary: Osoba niewidoma nie dowie się, do czego służą przyciski z samą ikoną, np. menu czy koszyk.
+  whatIsWrong: >
+    Na sprawdzonych podstronach {count} {count|link, przycisk lub inny element strony nie ma|linki, przyciski lub inne elementy strony nie mają|linków, przycisków lub innych elementów strony nie ma}
+    nazwy, którą może odczytać czytnik ekranu. Dotyczy to np. przycisków z samą ikoną (menu, koszyk,
+    lupa) albo osadzonej mapy lub filmu bez tytułu.
+  whyItMatters: >
+    Czytnik ekranu ogłasza taki element np. jako sam „przycisk”. Osoba niewidoma nie wie wtedy, czy
+    przycisk otwiera menu, koszyk czy profil w mediach społecznościowych.
+  howToFix:
+    - Dodaj przyciskom i linkom z samą ikoną nazwę dla czytników ekranu, np. aria-label="Otwórz menu".
+    - Nadaj osadzonym mapom i filmom (iframe) atrybut title z opisem zawartości, np. title="Mapa dojazdu".
+    - Opisuj, co element robi, a nie jak wygląda, np. „Szukaj” zamiast „Lupa”.
+  short: >
+    {count} {count|link, przycisk lub inny element strony nie ma|linki, przyciski lub inne elementy strony nie mają|linków, przycisków lub innych elementów strony nie ma}
+    nazwy dla czytników ekranu. Dodaj nazwę każdemu przyciskowi z samą ikoną.
+  technical: >
+    axe: {rules}. {count} {count|element|elementy|elementów} bez nazwy dostępnej (accessible name).
+en:
+  title: Some links and buttons have no name for screen readers
+  summary: A blind visitor cannot tell what icon-only buttons, such as the menu or cart, do.
+  whatIsWrong: >
+    On the pages checked, {count} {count|link, button or other page element has|links, buttons or other page elements have}
+    no name that a screen reader can read out. This happens, for example, with icon-only buttons
+    (menu, cart, search) or an embedded map or video without a title.
+  whyItMatters: >
+    A screen reader announces such an element as, for example, just “button”. A blind visitor then
+    cannot tell whether it opens the menu, the cart or a social media profile.
+  howToFix:
+    - Give icon-only buttons and links a name for screen readers, e.g. aria-label="Open menu".
+    - Give embedded maps and videos (iframe) a title attribute that describes their content, e.g. title="Map to our office".
+    - Describe what the element does, not what it looks like, e.g. “Search” rather than “Magnifying glass”.
+  short: >
+    {count} {count|link, button or other page element has|links, buttons or other page elements have}
+    no name for screen readers. Give every icon-only button a name.
+  technical: >
+    axe: {rules}. {count} {count|element|elements} without an accessible name.

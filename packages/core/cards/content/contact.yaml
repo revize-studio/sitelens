@@ -1,0 +1,77 @@
+id: content/contact
+whoFixes: owner
+effort: small
+review: reviewed
+passed:
+  pl: Strona ma link do kontaktu albo klikalny telefon lub e-mail.
+  en: The site has a contact link or a clickable phone number or email.
+variants:
+  missing:
+    priority: important
+    pl:
+      title: Trudno znaleźć dane kontaktowe
+      summary: Klient, który chce się z Tobą skontaktować, może nie wiedzieć, jak to zrobić.
+      whatIsWrong: >
+        Na stronie głównej nie znaleźliśmy linku do kontaktu, a na sprawdzonych podstronach ani numeru
+        telefonu, ani adresu e-mail.
+      whyItMatters: >
+        Klient, który chce zapytać o ofertę albo umówić termin, musi szukać kontaktu na własną rękę.
+        Jeśli go nie znajdzie, może wybrać inną firmę.
+      howToFix:
+        - Dodaj link „Kontakt” w menu i w stopce.
+        - Podaj numer telefonu i adres e-mail jako klikalne linki, żeby na telefonie wystarczyło je dotknąć.
+      short: Trudno znaleźć dane kontaktowe. Dodaj link „Kontakt” w menu oraz klikalny telefon i e-mail.
+      technical: >
+        Brak linków tel: i mailto: oraz numerów telefonów i adresów e-mail w tekście sprawdzonych
+        podstron. Strona główna nie ma linku do własnej podstrony ze słowem „kontakt” lub „contact”
+        w treści albo adresie.
+    en:
+      title: Contact details are hard to find
+      summary: A customer who wants to get in touch with you may not know how.
+      whatIsWrong: >
+        We found no contact link on the homepage, and no phone number or email address on the pages
+        checked.
+      whyItMatters: >
+        A customer who wants to ask about your offer or book an appointment has to look for your contact
+        details on their own. If they cannot find them, they may choose another company.
+      howToFix:
+        - Add a “Contact” link to the menu and the footer.
+        - Give the phone number and email address as clickable links, so one tap is enough on a phone.
+      short: Contact details are hard to find. Add a “Contact” link to the menu and a clickable phone number and email.
+      technical: >
+        No tel: or mailto: links and no phone numbers or email addresses in the text of the pages
+        checked. The homepage has no same-site link with “kontakt” or “contact” in its text or URL.
+  not-clickable:
+    priority: minor
+    pl:
+      title: Dane kontaktowe nie są klikalne
+      summary: Telefon i e-mail są zwykłym tekstem, więc nie zawsze da się do Ciebie zadzwonić lub napisać jednym dotknięciem.
+      whatIsWrong: >
+        Numer telefonu lub adres e-mail pojawia się na sprawdzonych podstronach jako zwykły tekst, bez
+        linku ({count} {count|raz|razy|razy}, licząc powtórzenia na kolejnych podstronach). Żadna z tych
+        podstron nie ma klikalnego telefonu ani adresu e-mail.
+      whyItMatters: >
+        Gdy numer jest zwykłym tekstem, klient musi go czasem skopiować albo przepisać. Z linkiem tel:
+        dzwoni jednym dotknięciem, a link mailto: od razu otwiera nową wiadomość.
+      howToFix:
+        - "Zamień numery telefonów na linki tel: z numerem kierunkowym kraju (np. +48), a adresy e-mail na linki mailto:."
+      short: "Telefon i e-mail są zapisane zwykłym tekstem. Zamień je na klikalne linki tel: i mailto:."
+      technical: >
+        Numery telefonów lub adresy e-mail w tekście: {count} {count|wystąpienie|wystąpienia|wystąpień}.
+        Brak linków tel: i mailto: na sprawdzonych podstronach.
+    en:
+      title: Contact details are not clickable
+      summary: Your phone number and email are plain text, so customers cannot always call or write to you with one tap.
+      whatIsWrong: >
+        A phone number or email address appears as plain text without a link on the pages checked
+        ({count} {count|time|times}, counting repeats on different pages). None of these pages has a
+        clickable phone number or email address.
+      whyItMatters: >
+        When a number is plain text, customers sometimes have to copy or retype it. With a tel: link
+        they call with one tap, and a mailto: link opens a new email straight away.
+      howToFix:
+        - "Turn phone numbers into tel: links that include the country code, and email addresses into mailto: links."
+      short: "Your phone number and email are plain text. Turn them into clickable tel: and mailto: links."
+      technical: >
+        Phone numbers or email addresses in plain text: {count} {count|occurrence|occurrences}. No tel:
+        or mailto: links on the pages checked.

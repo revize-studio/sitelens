@@ -1,0 +1,65 @@
+---
+import { highlightShell } from '../lib/highlight';
+
+interface Props {
+  command: string;
+  copyLabel: string;
+  copiedLabel: string;
+  announcement: string;
+}
+
+const { command, copyLabel, copiedLabel, announcement } = Astro.props;
+---
+
+<div class="cmd" data-copy-root>
+  <code><span class="prompt" aria-hidden="true">$</span> <span class="line" set:html={highlightShell(command)} /></code>
+  <button
+    class="btn btn-secondary btn-small"
+    type="button"
+    data-copy={command}
+    data-label={copyLabel}
+    data-done={copiedLabel}
+    data-announcement={announcement}>{copyLabel}</button
+  >
+  <span class="visually-hidden" role="status" data-copy-status></span>
+</div>
+
+<style>
+  .cmd {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sl-space-2) var(--sl-space-4);
+    min-height: 52px;
+    padding: 6px 6px 6px 22px;
+    border-radius: 26px;
+    background: var(--sl-glass-card);
+    -webkit-backdrop-filter: blur(20px) saturate(1.7);
+    backdrop-filter: blur(20px) saturate(1.7);
+    box-shadow: inset 0 1px 0 0 var(--sl-lg-rim), inset 0 0 0 1px var(--sl-lg-edge), var(--sl-shadow-s);
+  }
+  /* Long commands wrap between arguments instead of scrolling inside the pill */
+  code {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-block: 6px;
+    font-size: var(--sl-fs-mono);
+    line-height: 1.5;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  .prompt { color: var(--sl-term-green); font-weight: 600; }
+  .btn {
+    min-width: 104px;
+    margin-left: auto;
+  }
+
+  @media (max-width: 479px) {
+    .cmd {
+      padding: 12px 12px 12px 18px;
+      border-radius: var(--sl-radius-l);
+    }
+    code { font-size: 0.8125rem; }
+  }
+</style>

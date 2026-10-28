@@ -1,0 +1,40 @@
+id: perf/compression
+priority: important
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Serwer kompresuje przesyłane podstrony.
+  en: The server compresses the pages it sends.
+pl:
+  title: Serwer wysyła podstrony bez kompresji
+  summary: Serwer nie kompresuje podstron, więc strona wczytuje się dłużej, niż musi.
+  whatIsWrong: >
+    Serwer wysyła {count} {count|podstronę|podstrony|podstron} bez kompresji.
+  whyItMatters: >
+    Kompresja zwykle wyraźnie zmniejsza pliki tekstowe. Bez niej strona zużywa więcej danych
+    i wczytuje się dłużej, zwłaszcza przy słabszym połączeniu.
+  howToFix:
+    - Włącz kompresję brotli lub gzip w ustawieniach serwera, w panelu hostingu albo w CDN, jeśli strona z niego korzysta.
+  short: >
+    Serwer wysyła {count} {count|podstronę|podstrony|podstron} bez kompresji. Włącz kompresję brotli
+    lub gzip w ustawieniach serwera albo hostingu.
+  technical: >
+    Brak nagłówka Content-Encoding (gzip, br, zstd lub deflate) na {count}
+    {count|podstronie|podstronach|podstronach} (dokumenty HTML od 1,4 KB).
+en:
+  title: The server sends pages without compression
+  summary: The server does not compress its pages, so the site takes longer to load than it needs to.
+  whatIsWrong: >
+    The server sends {count} {count|page|pages} without compression.
+  whyItMatters: >
+    Compression usually makes text files considerably smaller. Without it the site uses more data
+    and takes longer to load, especially on a slower connection.
+  howToFix:
+    - Turn on brotli or gzip compression in the server settings, in the hosting panel, or in the CDN if the site uses one.
+  short: >
+    The server sends {count} {count|page|pages} without compression. Turn on brotli or gzip
+    compression in the server or hosting settings.
+  technical: >
+    No Content-Encoding header (gzip, br, zstd or deflate) on {count} {count|page|pages} (HTML
+    documents of 1.4 KB or more).

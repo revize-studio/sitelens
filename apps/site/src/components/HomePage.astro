@@ -1,0 +1,30 @@
+---
+import { useTranslations, type Lang } from '../i18n';
+import Base from '../layouts/Base.astro';
+import BrandSection from './BrandSection.astro';
+import Checks from './Checks.astro';
+import Faq from './Faq.astro';
+import GetStarted from './GetStarted.astro';
+import Hero from './Hero.astro';
+import OpenSource from './OpenSource.astro';
+import PlainLanguage from './PlainLanguage.astro';
+import ReportViewer from './ReportViewer.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Base lang={lang} page="home" title={t.meta.title} description={t.meta.description} structuredData>
+  <Hero lang={lang} />
+  <Checks lang={lang} />
+  <BrandSection lang={lang} />
+  <ReportViewer lang={lang} />
+  <PlainLanguage lang={lang} />
+  <GetStarted lang={lang} />
+  <OpenSource lang={lang} />
+  <Faq lang={lang} />
+</Base>

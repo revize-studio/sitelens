@@ -1,0 +1,91 @@
+id: seo/indexability
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Google może pokazywać wszystkie sprawdzone podstrony.
+  en: Google can show all the pages we checked.
+variants:
+  homepage:
+    priority: critical
+    pl:
+      title: Strona główna jest zablokowana dla Google
+      summary: Google nie pokaże strony głównej w wynikach albo pokaże ją bez opisu.
+      whatIsWrong: >
+        Strona główna jest zablokowana dla Google regułą w pliku robots.txt, znacznikiem noindex w kodzie
+        strony albo takim samym zakazem w odpowiedzi serwera. Zablokowane podstrony, razem ze stroną
+        główną: {count}.
+      whyItMatters: >
+        Klienci, którzy szukają Twojej firmy w Google, mogą nie trafić na stronę. Noindex usuwa podstronę
+        z wyników, a blokada w robots.txt sprawia, że Google nie czyta treści i pokazuje najwyżej sam
+        adres.
+      howToFix:
+        - Wyłącz w panelu strony opcję, która ukrywa stronę przed wyszukiwarkami. W WordPressie to „Widoczność dla wyszukiwarek” w menu Ustawienia → Czytanie.
+        - Poproś developera o usunięcie noindex z kodu i nagłówków strony oraz blokady w robots.txt. Konkretne przyczyny są w załączniku technicznym.
+        - Zgłoś stronę główną do ponownego sprawdzenia w Google Search Console, w narzędziu do sprawdzania adresów URL (przycisk „Poproś o zindeksowanie”).
+      short: >
+        Strona główna jest zablokowana dla Google. Wyłącz w panelu strony opcję ukrywania strony przed
+        wyszukiwarkami albo poproś developera o usunięcie blokady.
+      technical: >
+        Blokada indeksowania na {count} {count|podstronie|podstronach|podstronach}, w tym na stronie
+        głównej: robots.txt (Googlebot), meta robots noindex/none lub X-Robots-Tag: noindex.
+    en:
+      title: The homepage is blocked for Google
+      summary: Google will not show the homepage in its results, or will show it without a description.
+      whatIsWrong: >
+        The homepage is blocked for Google by a robots.txt rule, a noindex tag in the page code or the
+        same instruction in the server response. Blocked pages, including the homepage: {count}.
+      whyItMatters: >
+        Customers searching for your business in Google may not find your site. Noindex removes a page
+        from the results, and a robots.txt block stops Google reading the content, so at most it shows
+        the bare address.
+      howToFix:
+        - Turn off the setting in the admin panel that hides the site from search engines. In WordPress it is “Search engine visibility” under Settings → Reading.
+        - Ask the developer to remove noindex from the page code and headers, and the block from robots.txt. The exact causes are in the technical appendix.
+        - Ask Google to check the homepage again in Google Search Console, with the URL Inspection tool (the “Request indexing” button).
+      short: >
+        The homepage is blocked for Google. Turn off the setting that hides the site from search engines,
+        or ask the developer to remove the block.
+      technical: >
+        Indexing blocked on {count} {count|page|pages}, including the homepage: robots.txt (Googlebot),
+        meta robots noindex/none or X-Robots-Tag: noindex.
+  pages:
+    priority: important
+    pl:
+      title: "{count} {count|podstrona jest zablokowana|podstrony są zablokowane|podstron jest zablokowanych} dla Google"
+      summary: Google nie pokaże tych podstron w wynikach albo pokaże je bez opisu.
+      whatIsWrong: >
+        {count} {count|podstrona ma|podstrony mają|podstron ma} blokadę dla Google: regułę w pliku
+        robots.txt, znacznik noindex w kodzie albo taki sam zakaz w odpowiedzi serwera.
+      whyItMatters: >
+        Jeśli to podstrony z ofertą lub kontaktem, klienci trudno trafią na nie z Google. Blokada ma sens
+        dla podstron takich jak koszyk, logowanie czy panel klienta.
+      howToFix:
+        - Sprawdź podstrony wymienione w polu „Dotyczy” i w załączniku technicznym.
+        - Odblokuj te, które klienci powinni znaleźć w Google, czyli usuń z nich noindex albo regułę w robots.txt.
+        - Używaj noindex, a nie robots.txt, do podstron, które mają nie pojawiać się w Google.
+      short: >
+        {count} {count|podstrona jest zablokowana|podstrony są zablokowane|podstron jest zablokowanych}
+        dla Google. Sprawdź, czy to celowe, i odblokuj podstrony, które klienci powinni znaleźć.
+      technical: >
+        Blokada indeksowania na {count} {count|podstronie|podstronach|podstronach}: robots.txt (Googlebot),
+        meta robots noindex/none lub X-Robots-Tag: noindex.
+    en:
+      title: "{count} {count|page is|pages are} blocked for Google"
+      summary: Google will not show these pages in its results, or will show them without a description.
+      whatIsWrong: >
+        {count} {count|page is|pages are} blocked for Google by a robots.txt rule, a noindex tag in the
+        page code or the same instruction in the server response.
+      whyItMatters: >
+        If these are offer or contact pages, customers will struggle to reach them from Google. A block
+        makes sense for pages such as the cart, login or a customer account.
+      howToFix:
+        - Check the pages listed under “Affects” and in the technical appendix.
+        - Unblock the ones customers should find in Google by removing noindex or the robots.txt rule.
+        - Use noindex, not robots.txt, for pages that should stay out of Google.
+      short: >
+        {count} {count|page is|pages are} blocked for Google. Check whether this is intended and unblock
+        the pages customers should find.
+      technical: >
+        Indexing blocked on {count} {count|page|pages}: robots.txt (Googlebot), meta robots noindex/none
+        or X-Robots-Tag: noindex.

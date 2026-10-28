@@ -1,0 +1,9 @@
+{
+  "description": "Rules for the brandbook's proposals: values the site does not state, offered for a person to approve.",
+  "clearSpaceRatio": 0.5,
+  "lockupMinHeightPx": 16,
+  "lockupMinWidthFloorPx": 64,
+  "markMinPx": 24,
+  "roundToPx": 8,
+  "prohibitions": ["stretch", "recolour", "effects", "rotate", "busyBackground"]
+}

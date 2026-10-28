@@ -1,0 +1,42 @@
+id: sec/info-disclosure
+priority: minor
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Strona nie zdradza wersji swojego oprogramowania.
+  en: The site does not reveal its software versions.
+pl:
+  title: Strona zdradza, jakiego oprogramowania używa
+  summary: Atakującym łatwiej sprawdzić, czy to oprogramowanie ma znane luki bezpieczeństwa.
+  whatIsWrong: >
+    Nagłówki serwera lub kod strony głównej publicznie podają, na jakim oprogramowaniu działa strona:
+    {items}.
+  whyItMatters: >
+    Znając nazwę i wersję, atakujący łatwiej znajdzie znane luki w tym oprogramowaniu. Ukrycie tych
+    informacji nie zastąpi aktualizacji, bo oprogramowanie da się rozpoznać także w inny sposób.
+  howToFix:
+    - Wyłącz w ustawieniach serwera nagłówek X-Powered-By i numer wersji w nagłówku Server.
+    - Usuń z kodu strony znacznik meta generator.
+    - Aktualizuj oprogramowanie strony i serwera na bieżąco, bo to aktualizacje usuwają znane luki.
+  short: >
+    Strona zdradza, jakiego oprogramowania używa ({items}). Ukryj te informacje w ustawieniach serwera
+    i aktualizuj oprogramowanie na bieżąco.
+  technical: "Ujawnione na stronie głównej ({count}):"
+en:
+  title: The site reveals what software it uses
+  summary: Attackers can more easily check whether that software has known security flaws.
+  whatIsWrong: >
+    The server headers or the homepage code publicly state what software the site runs on: {items}.
+  whyItMatters: >
+    Knowing the name and version, an attacker can more easily find known flaws in that software. Hiding
+    this information does not replace updates, because the software can also be recognised in other
+    ways.
+  howToFix:
+    - Turn off the X-Powered-By header and the version number in the Server header in the server settings.
+    - Remove the generator meta tag from the page code.
+    - Keep the site and server software up to date, because updates are what fix known flaws.
+  short: >
+    The site reveals what software it uses ({items}). Hide this information in the server settings and
+    keep the software up to date.
+  technical: "Disclosed on the homepage ({count}):"

@@ -1,0 +1,358 @@
+---
+// The online audit: everything runs in the visitor's browser with the same checks, cards and report
+// as the CLI. Pages come through the proxy (apps/proxy), speed and accessibility from PageSpeed Insights.
+import { reportInlineCode, type ReportAssets } from '@sitelens/report';
+import cli from '../../../../packages/cli/package.json';
+import monoFont from '../../../../public/fonts/GeistMono-Variable.woff2?url';
+import sansFont from '../../../../public/fonts/InstrumentSans-Variable.woff2?url';
+import logo from '../../../../public/logo/sitelens-logo.svg?raw';
+import { ONLINE_AUDIT, PSI_KEY_HOWTO_URL } from '../config';
+import { pageLinks, routes, useTranslations, type Lang } from '../i18n';
+import { rich } from '../lib/rich';
+import CopyCommand from './CopyCommand.astro';
+import PageHero from './PageHero.astro';
+import UrlForm from './UrlForm.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const page = t.auditPage;
+const o = page.online;
+
+const assets: ReportAssets = { logoSvg: logo.replace(/<\?xml[^>]*>/, ''), fontSans: sansFont, fontMono: monoFont };
+// The report is shown in a frame that inherits this site's CSP; listing its inline style and script
+// here lets scripts/headers.mjs allow exactly them by hash
+const inline = reportInlineCode(assets);
+const config = { ...ONLINE_AUDIT, lang, version: cli.version, assets, strings: o };
+const reportLanguages = [
+  { value: 'pl', label: 'Polski' },
+  { value: 'en', label: 'English' },
+];
+const command = {
+  command: 'npx sitelens',
+  copyLabel: t.hero.terminal.copy,
+  copiedLabel: t.hero.terminal.copied,
+  announcement: t.hero.terminal.copiedAnnouncement,
+};
+---
+
+<section class="container audit" data-online-audit data-config={JSON.stringify(config)}>
+  <PageHero icon="browser" heading={page.heading} lead={o.lead} />
+  <UrlForm lang={lang} id="audit-url" />
+  <fieldset class="report-lang">
+    <legend>{o.reportLang}</legend>
+    {
+      reportLanguages.map((option) => (
+        <label>
+          <input type="radio" name="report-lang" value={option.value} checked={option.value === lang} data-report-lang />
+          <span lang={option.value}>{option.label}</span>
+        </label>
+      ))
+    }
+  </fieldset>
+  <p class="more" set:html={rich(o.more, pageLinks(lang))} />
+  <div class="human" data-human hidden></div>
+
+  <section class="progress tile" data-progress hidden aria-labelledby="audit-progress-title">
+    <h2 id="audit-progress-title" data-progress-title></h2>
+    <ol class="audit-steps">
+      {
+        Object.entries(o.steps).map(([step, label]) => (
+          <li data-step={step} data-state="waiting">
+            <span class="state" aria-hidden="true" />
+            <span class="label">{label}</span>
+            <span class="count" data-count />
+          </li>
+        ))
+      }
+    </ol>
+    <p class="visually-hidden" aria-live="polite" data-announce></p>
+  </section>
+
+  <section class="problem tile" data-error hidden role="alert">
+    <p class="problem-text" data-error-text></p>
+    <p>{o.cli}</p>
+    <CopyCommand {...command} />
+    <button class="btn btn-secondary" type="button" data-retry>{o.retry}</button>
+  </section>
+
+  <section class="result" data-result hidden aria-labelledby="audit-result-title">
+    <header class="result-head">
+      <h2 id="audit-result-title" tabindex="-1" data-result-title></h2>
+      <p class="overall" data-overall></p>
+      <ul class="scores" data-scores></ul>
+    </header>
+
+    <div class="pagespeed tile" data-pagespeed hidden>
+      <p data-pagespeed-text></p>
+      <form class="key-row" data-pagespeed-form>
+        <label for="pagespeed-key">{o.keys.label}</label>
+        <input id="pagespeed-key" name="key" type="password" autocomplete="off" spellcheck="false" required />
+        <button class="btn btn-primary btn-small" type="submit">{o.pagespeed.finish}</button>
+      </form>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" type="button" data-pdf>{o.pdf}</button>
+      <button class="btn btn-secondary" type="button" data-json>{o.json}</button>
+      <a class="btn btn-secondary" href={routes.audit[lang]}>{o.again}</a>
+    </div>
+    <p class="hint">{o.pdfHint}</p>
+
+    <div class="preview tile" data-preview>
+      <iframe title={o.preview} data-report></iframe>
+    </div>
+
+    <p class="note" data-warnings hidden></p>
+    <p class="note">{o.partial}</p>
+    <CopyCommand {...command} />
+  </section>
+
+  <details class="keys tile">
+    <summary>{o.keys.summary}</summary>
+    <p set:html={rich(o.keys.text, { howto: PSI_KEY_HOWTO_URL })} />
+    <form class="key-row" data-key-form>
+      <label for="psi-key">{o.keys.label}</label>
+      <input id="psi-key" name="key" type="password" autocomplete="off" spellcheck="false" required />
+      <button class="btn btn-secondary btn-small" type="submit">{o.keys.save}</button>
+      <button class="btn btn-secondary btn-small" type="button" data-key-remove hidden>{o.keys.remove}</button>
+    </form>
+    <p class="key-status" aria-live="polite" data-key-status></p>
+  </details>
+
+  <template data-report-csp>
+    <style is:inline set:html={inline.style} />
+    <script is:inline set:html={inline.script} />
+  </template>
+</section>
+
+<script>
+  import '../scripts/online-audit';
+</script>
+
+<style>
+  .audit {
+    display: grid;
+    justify-items: center;
+    gap: var(--sl-space-6);
+    padding-bottom: var(--sl-section-pad);
+  }
+  .audit > :global(*) { width: 100%; }
+  .audit > .human { width: auto; }
+  /* The panels set their own display, which would otherwise win over the hidden attribute */
+  .audit [hidden] { display: none !important; }
+
+  .tile {
+    display: grid;
+    gap: var(--sl-space-4);
+    max-width: 46rem;
+    margin-inline: auto;
+    padding: clamp(20px, 4vw, 32px);
+    border-radius: var(--sl-radius-l);
+  }
+
+  .progress h2 { font-size: var(--sl-fs-h3); }
+
+  .audit-steps {
+    display: grid;
+    gap: var(--sl-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .audit-steps li {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    align-items: center;
+    gap: var(--sl-space-3);
+  }
+  .audit-steps li[data-state='waiting'] .label { color: var(--sl-text-2); }
+  .count {
+    color: var(--sl-text-2);
+    font: 500 var(--sl-fs-small) / 1 var(--sl-font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .state {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--sl-line);
+    border-radius: 50%;
+  }
+  [data-state='active'] .state {
+    border-color: var(--sl-accent-soft);
+    border-top-color: var(--sl-accent);
+    animation: spin 0.8s linear infinite;
+  }
+  [data-state='done'] .state {
+    border-color: var(--sl-good);
+    background: var(--sl-good);
+  }
+  [data-state='done'] .state::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 9px;
+    border: solid var(--sl-surface);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  [data-state='skipped'] .state { border-style: dashed; }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-state='active'] .state { animation: none; border-color: var(--sl-accent); }
+  }
+
+  .report-lang {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--sl-space-2);
+    margin: calc(-1 * var(--sl-space-2)) 0 0;
+    padding: 0;
+    border: 0;
+  }
+  .report-lang legend {
+    float: left;
+    margin-right: var(--sl-space-2);
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+    font-weight: 500;
+  }
+  .report-lang label { position: relative; }
+  .report-lang input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .report-lang span {
+    display: block;
+    padding: 6px 16px;
+    border: 1px solid var(--sl-field-line);
+    border-radius: var(--sl-radius-pill);
+    background: var(--sl-surface);
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+    font-weight: 500;
+    transition: border-color 0.2s var(--sl-ease-out), color 0.2s var(--sl-ease-out);
+  }
+  .report-lang label:hover span { border-color: var(--sl-text-2); }
+  .report-lang input:checked + span {
+    border-color: var(--sl-accent);
+    color: var(--sl-text);
+    box-shadow: inset 0 0 0 1px var(--sl-accent);
+  }
+  .report-lang input:focus-visible + span {
+    outline: 3px solid var(--sl-accent);
+    outline-offset: 2px;
+  }
+
+  .more {
+    max-width: 36rem;
+    margin-inline: auto;
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+    text-align: center;
+  }
+
+  .scores {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sl-space-2) var(--sl-space-5);
+    margin: var(--sl-space-3) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* The items are created by the script, so they carry no scoped attribute */
+  .scores :global(li) { color: var(--sl-text-2); }
+  .scores :global(b) {
+    margin-left: 6px;
+    color: var(--sl-text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .problem { justify-items: start; }
+  .problem-text { font-weight: 500; }
+
+  .result {
+    display: grid;
+    gap: var(--sl-space-5);
+  }
+  .result-head,
+  .actions,
+  .hint,
+  .note,
+  .result > :global(.cmd) {
+    max-width: 46rem;
+    margin-inline: auto;
+    width: 100%;
+  }
+  .result-head { text-align: center; }
+  .result-head h2:focus { outline: none; }
+  .overall { color: var(--sl-text-2); }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sl-space-3);
+  }
+  .hint,
+  .note {
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+    text-align: center;
+  }
+  .result > .tile { width: 100%; }
+  .preview {
+    max-width: 60rem;
+    padding: clamp(8px, 2vw, 16px);
+    overflow: hidden;
+  }
+  .preview iframe {
+    display: block;
+    width: 100%;
+    min-height: 60vh;
+    border: 0;
+    border-radius: var(--sl-radius-m);
+    background: var(--sl-surface-2);
+  }
+
+  .keys summary {
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .keys p { color: var(--sl-text-2); }
+  .key-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sl-space-3);
+  }
+  .key-row label { width: 100%; font-size: var(--sl-fs-small); font-weight: 500; }
+  .key-row input {
+    flex: 1 1 14rem;
+    min-width: 0;
+    padding: 10px 14px;
+    border: 1px solid var(--sl-field-line);
+    border-radius: var(--sl-radius-s);
+    background: var(--sl-surface);
+    color: var(--sl-text);
+    font: inherit;
+  }
+  .key-row input:focus-visible {
+    outline: 3px solid var(--sl-accent);
+    outline-offset: 2px;
+  }
+  .key-status { min-height: 1.5em; font-size: var(--sl-fs-small); }
+</style>

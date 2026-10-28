@@ -1,0 +1,110 @@
+---
+// A miniature of the sitelens.pl homepage for the brandbook scene. It is drawn twice: once in
+// the browser window and once inside the loupe, where the same layout is shown enlarged.
+import { LOGO_VIEWBOX } from '../lib/logo';
+
+interface Props {
+  title: string;
+  button: string;
+}
+
+const { title, button } = Astro.props;
+const [first, ...rest] = title.split(' ');
+---
+
+<div class="site">
+  <div class="s-nav">
+    <svg class="s-logo" data-target="0" viewBox={LOGO_VIEWBOX} focusable="false"><use href="#logo-nav-art"></use></svg>
+    <i class="s-link"></i><i class="s-link"></i><i class="s-link"></i>
+    <i class="s-toggle"></i>
+  </div>
+  <p class="s-title"><span data-target="1">{first}</span> {rest.join(' ')}</p>
+  <i class="s-line"></i>
+  <i class="s-line short"></i>
+  <div class="s-form">
+    <i class="s-field" data-target="2"></i>
+    <span class="s-btn" data-target="3">{button}</span>
+  </div>
+  <div class="s-tiles"><i></i><i></i><i></i></div>
+</div>
+
+<style>
+  /* Every size is in container units, so the copy inside the loupe lines up with the original */
+  .site {
+    display: grid;
+    gap: 3cqi;
+    padding: 3.4cqi 5cqi 6cqi;
+    background:
+      radial-gradient(50% 60% at 8% 30%, var(--sl-glow-1), transparent 70%),
+      radial-gradient(45% 55% at 96% 70%, var(--sl-glow-2), transparent 70%),
+      var(--sl-bg);
+    color: var(--sl-text);
+  }
+  .s-nav {
+    display: flex;
+    align-items: center;
+    gap: 3cqi;
+    margin-bottom: 3cqi;
+  }
+  .s-logo {
+    width: 17cqi;
+    height: auto;
+    margin-right: auto;
+    color: var(--sl-text);
+  }
+  .s-link,
+  .s-line,
+  .s-toggle {
+    display: block;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--sl-text-2) 26%, transparent);
+  }
+  .s-link { width: 7cqi; height: 1.3cqi; }
+  .s-toggle { width: 4.4cqi; height: 4.4cqi; background: var(--sl-surface); box-shadow: 0 0 0 1px var(--sl-line); }
+  .s-title {
+    max-width: 16ch;
+    font-size: 6.4cqi;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+  }
+  .s-line { width: 64cqi; height: 1.5cqi; }
+  .s-line.short { width: 44cqi; }
+  .s-form {
+    display: flex;
+    gap: 1.6cqi;
+    margin-top: 1.5cqi;
+  }
+  .s-field {
+    display: block;
+    width: 36cqi;
+    height: 7.4cqi;
+    border-radius: 99px;
+    background: var(--sl-surface);
+    box-shadow: inset 0 0 0 1px var(--sl-field-line);
+  }
+  .s-btn {
+    display: grid;
+    place-items: center;
+    padding: 0 3.4cqi;
+    border-radius: 99px;
+    background: var(--sl-btn-bg);
+    color: var(--sl-btn-text);
+    font-size: 2.3cqi;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .s-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.4cqi;
+    margin-top: 3cqi;
+  }
+  .s-tiles i {
+    display: block;
+    height: 15cqi;
+    border-radius: 2.6cqi;
+    background: color-mix(in srgb, var(--sl-surface) 70%, transparent);
+    box-shadow: 0 0 0 1px var(--sl-glass-line), var(--sl-shadow-s);
+  }
+</style>

@@ -1,0 +1,43 @@
+id: seo/status-codes
+priority: important
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Wszystkie sprawdzone podstrony działają.
+  en: All pages checked work.
+pl:
+  title: "{count} {count|podstrona nie działa|podstrony nie działają|podstron nie działa}"
+  summary: Zamiast treści odwiedzający widzi komunikat o błędzie.
+  whatIsWrong: >
+    {count} {count|podstrona zwraca|podstrony zwracają|podstron zwraca} błąd zamiast treści, np. „nie
+    znaleziono strony” (404) albo błąd serwera (500). {count|Trafiliśmy na nią|Trafiliśmy na nie|Trafiliśmy na nie}
+    przez linki na stronie albo mapę strony.
+  whyItMatters: >
+    Klient, który kliknie link do takiej podstrony, trafia na błąd i często wychodzi. Google przestaje
+    pokazywać w wynikach adresy, które długo zwracają błąd.
+  howToFix:
+    - Przywróć brakujące podstrony albo ustaw przekierowanie 301 na najbliższą działającą podstronę.
+    - Usuń albo popraw linki, które prowadzą do tych adresów.
+    - Błędy serwera (kody 5xx) zgłoś osobie, która opiekuje się stroną albo hostingiem.
+  short: >
+    {count} {count|podstrona zwraca|podstrony zwracają|podstron zwraca} błąd zamiast treści. Przywróć
+    {count|ją|je|je} albo ustaw przekierowanie na działającą podstronę.
+  technical: Kod odpowiedzi 4xx lub 5xx na {count} {count|podstronie|podstronach|podstronach}.
+en:
+  title: "{count} {count|page does|pages do} not work"
+  summary: Instead of content, visitors see an error message.
+  whatIsWrong: >
+    {count} {count|page returns|pages return} an error instead of content, e.g. “page not found” (404)
+    or a server error (500). We reached {count|it|them} through links on the site or the sitemap.
+  whyItMatters: >
+    A customer who clicks a link to such a page hits an error and often leaves. Google stops showing
+    addresses that keep returning errors.
+  howToFix:
+    - Restore the missing pages or set up a 301 redirect to the closest working page.
+    - Remove or fix the links that lead to these addresses.
+    - Report server errors (5xx codes) to whoever looks after the site or the hosting.
+  short: >
+    {count} {count|page returns|pages return} an error instead of content. Restore {count|it|them} or
+    redirect to a working page.
+  technical: Status 4xx or 5xx on {count} {count|page|pages}.

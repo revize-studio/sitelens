@@ -1,0 +1,105 @@
+---
+import { pageLinks, useTranslations, type Lang } from '../i18n';
+import { rich } from '../lib/rich';
+
+interface Props {
+  lang: Lang;
+  /** Questions of another page; the homepage FAQ by default */
+  content?: { id: string; title: string; items: { q: string; a: string }[] };
+}
+
+const { lang, content } = Astro.props;
+const t = content ?? useTranslations(lang).faq;
+const links = pageLinks(lang);
+---
+
+<section class="section" id={t.id} aria-labelledby="faq-title">
+  <div class="ambient center" aria-hidden="true"></div>
+  <div class="container narrow">
+    <header class="section-head" data-reveal>
+      <h2 id="faq-title">{t.title}</h2>
+    </header>
+    <div class="list tile" data-reveal="2" data-faq>
+      {
+        t.items.map((item) => (
+          <details>
+            <summary>
+              <span>{item.q}</span>
+              <span class="toggle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M12 5.5v13M5.5 12h13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+                </svg>
+              </span>
+            </summary>
+            <div class="answer">
+              <p set:html={rich(item.a, links)} />
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .narrow { max-width: 760px; }
+  .section-head { margin-bottom: var(--sl-space-7); }
+
+  .list { padding: var(--sl-space-2) clamp(20px, 3vw, 36px); }
+  details + details { border-top: 1px solid var(--sl-lg-edge); }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sl-space-4);
+    padding: 22px 4px;
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:focus-visible { border-radius: var(--sl-radius-s); }
+
+  /* A small glass button whose plus turns into a cross as the answer opens */
+  .toggle {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    color: var(--sl-text-2);
+    background: linear-gradient(180deg, var(--sl-lq-top), var(--sl-lq-tint));
+    box-shadow:
+      inset 0 1px 0.5px 0 var(--sl-lq-spec),
+      inset 0 0 0 0.5px var(--sl-lq-spec-soft),
+      0 0 0 0.5px var(--sl-lq-edge),
+      0 2px 6px -2px var(--sl-lq-shadow);
+    transition:
+      color 0.3s var(--sl-ease-out),
+      background-color 0.3s var(--sl-ease-out),
+      transform 0.5s var(--sl-ease-spring);
+  }
+  .toggle svg { width: 18px; height: 18px; }
+  summary:hover .toggle { color: var(--sl-text); }
+  /* data-state comes from scripts/faq.ts, so the cross turns back as soon as closing starts */
+  details[open]:not([data-state="closed"]) .toggle {
+    color: var(--sl-btn-text);
+    background: linear-gradient(180deg, var(--sl-btn-hi), var(--sl-btn-bg) 50%, var(--sl-btn-lo));
+    box-shadow:
+      inset 0 1px 0.5px 0 var(--sl-btn-spec),
+      0 0 0 0.5px var(--sl-btn-edge),
+      0 4px 12px -4px var(--sl-btn-glow);
+    transform: rotate(135deg);
+  }
+
+  .answer p {
+    max-width: 62ch;
+    padding: 0 4px 24px;
+    color: var(--sl-text-2);
+  }
+</style>

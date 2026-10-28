@@ -1,0 +1,305 @@
+---
+import { useTranslations, type Lang } from '../i18n';
+import Icon3D from './Icon3D.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang).checks;
+const { performance: perf, seo, accessibility: a11y, security: sec } = t;
+---
+
+<section class="section" id={t.id} aria-labelledby="checks-title">
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <h2 id="checks-title">{t.title}</h2>
+      <p>{t.lead}</p>
+    </header>
+
+    <div class="bento">
+      <article class="tile lift perf" data-reveal="1">
+        <Icon3D name="performance" />
+        <h3>{perf.title}</h3>
+        <p class="desc">{perf.desc}</p>
+        <div class="specimen" role="img" aria-label={perf.specimen.label}>
+          <p class="metric"><span class="dot critical"></span>{perf.specimen.metric}</p>
+          <p class="value">{perf.specimen.value}</p>
+          <div class="scale">
+            <span class="zone good"></span><span class="zone mid"></span><span class="zone poor"></span>
+            <span class="marker"></span>
+          </div>
+          <div class="ticks">{perf.specimen.ticks.map((tick) => <span>{tick}</span>)}</div>
+          <p class="hint">{perf.specimen.good}</p>
+        </div>
+        <ul class="items" role="list">{perf.items.map((item) => <li>{item}</li>)}</ul>
+      </article>
+
+      <article class="tile lift seo" data-reveal="2">
+        <Icon3D name="seo" />
+        <h3>{seo.title}</h3>
+        <p class="desc">{seo.desc}</p>
+        <div class="specimen serp" role="img" aria-label={seo.specimen.label}>
+          <p class="serp-url"><span class="favicon"></span>{seo.specimen.url}</p>
+          <p class="serp-title">{seo.specimen.resultTitle}</p>
+          <p class="serp-missing"><span class="dot important"></span>{seo.specimen.missing}</p>
+          <span class="skeleton"></span>
+          <span class="skeleton short"></span>
+        </div>
+        <ul class="items" role="list">{seo.items.map((item) => <li>{item}</li>)}</ul>
+      </article>
+
+      <article class="tile lift a11y" data-reveal="1">
+        <Icon3D name="accessibility" />
+        <h3>{a11y.title}</h3>
+        <p class="desc">{a11y.desc}</p>
+        <div class="specimen form" role="img" aria-label={a11y.specimen.label}>
+          <div class="case">
+            <span class="mock-input"></span>
+            <p class="reader"><span class="dot important"></span><span>{a11y.specimen.reads} <b>{a11y.specimen.without}</b></span></p>
+          </div>
+          <div class="case">
+            <span class="mock-label">{a11y.specimen.field}</span>
+            <span class="mock-input"></span>
+            <p class="reader"><span class="dot good"></span><span>{a11y.specimen.reads} <b>{a11y.specimen.with}</b></span></p>
+          </div>
+        </div>
+        <ul class="items" role="list">{a11y.items.map((item) => <li>{item}</li>)}</ul>
+      </article>
+
+      <article class="tile lift sec" data-reveal="2">
+        <Icon3D name="security" />
+        <h3>{sec.title}</h3>
+        <p class="desc">{sec.desc}</p>
+        <div class="specimen headers" role="img" aria-label={sec.specimen.label}>
+          {
+            sec.specimen.rows.map((row) => (
+              <p class="row">
+                <span class:list={['dot', row.state]} />
+                <span class="name">{row.name}</span>
+                <span class="state">{row.value}</span>
+              </p>
+            ))
+          }
+        </div>
+        <ul class="items" role="list">{sec.items.map((item) => <li>{item}</li>)}</ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--sl-space-5);
+  }
+  .perf { grid-column: span 7; }
+  .seo { grid-column: span 5; }
+  .a11y { grid-column: span 5; }
+  .sec { grid-column: span 7; }
+
+  .tile {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(28px, 3.4vw, 44px);
+  }
+  h3 {
+    margin-top: var(--sl-space-5);
+    font-size: clamp(1.5rem, 1.2rem + 0.9vw, 1.875rem);
+    letter-spacing: -0.025em;
+  }
+  .desc {
+    max-width: 30rem;
+    margin-top: var(--sl-space-2);
+    color: var(--sl-text-2);
+  }
+
+  .specimen {
+    margin-block: var(--sl-space-6);
+    padding: var(--sl-space-5);
+    border-radius: var(--sl-radius-l);
+    background: var(--sl-surface);
+    box-shadow: inset 0 0 0 1px var(--sl-line), var(--sl-shadow-s);
+    font-size: 15px;
+  }
+
+  .items {
+    display: grid;
+    gap: 6px;
+    margin: auto 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 15px;
+  }
+  .items li {
+    position: relative;
+    padding-left: 18px;
+  }
+  .items li::before {
+    content: "";
+    position: absolute;
+    top: 0.62em;
+    left: 2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sl-text-2);
+  }
+
+  .dot {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+  .critical { background: var(--sl-critical); }
+  .important { background: var(--sl-important); }
+  .good { background: var(--sl-good); }
+
+  .metric {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+  .value {
+    margin-top: 6px;
+    font-size: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .scale {
+    position: relative;
+    display: grid;
+    grid-template-columns: 50fr 30fr 20fr;
+    gap: 3px;
+    height: 10px;
+    margin-top: var(--sl-space-5);
+  }
+  .zone { border-radius: 5px; }
+  .zone.good { background: color-mix(in srgb, var(--sl-good) 70%, transparent); }
+  .zone.mid { background: color-mix(in srgb, var(--sl-important) 70%, transparent); }
+  .zone.poor { background: color-mix(in srgb, var(--sl-critical) 70%, transparent); }
+  .marker {
+    position: absolute;
+    top: -6px;
+    left: 82%;
+    width: 4px;
+    height: 22px;
+    border-radius: 2px;
+    background: var(--sl-text);
+    box-shadow: 0 0 0 3px var(--sl-surface);
+  }
+  .ticks {
+    display: grid;
+    grid-template-columns: 50fr 30fr 20fr 0fr;
+    margin-top: 8px;
+    color: var(--sl-text-2);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+  .ticks span:last-child { justify-self: end; white-space: nowrap; }
+  .hint {
+    margin-top: var(--sl-space-3);
+    color: var(--sl-text-2);
+    font-size: 14px;
+  }
+
+  .serp { display: grid; gap: 6px; }
+  .serp-url {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--sl-text-2);
+    font-size: 14px;
+  }
+  .favicon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--sl-surface-2);
+    box-shadow: inset 0 0 0 1px var(--sl-line);
+  }
+  .serp-title {
+    color: var(--sl-accent);
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .serp-missing {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 4px;
+    padding: 10px 12px;
+    border: 1px dashed var(--sl-field-line);
+    border-radius: var(--sl-radius-s);
+    font-size: 14px;
+  }
+  .serp-missing .dot { transform: translateY(-1px); }
+  .skeleton {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--sl-line);
+  }
+  .skeleton.short { width: 62%; }
+
+  .form { display: grid; gap: var(--sl-space-4); }
+  .case { display: grid; gap: 8px; }
+  .case + .case {
+    padding-top: var(--sl-space-4);
+    border-top: 1px solid var(--sl-line);
+  }
+  .mock-label { font-size: 14px; font-weight: 600; }
+  .mock-input {
+    height: 40px;
+    border: 1px solid var(--sl-field-line);
+    border-radius: var(--sl-radius-s);
+    background: var(--sl-surface);
+  }
+  .reader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--sl-text-2);
+    font-size: 14px;
+  }
+  .reader b { color: var(--sl-text); font-weight: 600; }
+
+  .headers { display: grid; }
+  .row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding-block: 10px;
+  }
+  .row + .row { border-top: 1px solid var(--sl-line); }
+  .name {
+    overflow: hidden;
+    font-family: var(--sl-font-mono);
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .state {
+    color: var(--sl-text-2);
+    font-size: 14px;
+    text-align: right;
+  }
+
+  @media (max-width: 899px) {
+    .perf, .seo, .a11y, .sec { grid-column: 1 / -1; }
+  }
+  /* Phones: header names wrap and the value moves under the name instead of being cut off */
+  @media (max-width: 520px) {
+    .row { grid-template-columns: auto minmax(0, 1fr); row-gap: 2px; }
+    .name { white-space: normal; }
+    .state { grid-column: 2; text-align: left; }
+  }
+</style>

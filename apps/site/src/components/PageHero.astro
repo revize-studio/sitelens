@@ -1,0 +1,61 @@
+---
+import type { IconName } from '../lib/icons';
+import Icon3D from './Icon3D.astro';
+
+interface Props {
+  icon: IconName;
+  heading: string;
+  lead?: string;
+  meta?: string;
+}
+
+const { icon, heading, lead, meta } = Astro.props;
+---
+
+<header class="page-hero lift">
+  <div class="ambient hero-glow" aria-hidden="true"></div>
+  <Icon3D name={icon} size={96} />
+  <h1>{heading}</h1>
+  {meta && <p class="meta">{meta}</p>}
+  {lead && <p class="lead">{lead}</p>}
+</header>
+
+<style>
+  .page-hero {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    justify-items: center;
+    padding-block: clamp(40px, 6vw, 80px) clamp(32px, 4vw, 56px);
+    text-align: center;
+  }
+  /* A halo around the icon; the layer is full width, so 50% is the middle of the screen */
+  .hero-glow {
+    inset: -40px calc(50% - 50vw) 0;
+    background:
+      radial-gradient(380px 280px at calc(50% - 110px) 34%, var(--sl-glow-1), transparent 70%),
+      radial-gradient(380px 280px at calc(50% + 110px) 28%, var(--sl-glow-2), transparent 70%);
+    -webkit-mask-image: linear-gradient(transparent, var(--sl-text) 14%, var(--sl-text) 64%, transparent);
+    mask-image: linear-gradient(transparent, var(--sl-text) 14%, var(--sl-text) 64%, transparent);
+  }
+  h1 {
+    max-width: 18ch;
+    margin-top: var(--sl-space-6);
+    font-size: var(--sl-fs-section);
+    letter-spacing: -0.035em;
+    line-height: 1.06;
+  }
+  .meta {
+    margin-top: var(--sl-space-3);
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+    font-weight: 500;
+  }
+  .lead {
+    max-width: 38rem;
+    margin-top: var(--sl-space-5);
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-sub);
+    line-height: 1.45;
+  }
+</style>

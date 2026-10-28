@@ -1,0 +1,311 @@
+---
+// The brandbook generator online: the site renders in a sandboxed frame in the visitor's browser,
+// read by the same extraction as the CLI; screenshots come from PageSpeed Insights.
+import { brandbookInlineScript, interactiveBrandbookScript } from '@sitelens/report';
+import cli from '../../../../packages/cli/package.json';
+import geistSans from '../../../../packages/report/fonts/Geist-Variable.woff2?url';
+import geistMono from '../../../../public/fonts/GeistMono-Variable.woff2?url';
+import { ONLINE_AUDIT, onlineAuditReady } from '../config';
+import { routes, useTranslations, type Lang } from '../i18n';
+import CopyCommand from './CopyCommand.astro';
+import Faq from './Faq.astro';
+import PageHero from './PageHero.astro';
+import ReportViewer from './ReportViewer.astro';
+import UrlForm from './UrlForm.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const b = t.brandbookPage;
+const config = {
+  ...ONLINE_AUDIT,
+  lang,
+  version: cli.version,
+  fonts: { sans: geistSans, mono: geistMono },
+  strings: { progress: b.progress, done: b.done, summary: b.summary, errors: b.errors },
+};
+const copy = { copyLabel: t.hero.terminal.copy, copiedLabel: t.hero.terminal.copied, announcement: t.hero.terminal.copiedAnnouncement };
+---
+
+<section class="container brandbook" data-brandbook data-config={JSON.stringify(config)}>
+  <PageHero icon="palette" heading={b.heading} lead={b.lead} />
+  {
+    onlineAuditReady ? (
+      <UrlForm lang={lang} id="brandbook-url" tool="brandbook" />
+    ) : (
+      <p class="soon tile">{b.soon}</p>
+    )
+  }
+  <div class="human" data-human hidden></div>
+
+  <section class="progress tile" data-progress hidden aria-labelledby="brandbook-progress-title">
+    <h2 id="brandbook-progress-title" data-progress-title></h2>
+    <ol class="steps-list">
+      {
+        Object.entries(b.steps).map(([step, label]) => (
+          <li data-step={step} data-state="waiting">
+            <span class="state" aria-hidden="true" />
+            <span class="label">{label}</span>
+            <span class="count" data-count />
+          </li>
+        ))
+      }
+    </ol>
+    <p class="visually-hidden" aria-live="polite" data-announce></p>
+  </section>
+
+  <section class="problem tile" data-error hidden role="alert">
+    <p class="problem-text" data-error-text></p>
+    <CopyCommand command={b.terminal.command} {...copy} />
+    <button class="btn btn-secondary" type="button" data-retry>{b.retry}</button>
+  </section>
+
+  <section class="result" data-result hidden aria-labelledby="brandbook-result-title">
+    <header class="result-head">
+      <h2 id="brandbook-result-title" tabindex="-1" data-result-title></h2>
+      <p class="summary" data-summary></p>
+    </header>
+    <p class="note" data-limited hidden>{b.limited}</p>
+    <p class="note" data-no-shots hidden>{b.noShots}</p>
+    <div class="actions">
+      <button class="btn btn-primary" type="button" data-pdf>{b.pdf}</button>
+      <button class="btn btn-secondary" type="button" data-tokens>{b.tokens}</button>
+      <button class="btn btn-secondary" type="button" data-zip>{b.zip}</button>
+      <a class="btn btn-secondary" href={routes.brandbook[lang]}>{b.again}</a>
+    </div>
+    <p class="hint">{b.pdfHint}</p>
+    <div class="preview tile">
+      <iframe title={b.preview} allow="clipboard-write" data-preview></iframe>
+    </div>
+  </section>
+
+  <div class="stage" data-stage aria-hidden="true"></div>
+  <iframe class="print-frame" title={b.printFrame} aria-hidden="true" tabindex="-1" data-print></iframe>
+
+  <template data-brandbook-csp>
+    <script is:inline set:html={brandbookInlineScript()} />
+    <script is:inline set:html={interactiveBrandbookScript()} />
+  </template>
+</section>
+
+<div data-sample>
+  <ReportViewer lang={lang} kind="brandbook" />
+</div>
+
+<section class="section" aria-labelledby="brandbook-terminal-title">
+  <div class="container narrow">
+    <div class="terminal tile" data-reveal>
+      <h2 id="brandbook-terminal-title">{b.terminal.title}</h2>
+      <p>{b.terminal.text}</p>
+      <CopyCommand command={b.terminal.command} {...copy} />
+      <a href={routes.terminal[lang]}>{b.terminal.guide}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="brandbook-compare-title">
+  <div class="container narrow">
+    <header class="section-head" data-reveal>
+      <h2 id="brandbook-compare-title">{b.compare.title}</h2>
+    </header>
+    <div class="compare tile" data-reveal="1">
+      <table>
+        <thead>
+          <tr><td></td><th scope="col">{b.compare.online}</th><th scope="col">{b.compare.terminal}</th></tr>
+        </thead>
+        <tbody>
+          {
+            b.compare.rows.map((row) => (
+              <tr>
+                <th scope="row">{row.what}</th>
+                <td>{row.online}</td>
+                <td>{row.terminal}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<Faq lang={lang} content={{ id: 'faq', ...b.faq }} />
+
+<script>
+  import '../scripts/brandbook-online';
+</script>
+
+<style>
+  .brandbook {
+    display: grid;
+    justify-items: center;
+    gap: var(--sl-space-6);
+    padding-bottom: var(--sl-section-pad);
+  }
+  .brandbook > :global(*) { width: 100%; }
+  .brandbook > .human { width: auto; }
+  /* The panels set their own display, which would otherwise win over the hidden attribute */
+  .brandbook [hidden] { display: none !important; }
+
+  .tile {
+    display: grid;
+    gap: var(--sl-space-4);
+    max-width: 46rem;
+    margin-inline: auto;
+    padding: clamp(20px, 4vw, 32px);
+    border-radius: var(--sl-radius-l);
+  }
+  .soon { text-align: center; }
+
+  .progress h2 { font-size: var(--sl-fs-h3); }
+  .steps-list {
+    display: grid;
+    gap: var(--sl-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .steps-list li {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    align-items: center;
+    gap: var(--sl-space-3);
+  }
+  .steps-list li[data-state='waiting'] .label { color: var(--sl-text-2); }
+  .count {
+    color: var(--sl-text-2);
+    font: 500 var(--sl-fs-small) / 1 var(--sl-font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .state {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--sl-line);
+    border-radius: 50%;
+  }
+  [data-state='active'] .state {
+    border-color: var(--sl-accent-soft);
+    border-top-color: var(--sl-accent);
+    animation: spin 0.8s linear infinite;
+  }
+  [data-state='done'] .state {
+    border-color: var(--sl-good);
+    background: var(--sl-good);
+  }
+  [data-state='done'] .state::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 9px;
+    border: solid var(--sl-surface);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-state='active'] .state { animation: none; border-color: var(--sl-accent); }
+  }
+
+  .problem { justify-items: start; }
+  .problem-text { font-weight: 500; }
+
+  .result {
+    display: grid;
+    gap: var(--sl-space-5);
+  }
+  .result-head,
+  .actions,
+  .hint,
+  .note {
+    width: 100%;
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+  .result-head { text-align: center; }
+  .result-head h2:focus { outline: none; }
+  .summary { color: var(--sl-text-2); }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sl-space-3);
+  }
+  .hint,
+  .note {
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+    text-align: center;
+  }
+  .result > .tile { width: 100%; }
+  .preview {
+    max-width: 76rem;
+    padding: clamp(8px, 2vw, 16px);
+    overflow: hidden;
+  }
+  .preview iframe {
+    display: block;
+    width: 100%;
+    min-height: 60vh;
+    border: 0;
+    border-radius: var(--sl-radius-m);
+    background: var(--sl-surface-2);
+  }
+
+  /* The site is laid out here at full desktop width, out of sight; only the extraction looks at it */
+  .stage {
+    position: fixed;
+    top: 0;
+    left: -20000px;
+    width: 1440px;
+    height: 900px;
+    overflow: hidden;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* The A4 version waits here for the print dialog; it has to be laid out to paginate itself */
+  .print-frame {
+    position: fixed;
+    top: 0;
+    left: -20000px;
+    width: 1200px;
+    height: 900px;
+    border: 0;
+    pointer-events: none;
+  }
+
+  .terminal {
+    justify-items: start;
+  }
+  .terminal p { color: var(--sl-text-2); }
+
+  .compare { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    padding: 12px 12px 12px 0;
+    border-bottom: 1px solid var(--sl-line);
+    text-align: left;
+    vertical-align: top;
+  }
+  thead th { color: var(--sl-text-2); font-size: var(--sl-fs-small); font-weight: 500; }
+  tbody th { font-weight: 500; }
+  tbody td { color: var(--sl-text-2); }
+  tr:last-child > * { border-bottom: 0; }
+  @media (max-width: 560px) {
+    tbody th,
+    tbody td { font-size: var(--sl-fs-small); }
+    tbody th { width: 34%; }
+  }
+</style>

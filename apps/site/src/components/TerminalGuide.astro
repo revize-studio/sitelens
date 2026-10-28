@@ -1,0 +1,297 @@
+---
+import { pageLinks, useTranslations, type Lang } from '../i18n';
+import { highlightShell } from '../lib/highlight';
+import { rich } from '../lib/rich';
+import CopyCommand from './CopyCommand.astro';
+import PageHero from './PageHero.astro';
+import TerminalScreen from './TerminalScreen.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = useTranslations(lang);
+const t = dict.terminalPage;
+const links = pageLinks(lang);
+const copy = {
+  copyLabel: dict.hero.terminal.copy,
+  copiedLabel: dict.hero.terminal.copied,
+  announcement: dict.hero.terminal.copiedAnnouncement,
+};
+const systems = [
+  { id: 'mac', ...t.mac },
+  { id: 'windows', ...t.windows },
+  { id: 'linux', ...t.linux },
+];
+---
+
+<article class="container guide">
+  <PageHero icon="terminal" heading={t.heading} lead={t.lead} />
+  <div class="ambient sides guide-light" aria-hidden="true"></div>
+
+  <div class="os" data-os-guide>
+    <div class="switch" role="tablist" aria-label={t.tabs} hidden data-tablist>
+      {
+        systems.map((os, i) => (
+          <button
+            class="tab"
+            type="button"
+            role="tab"
+            id={`tab-${os.id}`}
+            aria-controls={`panel-${os.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? undefined : '-1'}
+            data-tab={os.id}
+          >
+            {os.name}
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      systems.map((os) => (
+        <section class="panel" id={`panel-${os.id}`} aria-labelledby={`heading-${os.id}`} data-panel={os.id}>
+          <h2 class="panel-title" id={`heading-${os.id}`}>
+            {os.name}
+          </h2>
+          <ol class="guide-steps">
+            {os.steps.map((step) => (
+              <li class="tile">
+                <h3>{step.title}</h3>
+                <p set:html={rich(step.body)} />
+                {'code' in step && step.code && <CopyCommand command={step.code} {...copy} />}
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))
+    }
+  </div>
+
+  <section class="block" aria-labelledby="alternative-title">
+    <h2 id="alternative-title">{t.alternative.title}</h2>
+    <div class="alternative tile">
+      <p set:html={rich(t.alternative.body)} />
+      <CopyCommand command={t.alternative.code} {...copy} />
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="expected-title">
+    <h2 id="expected-title">{t.expected}</h2>
+    <div class="sample tile">
+      <TerminalScreen lines={dict.hero.stage} />
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="options-title">
+    <h2 id="options-title">{t.options.title}</h2>
+    <dl class="options tile">
+      {
+        t.options.items.map((item) => (
+          <div class="option">
+            <dt>
+              <code set:html={highlightShell(item.code)} />
+            </dt>
+            <dd>{item.text}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="block" aria-labelledby="problems-title">
+    <h2 id="problems-title">{t.problems.title}</h2>
+    <dl class="problems">
+      {
+        t.problems.items.map((item) => (
+          <div class="problem">
+            <dt>{item.q}</dt>
+            <dd set:html={rich(item.a)} />
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <p class="online tile" set:html={rich(t.online, links)} />
+</article>
+
+<style>
+  .alternative {
+    display: grid;
+    gap: var(--sl-space-4);
+    padding: clamp(20px, 3vw, 32px);
+    color: var(--sl-text-2);
+  }
+  .guide {
+    position: relative;
+    isolation: isolate;
+    max-width: 880px;
+    padding-bottom: var(--sl-section-pad);
+  }
+  .guide-light { inset: 20% calc(50% - 50vw) 0; }
+
+  .os { margin-top: var(--sl-space-4); }
+  .switch {
+    display: flex;
+    gap: 4px;
+    width: max-content;
+    margin: 0 auto var(--sl-space-6);
+    padding: 4px;
+    border-radius: var(--sl-radius-pill);
+    background: var(--sl-lg-tint);
+    -webkit-backdrop-filter: blur(20px) saturate(1.7);
+    backdrop-filter: blur(20px) saturate(1.7);
+    box-shadow: inset 0 1px 0 0 var(--sl-lg-rim), inset 0 0 0 1px var(--sl-lg-edge), var(--sl-shadow-s);
+  }
+  .tab {
+    min-width: 128px;
+    height: 44px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: var(--sl-radius-pill);
+    background: transparent;
+    color: var(--sl-text-2);
+    font-weight: 600;
+    transition: background-color 0.25s var(--sl-ease-out), color 0.25s var(--sl-ease-out), box-shadow 0.25s var(--sl-ease-out);
+  }
+  .tab[aria-selected="true"] {
+    background: var(--sl-surface);
+    color: var(--sl-text);
+    box-shadow: inset 0 1px 0 0 var(--sl-lg-rim), var(--sl-shadow-s);
+  }
+
+  .panel + .panel { margin-top: var(--sl-space-8); }
+  .panel-title {
+    margin-bottom: var(--sl-space-5);
+    font-size: var(--sl-fs-h2);
+  }
+
+  /*
+    With JS the guide becomes tabs before first paint: the head script marks the system,
+    so the right panel shows immediately and nothing shifts when the module loads.
+  */
+  :global(.js) .switch { display: flex; }
+  :global(.js) .panel { display: none; }
+  :global(.js:not([data-os])) .os:not([data-show]) .panel[data-panel="mac"],
+  :global(.js[data-os="windows"]) .os:not([data-show]) .panel[data-panel="windows"],
+  :global(.js[data-os="linux"]) .os:not([data-show]) .panel[data-panel="linux"],
+  .os[data-show="mac"] .panel[data-panel="mac"],
+  .os[data-show="windows"] .panel[data-panel="windows"],
+  .os[data-show="linux"] .panel[data-panel="linux"] { display: block; }
+  :global(.js) .panel + .panel { margin-top: 0; }
+  :global(.js) .panel-title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .guide-steps {
+    display: grid;
+    gap: var(--sl-space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+  .guide-steps > li {
+    position: relative;
+    display: grid;
+    gap: var(--sl-space-3);
+    min-width: 0;
+    padding: 24px 28px 24px 84px;
+    border-radius: var(--sl-radius-l);
+    counter-increment: step;
+  }
+  .guide-steps > li::before {
+    content: counter(step);
+    position: absolute;
+    top: 22px;
+    left: 28px;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--sl-accent-soft);
+    color: var(--sl-accent);
+    font-weight: 600;
+  }
+  h3 {
+    font-size: 1.25rem;
+    line-height: 36px;
+  }
+  .guide-steps p { color: var(--sl-text-2); }
+  .guide-steps :global(code),
+  .problems :global(code) {
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: var(--sl-surface-2);
+    color: var(--sl-text);
+    font-size: 0.9em;
+  }
+  .guide-steps :global(.cmd code) {
+    padding: 6px 0;
+    background: none;
+    font-size: var(--sl-fs-mono);
+  }
+  .guide-steps :global(.cmd) { background: var(--sl-surface-2); }
+
+  .block { margin-top: var(--sl-space-9); }
+  .block h2 {
+    margin-bottom: var(--sl-space-5);
+    font-size: var(--sl-fs-h2);
+  }
+
+  .sample {
+    max-width: 560px;
+    font-size: clamp(12px, 1.6vw, 14px);
+  }
+
+  .options {
+    margin: 0;
+    padding: var(--sl-space-2) var(--sl-space-6);
+  }
+  .option {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    gap: var(--sl-space-4);
+    padding-block: var(--sl-space-4);
+  }
+  .option + .option { border-top: 1px solid var(--sl-line); }
+  .option code { font-size: 14px; }
+  dd { margin: 0; }
+  .option dd { color: var(--sl-text-2); }
+
+  .problems {
+    display: grid;
+    gap: var(--sl-space-5);
+    margin: 0;
+  }
+  .problem dt { font-weight: 600; }
+  .problem dd {
+    margin-top: 4px;
+    color: var(--sl-text-2);
+  }
+
+  .online {
+    margin-top: var(--sl-space-9);
+    padding: var(--sl-space-6);
+    font-weight: 500;
+    text-align: center;
+  }
+
+  @media (max-width: 599px) {
+    .tab { min-width: 0; padding: 0 16px; }
+    .guide-steps > li { padding: 20px 20px 20px 68px; }
+    .guide-steps > li::before { left: 20px; top: 20px; width: 32px; height: 32px; }
+    h3 { line-height: 32px; }
+    .option { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .options { padding-inline: var(--sl-space-5); }
+  }
+</style>

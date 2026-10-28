@@ -1,0 +1,102 @@
+id: seo/sitemap
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Mapa strony działa i zawiera {count} {count|adres|adresy|adresów}.
+  en: The sitemap works and lists {count} {count|address|addresses}.
+variants:
+  missing:
+    priority: minor
+    pl:
+      title: Google nie dostaje listy podstron
+      summary: Strona nie ma mapy strony, więc nowe podstrony mogą później trafiać do wyników wyszukiwania.
+      whatIsWrong: Strona nie ma mapy strony (pliku sitemap.xml), czyli listy podstron przygotowanej dla wyszukiwarek.
+      whyItMatters: >
+        Google znajduje wtedy podstrony tylko przez linki. Na małej stronie z dobrym menu to zwykle
+        wystarcza, ale nowe albo rzadko linkowane podstrony mogą długo nie pojawiać się w wynikach.
+      howToFix:
+        - Włącz mapę strony we wtyczce SEO albo w ustawieniach systemu, w którym zbudowana jest strona.
+        - Dopisz adres mapy do pliku robots.txt, w linii „Sitemap:”.
+        - Zgłoś mapę w Google Search Console, w sekcji „Mapy witryn”.
+      short: Strona nie ma mapy strony (pliku sitemap.xml). Włącz ją we wtyczce SEO i zgłoś w Google Search Console.
+      technical: Brak mapy strony. Adres z robots.txt albo domyślny /sitemap.xml zwraca 404 lub zwykłą stronę HTML.
+    en:
+      title: Google gets no list of your pages
+      summary: The site has no sitemap, so new pages may take longer to reach search results.
+      whatIsWrong: The site has no sitemap (sitemap.xml file), a list of pages prepared for search engines.
+      whyItMatters: >
+        Google then finds pages only through links. On a small site with a good menu that is usually
+        enough, but new or rarely linked pages may take a long time to show up in results.
+      howToFix:
+        - Turn on the sitemap in your SEO plugin or in the settings of the system the site is built with.
+        - Add the sitemap address to robots.txt, on a “Sitemap:” line.
+        - Submit the sitemap in Google Search Console, under “Sitemaps”.
+      short: The site has no sitemap (sitemap.xml file). Turn it on in your SEO plugin and submit it in Google Search Console.
+      technical: No sitemap. The address from robots.txt or the default /sitemap.xml returns 404 or a regular HTML page.
+  invalid:
+    priority: important
+    pl:
+      title: Mapa strony nie działa
+      summary: Google nie odczyta z mapy strony listy podstron.
+      whatIsWrong: "Mapa strony {url} nie daje Google listy podstron: nie otwiera się, ma błędy albo jest pusta."
+      whyItMatters: >
+        Jeśli mapa jest zgłoszona w Google Search Console, pojawi się tam błąd. Google szuka wtedy
+        podstron tylko przez linki, więc nowe albo rzadko linkowane podstrony mogą długo nie trafiać do wyników.
+      howToFix:
+        - Otwórz adres mapy w przeglądarce i sprawdź, czy pokazuje listę adresów podstron.
+        - Wygeneruj mapę ponownie we wtyczce SEO albo poproś developera o naprawę.
+        - Jeśli plik robots.txt wskazuje stary adres mapy, popraw go.
+      short: Mapa strony {url} nie daje Google listy podstron. Wygeneruj ją ponownie we wtyczce SEO albo poproś developera o naprawę.
+      technical: "Mapa strony {url}: brak poprawnej listy adresów (kod odpowiedzi inny niż 200, błąd XML albo pusty <urlset>)."
+    en:
+      title: The sitemap does not work
+      summary: Google cannot read a list of pages from the sitemap.
+      whatIsWrong: "The sitemap {url} gives Google no list of pages: it does not open, has errors or is empty."
+      whyItMatters: >
+        If the sitemap is submitted in Google Search Console, an error will show up there. Google then
+        looks for pages only through links, so new or rarely linked pages may take a long time to reach results.
+      howToFix:
+        - Open the sitemap address in a browser and check that it shows a list of page addresses.
+        - Regenerate the sitemap in your SEO plugin or ask a developer to fix it.
+        - If robots.txt points to an old sitemap address, correct it.
+      short: The sitemap {url} gives Google no list of pages. Regenerate it in your SEO plugin or ask a developer to fix it.
+      technical: "Sitemap {url}: no valid list of addresses (status other than 200, XML error or empty <urlset>)."
+  errors:
+    priority: minor
+    pl:
+      title: "Mapa strony wskazuje {count} {count|niedziałającą podstronę|niedziałające podstrony|niedziałających podstron}"
+      summary: Google dostaje z mapy strony adresy, pod którymi zamiast treści jest błąd.
+      whatIsWrong: >
+        {count} {count|adres|adresy|adresów} z mapy strony {count|zwraca|zwracają|zwraca} błąd zamiast
+        treści, np. „nie znaleziono strony”.
+      whyItMatters: >
+        Mapa strony powinna zawierać tylko działające adresy, które mają się pojawiać w Google. Błędne
+        wpisy Google pokazuje jako problemy w Search Console, a klient, który trafi na taki adres
+        z wyników wyszukiwania, zobaczy błąd.
+      howToFix:
+        - Usuń z mapy strony adresy podstron, których już nie ma, albo przywróć te podstrony.
+        - Jeśli podstrona zmieniła adres, ustaw przekierowanie 301 ze starego adresu na nowy.
+        - Sprawdź, czy mapa aktualizuje się sama po dodaniu lub usunięciu podstrony.
+      short: >
+        {count} {count|adres|adresy|adresów} z mapy strony {count|zwraca|zwracają|zwraca} błąd. Usuń
+        {count|go|je|je} z mapy albo przywróć {count|tę podstronę|te podstrony|te podstrony}.
+      technical: "{count} {count|adres|adresy|adresów} z mapy strony z kodem odpowiedzi 4xx lub 5xx (spośród sprawdzonych podstron)."
+    en:
+      title: "The sitemap lists {count} broken {count|page|pages}"
+      summary: Google gets addresses from the sitemap that show an error instead of content.
+      whatIsWrong: >
+        {count} {count|address|addresses} in the sitemap {count|returns|return} an error instead of
+        content, e.g. “page not found”.
+      whyItMatters: >
+        A sitemap should contain only working addresses you want in Google. Google shows wrong entries
+        as issues in Search Console, and a customer who lands on such an address from search results
+        sees an error.
+      howToFix:
+        - Remove addresses of pages that no longer exist from the sitemap, or restore those pages.
+        - If a page has moved, set up a 301 redirect from the old address to the new one.
+        - Check that the sitemap updates itself when you add or remove a page.
+      short: >
+        {count} {count|address|addresses} in the sitemap {count|returns|return} an error. Remove
+        {count|it|them} from the sitemap or restore {count|the page|the pages}.
+      technical: "{count} sitemap {count|address|addresses} with status 4xx or 5xx (among the pages checked)."

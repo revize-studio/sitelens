@@ -1,0 +1,29 @@
+---
+import { routes, useTranslations, type Lang } from '../i18n';
+import BrandStage from './BrandStage.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).brandSection;
+---
+
+<section class="section brand" id={t.id} aria-labelledby="brand-title">
+  <div class="ambient sides" aria-hidden="true"></div>
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <h2 id="brand-title">{t.title}</h2>
+      <p>{t.lead}</p>
+      <a class="btn btn-primary" href={routes.brandbook[lang]}>{t.cta}</a>
+    </header>
+    <div data-reveal="1">
+      <BrandStage lang={lang} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-head .btn { margin-top: var(--sl-space-6); }
+</style>

@@ -1,0 +1,99 @@
+---
+import { useTranslations, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang).nav;
+---
+
+<button
+  class="theme-toggle lq-btn"
+  type="button"
+  aria-label={t.themeToDark}
+  data-label-dark={t.themeToDark}
+  data-label-light={t.themeToLight}
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <!-- mask luminance values, not visible colours --><mask id="tt-mask"><rect x="-4" y="-4" width="32" height="32" fill="#fff" /><circle class="tt-cut" cx="18.5" cy="5.5" r="7.5" fill="#000" /></mask>
+    <g mask="url(#tt-mask)"><circle class="tt-core" cx="12" cy="12" r="5" fill="currentColor"></circle></g>
+    <path class="tt-star" d="M16.6 5.3l.48 1.32 1.32.48-1.32.48-.48 1.32-.48-1.32-1.32-.48 1.32-.48z" fill="currentColor"></path>
+    <circle class="tt-star small" cx="19.7" cy="10.1" r=".85" fill="currentColor"></circle>
+    <g class="tt-rays" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+      <line x1="20.2" y1="12" x2="22.4" y2="12"></line>
+      <line x1="17.8" y1="17.8" x2="19.35" y2="19.35"></line>
+      <line x1="12" y1="20.2" x2="12" y2="22.4"></line>
+      <line x1="6.2" y1="17.8" x2="4.65" y2="19.35"></line>
+      <line x1="3.8" y1="12" x2="1.6" y2="12"></line>
+      <line x1="6.2" y1="6.2" x2="4.65" y2="4.65"></line>
+      <line x1="12" y1="3.8" x2="12" y2="1.6"></line>
+      <line x1="17.8" y1="6.2" x2="19.35" y2="4.65"></line>
+    </g>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      color 0.6s var(--sl-ease-out),
+      box-shadow 0.3s var(--sl-ease-out),
+      transform 0.45s var(--sl-ease-spring),
+      --light 0.7s var(--sl-ease-draw);
+  }
+  .theme-toggle:active { transform: scale(0.88); }
+  .theme-toggle:focus-visible { outline: 3px solid var(--sl-accent); outline-offset: 3px; }
+
+  svg {
+    width: 22px;
+    height: 22px;
+    overflow: visible;
+    transition: transform var(--sl-dur-theme-icon) var(--sl-ease-spring);
+  }
+  .tt-core {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform var(--sl-dur-theme-icon) var(--sl-ease-spring);
+  }
+  .tt-cut {
+    transform: translate(9px, -9px);
+    transition: transform var(--sl-dur-theme-icon) var(--sl-ease-spring);
+  }
+  .tt-rays {
+    transform-origin: 12px 12px;
+    transition:
+      transform 0.6s var(--sl-ease-spring),
+      opacity 0.35s var(--sl-ease-out);
+  }
+  /* Stars come out after the moon has formed, and leave at once when the sun returns */
+  .tt-star {
+    opacity: 0;
+    transform: scale(0);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      opacity 0.2s var(--sl-ease-out),
+      transform 0.2s var(--sl-ease-out);
+  }
+  :global(:root[data-theme="dark"]) .tt-star {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.3s var(--sl-ease-out) 0.32s,
+      transform var(--sl-dur-theme-icon) var(--sl-ease-spring) 0.32s;
+  }
+  :global(:root[data-theme="dark"]) .tt-star.small { transition-delay: 0.44s; }
+  :global(:root[data-theme="dark"]) svg { transform: rotate(40deg); }
+  :global(:root[data-theme="dark"]) .tt-core { transform: scale(1.75); }
+  :global(:root[data-theme="dark"]) .tt-cut { transform: translate(0, 0); }
+  :global(:root[data-theme="dark"]) .tt-rays { transform: rotate(-60deg) scale(0.4); opacity: 0; }
+</style>

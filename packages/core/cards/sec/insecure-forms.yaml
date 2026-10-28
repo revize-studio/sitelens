@@ -1,0 +1,43 @@
+id: sec/insecure-forms
+priority: critical
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Żaden formularz nie wysyła danych bez szyfrowania.
+  en: No form sends data without encryption.
+pl:
+  title: Formularz wysyła dane bez szyfrowania
+  summary: To, co klienci wpisują w formularz, ktoś po drodze może podejrzeć.
+  whatIsWrong: >
+    Na {count} {count|podstronie|podstronach|podstronach} formularz wysyła dane przez zwykłe http albo
+    pole hasła jest na podstronie otwieranej bez https.
+  whyItMatters: >
+    Imię, e-mail, telefon czy hasło są wtedy przesyłane bez szyfrowania, więc ktoś po drodze, np.
+    w publicznym Wi-Fi, może je odczytać. Przeglądarki ostrzegają klientów przy takich formularzach.
+  howToFix:
+    - Zmień adres, na który formularz wysyła dane (atrybut action), na adres z https.
+    - Upewnij się, że cała strona, razem z podstronami z formularzami, działa przez https.
+  short: >
+    Na {count} {count|podstronie|podstronach|podstronach} formularz wysyła dane bez szyfrowania. Zmień
+    adres jego wysyłki na https.
+  technical: >
+    Formularz z action=http:// albo pole type=password na stronie http:// na {count}
+    {count|podstronie|podstronach|podstronach}.
+en:
+  title: A form sends data without encryption
+  summary: What customers type into the form can be read by someone along the way.
+  whatIsWrong: >
+    On {count} {count|page|pages} a form sends data over plain http, or a password field sits on a page
+    opened without https.
+  whyItMatters: >
+    Names, email addresses, phone numbers or passwords then travel unencrypted, so someone along the way,
+    for example on public Wi-Fi, can read them. Browsers warn customers about such forms.
+  howToFix:
+    - Change the address the form sends data to (the action attribute) to an https address.
+    - Make sure the whole site, including the pages with forms, works over https.
+  short: >
+    On {count} {count|page|pages} a form sends data without encryption. Change its submit address to
+    https.
+  technical: >
+    Form with action=http:// or a type=password field on an http:// page, on {count} {count|page|pages}.

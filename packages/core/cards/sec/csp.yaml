@@ -1,0 +1,85 @@
+id: sec/csp
+whoFixes: developer
+effort: large
+review: reviewed
+passed:
+  pl: Serwer wysyła politykę bezpieczeństwa treści (CSP).
+  en: The server sends a content security policy (CSP).
+variants:
+  missing:
+    priority: minor
+    pl:
+      title: Strona nie ogranicza, skąd mogą pochodzić skrypty
+      summary: Bez polityki bezpieczeństwa treści (CSP) strona jest słabiej chroniona przed wstrzykniętymi skryptami.
+      whatIsWrong: >
+        Serwer nie wysyła polityki bezpieczeństwa treści (nagłówka Content-Security-Policy), czyli listy
+        miejsc, z których przeglądarka może wczytywać skrypty i inne pliki strony.
+      whyItMatters: >
+        Strona działa i bez niej, ale to dodatkowa warstwa ochrony: jeśli ktoś wstrzyknie na stronę obcy
+        skrypt, dobrze ustawiona polityka nie pozwoli przeglądarce go uruchomić.
+      howToFix:
+        - Poproś developera o przygotowanie polityki CSP dopasowanej do usług, z których korzysta strona, np. statystyk, czatu czy map.
+        - Włącz ją najpierw w trybie raportowania (Content-Security-Policy-Report-Only), który niczego nie blokuje, tylko zgłasza, co zostałoby zablokowane.
+        - Przełącz ją na zwykły nagłówek Content-Security-Policy, gdy raporty nie pokazują już problemów.
+      short: >
+        Serwer nie wysyła polityki bezpieczeństwa treści (CSP), która chroni przed wstrzykniętymi
+        skryptami. Poproś developera o jej przygotowanie i włączenie, najpierw w trybie raportowania.
+      technical: >
+        Brak nagłówka Content-Security-Policy (polityka w znaczniku <meta http-equiv> nie jest
+        sprawdzana).
+    en:
+      title: The site does not limit where scripts can come from
+      summary: Without a content security policy (CSP), the site is less protected against injected scripts.
+      whatIsWrong: >
+        The server does not send a content security policy (the Content-Security-Policy header): a list of
+        places the browser may load the site's scripts and other files from.
+      whyItMatters: >
+        The site works without it, but it is an extra layer of protection: if someone injects a foreign
+        script into the site, a well-configured policy stops the browser from running it.
+      howToFix:
+        - Ask your developer to prepare a CSP that fits the services the site uses, such as analytics, chat or maps.
+        - Turn it on in report-only mode first (Content-Security-Policy-Report-Only), which blocks nothing and only reports what would be blocked.
+        - Switch to the regular Content-Security-Policy header once the reports show no more problems.
+      short: >
+        The server does not send a content security policy (CSP), which protects against injected
+        scripts. Ask your developer to prepare one and turn it on, starting in report-only mode.
+      technical: No Content-Security-Policy header (a policy in a <meta http-equiv> tag is not checked).
+  weak:
+    priority: minor
+    pl:
+      title: Polityka bezpieczeństwa treści (CSP) ma wyjątki, które ją osłabiają
+      summary: Polityka CSP jest ustawiona, ale jej wyjątki dla skryptów osłabiają ochronę przed wstrzykniętym kodem.
+      whatIsWrong: >
+        Polityka bezpieczeństwa treści jest ustawiona, ale w regułach dla skryptów dopuszcza:
+        {problems}.
+      whyItMatters: >
+        Z takimi wyjątkami skrypt wstrzyknięty na stronę nadal może się uruchomić, a przed tym właśnie
+        CSP ma chronić.
+      howToFix:
+        - Zastąp 'unsafe-inline', jeśli jest na liście, jednorazowymi kodami (nonce) albo skrótami (hash) skryptów, które strona naprawdę uruchamia.
+        - Usuń 'unsafe-eval' i symbol *, jeśli są na liście, a zamiast * wpisz konkretne domeny, z których strona wczytuje skrypty.
+        - Sprawdź po zmianie, czy formularze, statystyki i inne usługi na stronie nadal działają.
+      short: >
+        Polityka CSP osłabia ochronę przed wstrzykniętymi skryptami, bo dopuszcza: {problems}. Poproś
+        developera o usunięcie tych wyjątków.
+      technical: >
+        Słabe źródła skryptów w script-src lub default-src ('unsafe-inline' zgłaszane tylko bez nonce
+        i hasha):
+    en:
+      title: The content security policy (CSP) has exceptions that weaken it
+      summary: The site has a CSP, but its exceptions for scripts weaken the protection against injected code.
+      whatIsWrong: >
+        The content security policy is set, but its rules for scripts allow: {problems}.
+      whyItMatters: >
+        With these exceptions, a script injected into the site can still run, which is exactly what a CSP
+        is meant to prevent.
+      howToFix:
+        - Replace 'unsafe-inline', if listed, with nonces or hashes for the scripts the site really runs.
+        - Remove 'unsafe-eval' and *, if listed, and list the specific domains the site loads scripts from instead of *.
+        - Check after the change that forms, analytics and other services on the site still work.
+      short: >
+        The CSP weakens the protection against injected scripts because it allows: {problems}. Ask your
+        developer to remove these exceptions.
+      technical: >
+        Weak script sources in script-src or default-src ('unsafe-inline' reported only without a nonce
+        or hash):

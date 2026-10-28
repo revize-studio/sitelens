@@ -1,0 +1,48 @@
+id: a11y/images
+priority: important
+whoFixes: owner
+effort: small
+review: reviewed
+passed:
+  pl: Obrazy i ikony mają opisy dla czytników ekranu.
+  en: Images and icons have descriptions for screen readers.
+pl:
+  title: Obrazy i ikony nie mają opisów dla czytników ekranu
+  summary: Osoba niewidoma nie dowie się, co pokazują obrazy ani do czego służą linki i przyciski z samym obrazkiem.
+  whatIsWrong: >
+    Na sprawdzonych podstronach {count} {count|obraz, ikona lub przycisk z obrazkiem nie ma|obrazy, ikony lub przyciski z obrazkiem nie mają|obrazów, ikon lub przycisków z obrazkiem nie ma}
+    tekstu alternatywnego, czyli opisu, który odczytuje czytnik ekranu.
+  whyItMatters: >
+    Zamiast opisu czytnik ekranu czyta wtedy np. nazwę pliku („IMG_2041.jpg”) albo adres linku. Gdy
+    obraz jest linkiem lub przyciskiem, osoba niewidoma nie wie, dokąd prowadzi ani co robi.
+  howToFix:
+    - W panelu strony uzupełnij tekst alternatywny obrazów, które coś przekazują. Opisz krótko to, co powinna wiedzieć osoba, która ich nie widzi.
+    - Przy obrazach, które są linkiem lub przyciskiem (np. logo, lupa, koszyk), opisz cel, a nie wygląd, np. „Strona główna”, „Szukaj”, „Koszyk”.
+    - Obrazom czysto dekoracyjnym nadaj pusty opis (alt=""), żeby czytnik ekranu je pominął.
+    - Zgłoś developerowi ikony z szablonu strony, których nie zmienisz w panelu. Ich lista jest w załączniku technicznym.
+  short: >
+    {count} {count|obraz lub ikona nie ma|obrazy lub ikony nie mają|obrazów lub ikon nie ma} opisu dla
+    czytników ekranu. Uzupełnij tekst alternatywny, a przy obrazach-linkach opisz, dokąd prowadzą.
+  technical: >
+    axe: {rules}. {count} {count|element|elementy|elementów} bez tekstu alternatywnego ani innej nazwy
+    dostępnej (WCAG 1.1.1).
+en:
+  title: Images and icons have no descriptions for screen readers
+  summary: A blind visitor cannot tell what the images show or what image-only links and buttons do.
+  whatIsWrong: >
+    On the pages checked, {count} {count|image, icon or image button has|images, icons or image buttons have}
+    no text alternative, the description a screen reader reads out.
+  whyItMatters: >
+    Instead, a screen reader reads out something like the file name (“IMG_2041.jpg”) or the link
+    address. When the image is a link or a button, a blind visitor cannot tell where it leads or what it does.
+  howToFix:
+    - In the admin panel, fill in the text alternative for images that convey something. Briefly describe what someone who cannot see them should know.
+    - For images that are links or buttons (e.g. the logo, a magnifying glass, a cart), describe the purpose, not the look, e.g. “Homepage”, “Search”, “Cart”.
+    - Give purely decorative images an empty description (alt="") so screen readers skip them.
+    - Report icons that come with the site template, which you cannot change in the admin panel, to the developer. The list is in the technical appendix.
+  short: >
+    {count} {count|image or icon has|images or icons have} no description for screen readers. Fill in
+    the text alternative, and for image links describe where they lead.
+  technical: >
+    axe: {rules}. {count} {count|element|elements} without a text alternative or other accessible name
+    (WCAG 1.1.1).

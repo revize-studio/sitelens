@@ -1,0 +1,88 @@
+id: seo/title
+whoFixes: owner
+effort: small
+review: reviewed
+passed:
+  pl: Każda podstrona ma własny tytuł.
+  en: Every page has its own title.
+variants:
+  missing:
+    priority: important
+    pl:
+      title: "{count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} tytułu"
+      summary: Bez tytułu Google sam układa nagłówek wyniku wyszukiwania z innych fragmentów strony.
+      whatIsWrong: >
+        {count|Ta podstrona nie ma|Te podstrony nie mają|Te podstrony nie mają} tytułu, czyli tekstu, który Google pokazuje jako klikalny nagłówek wyniku
+        i który przeglądarka wyświetla na karcie.
+      whyItMatters: >
+        Tytuł to pierwsze, co klient widzi w Google. Bez niego nagłówek wyniku może być przypadkowy
+        i nie mówić, co klient znajdzie na podstronie.
+      howToFix:
+        - W panelu strony otwórz podstrony wymienione w załączniku i znajdź pole „Tytuł” lub „Tytuł SEO”.
+        - Wpisz krótki tytuł, który mówi, co jest na podstronie, np. „Cennik usług | Nazwa firmy”.
+      short: "{count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} tytułu. Dodaj go w panelu strony, w polu „Tytuł” lub „Tytuł SEO”."
+      technical: Brak <title> na {count} z {total} {total|podstrony|podstron|podstron}.
+    en:
+      title: "{count} of {total} {total|page|pages} {count|has|have} no title"
+      summary: Without a title, Google puts together the heading of the search result from other parts of the page.
+      whatIsWrong: >
+        {count|This page has|These pages have} no title, the text Google shows as the clickable heading of the result and the
+        browser shows on the tab.
+      whyItMatters: >
+        The title is the first thing a customer sees in Google. Without it, the heading of the result can
+        be random and not say what the customer will find on the page.
+      howToFix:
+        - In the admin panel open the pages listed in the appendix and find the “Title” or “SEO title” field.
+        - Write a short title that says what is on the page, e.g. “Pricing | Company name”.
+      short: "{count} of {total} {total|page|pages} {count|has|have} no title. Add one in the admin panel, in the “Title” or “SEO title” field."
+      technical: No <title> on {count} of {total} {total|page|pages}.
+  length:
+    priority: minor
+    pl:
+      title: Tytuły części podstron są za krótkie albo za długie
+      summary: Google może uciąć długi tytuł w wynikach, a krótki zwykle mówi za mało.
+      whatIsWrong: "{count} z {total} {total|podstrony|podstron|podstron} {count|ma|mają|ma} tytuł krótszy niż {min} albo dłuższy niż {max} znaków."
+      whyItMatters: >
+        Google pokazuje zwykle około {max} znaków tytułu, a resztę ucina. Bardzo krótki tytuł nie mówi
+        klientowi, dlaczego ma wybrać właśnie Twoją stronę.
+      howToFix:
+        - Skróć długie tytuły tak, żeby najważniejsze słowa były na początku.
+        - Krótkie tytuły uzupełnij o to, co klient znajdzie na podstronie, i o nazwę firmy.
+      short: "{count} z {total} {total|podstrony|podstron|podstron} {count|ma|mają|ma} tytuł krótszy niż {min} albo dłuższy niż {max} znaków. Popraw {count|go|je|je} w panelu strony."
+      technical: Długość <title> poza zakresem {min}–{max} znaków na {count} z {total} {total|podstrony|podstron|podstron}.
+    en:
+      title: Some page titles are too short or too long
+      summary: Google may cut a long title off in the results, and a short one usually says too little.
+      whatIsWrong: "{count} of {total} {total|page|pages} {count|has|have} a title shorter than {min} or longer than {max} characters."
+      whyItMatters: >
+        Google usually shows about {max} characters of a title and cuts off the rest. A very short title
+        does not tell a customer why to pick your site.
+      howToFix:
+        - Shorten long titles so the most important words come first.
+        - Add to short titles what the customer will find on the page, and the company name.
+      short: "{count} of {total} {total|page|pages} {count|has|have} a title shorter than {min} or longer than {max} characters. Fix {count|it|them} in the admin panel."
+      technical: <title> length outside {min}–{max} characters on {count} of {total} {total|page|pages}.
+  duplicate:
+    priority: minor
+    pl:
+      title: "{count} {count|podstrona ma|podstrony mają|podstron ma} ten sam tytuł"
+      summary: W wynikach Google klient nie odróżni, która podstrona jest właściwa.
+      whatIsWrong: Podstrony mają identyczny tytuł „{title}”, więc w wynikach Google wyglądają tak samo.
+      whyItMatters: >
+        Klient nie wie, w który wynik kliknąć. Przy powtarzających się tytułach Google może też sam
+        zmienić nagłówki tych wyników.
+      howToFix:
+        - Nadaj każdej z tych podstron tytuł, który opisuje jej treść.
+      short: Podstrony mają identyczny tytuł „{title}”. Nadaj każdej tytuł, który opisuje jej treść.
+      technical: Identyczny <title> „{title}” na {count} {count|podstronie|podstronach|podstronach}.
+    en:
+      title: "{count} {count|page has|pages have} the same title"
+      summary: In Google's results a customer cannot tell which page is the right one.
+      whatIsWrong: These pages share the title “{title}”, so they look the same in Google's results.
+      whyItMatters: >
+        A customer does not know which result to click. With repeated titles Google may also change the
+        headings of those results itself.
+      howToFix:
+        - Give each of these pages a title that describes its content.
+      short: These pages share the title “{title}”. Give each one a title that describes its content.
+      technical: Identical <title> “{title}” on {count} {count|page|pages}.

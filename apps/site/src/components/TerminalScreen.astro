@@ -1,0 +1,226 @@
+---
+import type { Dictionary } from '../i18n/pl';
+import { highlightShell } from '../lib/highlight';
+
+interface Props {
+  lines: Dictionary['hero']['stage'];
+  /** Adds the caret used by the hero typing sequence. */
+  animated?: boolean;
+  /** Hide the dotted bar when the screen sits inside a window that has its own title bar. */
+  bar?: boolean;
+}
+
+const { lines, animated = false, bar = true } = Astro.props;
+// Same bands as Lighthouse: 90+ good, 50–89 needs work, below 50 poor.
+const tone = (score: number) => (score >= 90 ? 't-ok' : score >= 50 ? 't-num' : 't-err');
+const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const crawling = escape(lines.crawling).replace(/\d+/, (n) => `<span class="t-num">${n}</span>`);
+const [savedLabel, savedFile] = lines.saved.split(/:\s+/);
+---
+
+<div class="term">
+  {
+    bar && (
+      <div class="bar" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
+    )
+  }
+  <div class="screen">
+    <p class="cmd">
+      <span class="prompt" aria-hidden="true">$</span>
+      <span class="cmd-text"
+        ><span class="typed" set:html={highlightShell(lines.command)} />{
+          animated && (
+            <span class="caret-track" aria-hidden="true">
+              <span class="caret" />
+            </span>
+          )
+        }</span
+      >
+    </p>
+    <p class="muted crawling" set:html={crawling} />
+    <ul class="cats" role="list">
+      {
+        lines.categories.map((c) => (
+          <li class="cat">
+            <span class="status" aria-hidden="true">
+              <svg class="spinner" viewBox="0 0 16 16">
+                <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="26 38" stroke-linecap="round" />
+              </svg>
+              <svg class="check" viewBox="0 0 16 16">
+                <path d="M3.5 8.5l3 3 6-7" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span class="name">{c.label}</span>
+            <svg class:list={['meter', tone(c.score)]} viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true">
+              <rect class="meter-track" width="100" height="6" rx="3" />
+              <rect class="meter-fill" width={c.score} height="6" rx="3" fill="currentColor" />
+            </svg>
+            <span class:list={['score', tone(c.score)]}>{c.score}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="overall">
+      <span class="ring" aria-hidden="true">
+        <svg viewBox="0 0 44 44">
+          <circle class="ring-track" cx="22" cy="22" r="18" fill="none" stroke-width="4"></circle>
+          <circle
+            class="ring-arc"
+            cx="22"
+            cy="22"
+            r="18"
+            fill="none"
+            stroke-width="4"
+            stroke-linecap="round"
+            pathLength="100"
+            stroke-dasharray="100"
+            stroke-dashoffset={100 - lines.overall}
+            transform="rotate(-90 22 22)"></circle>
+        </svg>
+      </span>
+      <span class="overall-text"><span class:list={['overall-num', tone(lines.overall)]}>{lines.overall}</span> {lines.overallLabel}</span>
+    </div>
+    <p class="saved">
+      <svg class="saved-check t-ok" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M3.5 8.5l3 3 6-7" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="muted">{savedLabel}:</span> <span class="t-url">{savedFile}</span>
+    </p>
+  </div>
+</div>
+
+<style>
+  .term {
+    font-family: var(--sl-font-mono);
+    line-height: 1.8;
+    text-align: left;
+  }
+  .bar {
+    display: flex;
+    gap: 7px;
+    padding: 16px 20px 0;
+  }
+  .bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sl-line);
+  }
+  .screen { padding: 10px 22px 20px; }
+
+  .cmd {
+    display: flex;
+    gap: 1ch;
+    white-space: nowrap;
+  }
+  .prompt { color: var(--sl-term-green); font-weight: 600; }
+  .muted { color: var(--sl-text-2); }
+  .cmd-text {
+    position: relative;
+    display: inline-block;
+  }
+  .typed { display: inline-block; }
+  .caret-track {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caret {
+    position: absolute;
+    top: 0.25em;
+    left: 100%;
+    width: 0.55em;
+    height: 1.3em;
+    margin-left: 1px;
+    border-radius: 1px;
+    background: var(--sl-accent);
+    opacity: 0;
+  }
+
+  .crawling { margin-top: 0.15em; }
+  .cats {
+    margin: 0.35em 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .cat {
+    display: grid;
+    grid-template-columns: 1.6em minmax(0, 1fr) 5.5em 2.4em;
+    gap: 0 0.6em;
+    align-items: center;
+  }
+  .check { color: var(--sl-term-green); }
+  /* pathLength="1": the hero animation draws the ticks by moving the dash offset */
+  .check path,
+  .saved-check path { stroke-dasharray: 1 2; }
+  .meter {
+    width: 100%;
+    height: 0.42em;
+    overflow: visible;
+  }
+  .meter-track { fill: var(--sl-line); }
+  .meter-fill {
+    transform-box: fill-box;
+    transform-origin: 0 50%;
+  }
+  .score { text-align: right; }
+  .status {
+    position: relative;
+    width: 1.15em;
+    height: 1.15em;
+  }
+  .status svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .spinner { color: var(--sl-accent); opacity: 0; }
+  .score {
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+
+  .overall {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin-top: 0.7em;
+    padding-top: 0.7em;
+    border-top: 1px solid var(--sl-line);
+  }
+  .ring {
+    flex-shrink: 0;
+    width: 2.6em;
+    height: 2.6em;
+  }
+  .ring svg { width: 100%; height: 100%; }
+  .ring-track { stroke: var(--sl-line); }
+  .ring-arc { stroke: var(--sl-accent); }
+  .overall-text { font-family: var(--sl-font); font-size: 1.07em; }
+  .overall-num {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .saved {
+    display: flex;
+    align-items: center;
+    gap: 0.45em;
+    margin-top: 0.5em;
+    white-space: nowrap;
+  }
+  .saved-check {
+    flex-shrink: 0;
+    width: 1.05em;
+    height: 1.05em;
+  }
+
+  @media (max-width: 399px) {
+    .bar { padding: 12px 14px 0; }
+    .screen { padding: 8px 14px 14px; }
+  }
+</style>

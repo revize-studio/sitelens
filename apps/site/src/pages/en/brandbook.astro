@@ -1,0 +1,11 @@
+---
+import BrandbookPage from '../../components/BrandbookPage.astro';
+import { useTranslations } from '../../i18n';
+import Base from '../../layouts/Base.astro';
+
+const t = useTranslations('en').brandbookPage;
+---
+
+<Base lang="en" page="brandbook" title={t.title} description={t.description}>
+  <BrandbookPage lang="en" />
+</Base>

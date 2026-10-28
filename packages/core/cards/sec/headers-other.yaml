@@ -1,0 +1,48 @@
+id: sec/headers-other
+priority: minor
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Serwer wysyła zalecane nagłówki bezpieczeństwa.
+  en: The server sends the recommended security headers.
+pl:
+  title: Brakuje dodatkowych nagłówków bezpieczeństwa
+  summary: Strona działa, ale serwer nie wysyła wszystkich prostych ustawień, które dodatkowo chronią odwiedzających.
+  whatIsWrong: >
+    Na stronie głównej serwer nie wysyła {count}
+    {count|zalecanego nagłówka|zalecanych nagłówków|zalecanych nagłówków} bezpieczeństwa: {headers}.
+  whyItMatters: >
+    Te nagłówki to dodatkowa ochrona na wypadek innych błędów. Nie pozwalają przeglądarce zgadywać,
+    czym jest plik, ograniczają, ile z adresu podstrony trafia do innych stron, i wyłączają funkcje,
+    których strona nie używa, np. kamerę.
+  howToFix:
+    - "Dodaj w ustawieniach serwera brakujące nagłówki, np. X-Content-Type-Options: nosniff, Referrer-Policy: strict-origin-when-cross-origin i Permissions-Policy: camera=(), microphone=(), geolocation=()."
+    - Wyłącz w Permissions-Policy tylko te funkcje, których strona nie używa. Nie blokuj np. lokalizacji, jeśli mapa pokazuje klientom, gdzie są.
+  short: >
+    Serwer nie wysyła {count} {count|zalecanego nagłówka|zalecanych nagłówków|zalecanych nagłówków}
+    bezpieczeństwa ({headers}). Poproś developera o dodanie {count|go|ich|ich} w ustawieniach serwera.
+  technical: >
+    Zalecane (OWASP): X-Content-Type-Options: nosniff, Referrer-Policy:
+    strict-origin-when-cross-origin, Permissions-Policy wyłączające nieużywane funkcje. Brak na stronie
+    głównej:
+en:
+  title: Some extra security headers are missing
+  summary: The site works, but the server does not send all the simple settings that give visitors extra protection.
+  whatIsWrong: >
+    On the homepage the server does not send {count} recommended security {count|header|headers}:
+    {headers}.
+  whyItMatters: >
+    These headers are extra protection in case something else goes wrong. They stop the browser from
+    guessing what a file is, limit how much of a page's address is passed on to other sites, and switch
+    off features the site does not use, such as the camera.
+  howToFix:
+    - "Add the missing headers in the server settings, e.g. X-Content-Type-Options: nosniff, Referrer-Policy: strict-origin-when-cross-origin and Permissions-Policy: camera=(), microphone=(), geolocation=()."
+    - Switch off in Permissions-Policy only the features the site does not use. For example, keep geolocation if a map shows customers where they are.
+  short: >
+    The server does not send {count} recommended security {count|header|headers} ({headers}). Ask
+    your developer to add {count|it|them} in the server settings.
+  technical: >
+    Recommended (OWASP): X-Content-Type-Options: nosniff, Referrer-Policy:
+    strict-origin-when-cross-origin, a Permissions-Policy that switches off unused features. Missing on
+    the homepage:

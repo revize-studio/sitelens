@@ -1,0 +1,49 @@
+id: mobile/viewport
+priority: critical
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Każda podstrona ma ustawienie, które mówi telefonowi, jak ją wyświetlić.
+  en: Every page has the setting that tells a phone how to display it.
+pl:
+  title: Strona nie dopasowuje się do ekranu telefonu
+  summary: Na telefonie strona wyświetla się jak pomniejszona wersja dla komputera.
+  whatIsWrong: >
+    {count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} ustawienia viewport,
+    które mówi telefonowi, jak dopasować stronę do ekranu. Bez niego telefon układa stronę jak na
+    szerokim ekranie komputera i ją pomniejsza.
+  whyItMatters: >
+    Twoi klienci muszą powiększać i przesuwać stronę, żeby przeczytać tekst. Google ocenia strony
+    w wersji na telefon i zaleca, żeby dobrze się na nim wyświetlały.
+  howToFix:
+    - Dodaj w sekcji <head> każdej podstrony znacznik meta viewport z wartością width=device-width, initial-scale=1.
+    - Nie blokuj przy tym powiększania (bez user-scalable=no i maximum-scale=1), bo osoby słabowidzące go potrzebują.
+    - Sprawdź potem stronę na telefonie. Jeśli nadal trzeba ją przesuwać na boki, dopasuj układ do wąskich ekranów.
+  short: >
+    {count} z {total} {total|podstrony|podstron|podstron} nie {count|dopasowuje|dopasowują|dopasowuje}
+    się do ekranu telefonu. Dodaj znacznik meta viewport z wartością width=device-width, initial-scale=1.
+  technical: >
+    Brak <meta name="viewport"> albo znacznik bez width i initial-scale na {count} z {total}
+    {total|podstrony|podstron|podstron}. Zalecany znacznik:
+    <meta name="viewport" content="width=device-width, initial-scale=1">.
+en:
+  title: The site does not fit phone screens
+  summary: On a phone the site appears as a shrunken desktop version.
+  whatIsWrong: >
+    {count} of {total} {total|page|pages} {count|lacks|lack} the viewport setting that tells a phone
+    how to fit the page to its screen. Without it, a phone lays the page out as if on a wide desktop
+    screen and shrinks it down.
+  whyItMatters: >
+    Your customers have to zoom in and scroll sideways to read the text. Google evaluates sites by
+    their mobile version and recommends that content displays well on phones.
+  howToFix:
+    - Add a meta viewport tag with width=device-width, initial-scale=1 to the <head> of every page.
+    - Do not block zooming while you are at it (no user-scalable=no or maximum-scale=1), because people with low vision need it.
+    - Check the site on a phone afterwards. If it still has to be scrolled sideways, adapt the layout to narrow screens.
+  short: >
+    {count} of {total} {total|page|pages} {count|does|do} not fit a phone screen. Add a meta viewport
+    tag with width=device-width, initial-scale=1.
+  technical: >
+    Missing <meta name="viewport"> or a tag with neither width nor initial-scale on {count} of {total}
+    {total|page|pages}. Recommended tag: <meta name="viewport" content="width=device-width, initial-scale=1">.

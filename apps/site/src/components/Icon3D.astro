@@ -1,0 +1,102 @@
+---
+// Gradients and the glyph shadow live once in IconDefs.astro; every icon references them.
+import type { IconName } from '../lib/icons';
+
+interface Props {
+  name: IconName;
+  size?: 36 | 44 | 56 | 72 | 96;
+}
+
+const { name, size = 56 } = Astro.props;
+---
+
+<span class:list={['icon3d', `size-${size}`]} aria-hidden="true">
+  <svg class="plate" viewBox="0 0 64 64" focusable="false">
+    <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#ig-plate)"></rect>
+    <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#ig-sheen)"></rect>
+    <rect x="4.5" y="4.5" width="55" height="55" rx="13.5" fill="none" stroke="url(#ig-rim)" stroke-width="1"></rect>
+  </svg>
+  <svg class="glyph" viewBox="0 0 64 64" focusable="false">
+    <g filter="url(#ig-shadow)" fill="none" stroke="url(#ig-glyph)" stroke-linecap="round" stroke-linejoin="round">
+      {name === 'performance' && <path d="M36 11 19 35h12l-4 18 18-25H33l3-17Z" fill="url(#ig-glyph)" stroke="none" />}
+      {
+        name === 'seo' && (
+          <>
+            <circle cx="29" cy="29" r="11" class="ig-glass" stroke-width="5.5" />
+            <path d="M37.5 37.5 47 47" stroke-width="6.5" />
+          </>
+        )
+      }
+      {
+        name === 'accessibility' && (
+          <>
+            <circle cx="32" cy="16.5" r="4.6" fill="url(#ig-glyph)" stroke="none" />
+            <path d="M18.5 25.5c9.5 2.4 17.5 2.4 27 0M32 27.5v9.5M32 37l-7 12M32 37l7 12" stroke-width="4.6" />
+          </>
+        )
+      }
+      {
+        name === 'security' && (
+          <>
+            <path d="M32 10.5 46.5 16v12.5c0 10-6.4 18.4-14.5 22-8.1-3.6-14.5-12-14.5-22V16Z" fill="url(#ig-glyph)" stroke="none" />
+            <path d="M25.5 30.5l4.8 4.8 8.7-9.6" class="ig-cut" stroke-width="4" />
+          </>
+        )
+      }
+      {
+        name === 'browser' && (
+          <>
+            <rect x="12" y="15" width="40" height="34" rx="8" class="ig-glass" stroke-width="4.5" />
+            <path d="M12 25h40" stroke-width="4.5" />
+            <circle cx="18.5" cy="20" r="1.8" fill="url(#ig-glyph)" stroke="none" />
+            <circle cx="24" cy="20" r="1.8" fill="url(#ig-glyph)" stroke="none" />
+          </>
+        )
+      }
+      {
+        name === 'terminal' && (
+          <>
+            <rect x="12" y="15" width="40" height="34" rx="8" class="ig-glass" stroke-width="4.5" />
+            <path d="M21 28l6 5-6 5M31 39.5h11" stroke-width="4.5" />
+          </>
+        )
+      }
+      {
+        name === 'report' && (
+          <>
+            <path d="M21 10.5h15l9.5 9.5v30.5a3 3 0 0 1-3 3H21a3 3 0 0 1-3-3v-37a3 3 0 0 1 3-3Z" class="ig-glass" stroke-width="4" />
+            <path d="M24.5 21h8" stroke-width="3.5" />
+            <circle cx="31.5" cy="38" r="7" stroke-width="4" />
+          </>
+        )
+      }
+      {name === 'code' && <path d="M24 21 14 32l10 11M40 21l10 11-10 11M35.5 16.5l-7 31" stroke-width="5" />}
+      {
+        name === 'lock' && (
+          <>
+            <path d="M24 29v-6a8 8 0 0 1 16 0v6" stroke-width="5" />
+            <rect x="16.5" y="28" width="31" height="23" rx="6.5" fill="url(#ig-glyph)" stroke="none" />
+            <path d="M32 36.5v5" class="ig-cut" stroke-width="4" />
+          </>
+        )
+      }
+      {
+        name === 'palette' && (
+          <>
+            <rect x="11.5" y="17" width="15" height="33" rx="4" class="ig-glass" stroke-width="4" transform="rotate(-16 19 33.5)" />
+            <rect x="24.5" y="13" width="15" height="35" rx="4" class="ig-glass" stroke-width="4" />
+            <rect x="37.5" y="17" width="15" height="33" rx="4" fill="url(#ig-glyph)" stroke="none" transform="rotate(16 45 33.5)" />
+          </>
+        )
+      }
+      {
+        name === 'document' && (
+          <>
+            <rect x="17" y="10.5" width="30" height="43" rx="5" class="ig-glass" stroke-width="4" />
+            <path d="M24 21h16M24 29h16M24 37h10" stroke-width="3.5" />
+          </>
+        )
+      }
+    </g>
+  </svg>
+</span>

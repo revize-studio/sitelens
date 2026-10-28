@@ -1,0 +1,42 @@
+id: seo/social-preview
+priority: minor
+whoFixes: owner
+effort: small
+review: reviewed
+passed:
+  pl: Link do strony głównej ma podgląd z tytułem, opisem i obrazkiem.
+  en: A link to the homepage shows a preview with a title, description and image.
+pl:
+  title: Link do strony wygląda ubogo po udostępnieniu
+  summary: Facebook, LinkedIn i komunikatory nie dostają pełnego podglądu linku do strony głównej.
+  whatIsWrong: >
+    Facebook, LinkedIn i komunikatory budują podgląd linku z trzech elementów: tytułu, opisu
+    i obrazka. Na stronie głównej brakuje {count} z nich; które, podajemy w załączniku technicznym.
+  whyItMatters: >
+    Gdy ktoś wyśle albo udostępni link do Twojej strony, podgląd bez obrazka i opisu przyciąga mniej
+    uwagi. Serwis może też sam wybrać przypadkowy obrazek albo fragment tekstu.
+  howToFix:
+    - We wtyczce SEO albo w ustawieniach strony uzupełnij tytuł, opis i obrazek do udostępniania (często w sekcji „Open Graph” albo „Media społecznościowe”).
+    - Przygotuj obrazek o wymiarach 1200 × 630 pikseli, np. z logo i krótkim hasłem.
+    - Sprawdź efekt, wklejając link do narzędzia Facebooka Sharing Debugger albo wysyłając go sobie w wiadomości.
+  short: >
+    Link do strony głównej nie ma pełnego podglądu przy udostępnianiu (brakuje {count} z 3 elementów).
+    Uzupełnij tytuł, opis i obrazek we wtyczce SEO.
+  technical: "Brak na stronie głównej: {fields} (ani odpowiedników twitter:*)."
+en:
+  title: A shared link to the site looks bare
+  summary: Facebook, LinkedIn and messaging apps do not get a full preview of the homepage link.
+  whatIsWrong: >
+    Facebook, LinkedIn and messaging apps build a link preview from three elements: a title, a
+    description and an image. The homepage is missing {count} of them; the technical appendix lists which.
+  whyItMatters: >
+    When someone sends or shares a link to your site, a preview without an image and description draws
+    less attention. The service may also pick a random image or snippet of text on its own.
+  howToFix:
+    - Fill in the sharing title, description and image in your SEO plugin or site settings (often under “Open Graph” or “Social”).
+    - Prepare an image of 1200 × 630 pixels, e.g. with your logo and a short line of text.
+    - Check the result by pasting the link into Facebook's Sharing Debugger or sending it to yourself in a message.
+  short: >
+    The homepage link has no full sharing preview ({count} of 3 elements missing). Fill in the title,
+    description and image in your SEO plugin.
+  technical: "Missing on the homepage: {fields} (and no twitter:* equivalent)."

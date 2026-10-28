@@ -1,0 +1,28 @@
+{
+  "name": "sitelens-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "cards": "node packages/core/scripts/build-cards.mjs",
+    "typecheck": "tsc --noEmit -p packages/core && tsc --noEmit -p packages/brand && tsc --noEmit -p packages/crawl && tsc --noEmit -p packages/report && tsc --noEmit -p packages/collect-node && tsc --noEmit -p packages/collect-web && tsc --noEmit -p packages/cli && tsc --noEmit -p apps/proxy",
+    "lint": "eslint packages apps/proxy",
+    "format": "prettier --write packages apps/proxy",
+    "test": "vitest run",
+    "build:cli": "pnpm --filter sitelens build",
+    "sitelens": "node packages/cli/dist/cli.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "22.20.5",
+    "esbuild": "0.28.2",
+    "eslint": "10.13.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "5.0.5"
+  }
+}

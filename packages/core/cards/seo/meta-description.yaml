@@ -1,0 +1,115 @@
+id: seo/meta-description
+whoFixes: owner
+effort: small
+review: reviewed
+passed:
+  pl: Każda podstrona ma własny opis dla Google.
+  en: Every page has its own description for Google.
+variants:
+  missing:
+    priority: important
+    pl:
+      title: "{count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} opisu dla Google"
+      summary: Google nie dostaje od Ciebie opisu podstrony i do wyników bierze fragment jej treści.
+      whatIsWrong: >
+        {count|Ta podstrona nie ma|Te podstrony nie mają|Te podstrony nie mają} opisu (meta description), czyli krótkiego tekstu, który Google może pokazać
+        pod tytułem w wynikach wyszukiwania.
+      whyItMatters: >
+        Dobry opis działa jak krótka zachęta, która przekonuje klienta, że na podstronie znajdzie to,
+        czego szuka. Bez niego Google pokazuje fragment treści, który nie zawsze dobrze ją przedstawia.
+      howToFix:
+        - Otwórz w panelu strony podstrony wymienione w polu „Dotyczy” i znajdź pole „Opis” lub „Meta description”, np. we wtyczce SEO.
+        - Napisz jedno lub dwa zdania o tym, co klient znajdzie na podstronie. Najważniejsze umieść na początku, bo Google ucina długie opisy.
+        - Przygotuj osobny opis dla każdej podstrony, a ogólny opis firmy zostaw dla strony głównej.
+      short: >
+        {count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} opisu dla Google.
+        Dodaj go w panelu strony, w polu „Opis” lub „Meta description”.
+      technical: >
+        Brak lub pusty <meta name="description"> na {count} z {total} {total|podstrony|podstron|podstron}.
+    en:
+      title: "{count} of {total} {total|page|pages} {count|has|have} no description for Google"
+      summary: Google gets no description of the page from you and takes a snippet of its content for the results.
+      whatIsWrong: >
+        {count|This page has|These pages have} no description (meta description), the short text Google can show under the
+        title in search results.
+      whyItMatters: >
+        A good description works like a short pitch that convinces a customer the page has what they are
+        looking for. Without one, Google shows a snippet of the content, which does not always present
+        the page well.
+      howToFix:
+        - Open the pages listed under “Affects” in the admin panel and find the “Description” or “Meta description” field, for example in the SEO plugin.
+        - Write one or two sentences about what the customer will find on the page. Put the key information first, because Google cuts long descriptions short.
+        - Give each page its own description, and keep the general description of the business for the homepage.
+      short: >
+        {count} of {total} {total|page|pages} {count|has|have} no description for Google. Add one in the
+        admin panel, in the “Description” or “Meta description” field.
+      technical: >
+        Missing or empty <meta name="description"> on {count} of {total} {total|page|pages}.
+  length:
+    priority: minor
+    pl:
+      title: "{count} {count|podstrona ma|podstrony mają|podstron ma} za długi opis dla Google"
+      summary: Google ucina długie opisy, więc klient może nie zobaczyć ich końca.
+      whatIsWrong: >
+        {count} {count|podstrona ma|podstrony mają|podstron ma} opis dłuższy niż {max} znaków.
+      whyItMatters: >
+        Google nie podaje sztywnego limitu, ale w wynikach ucina opis tak, żeby zmieścił się na szerokości
+        ekranu. Informacja z końca długiego opisu może się nie wyświetlić.
+      howToFix:
+        - Skróć opisy do najwyżej {max} znaków i umieść najważniejszą informację na początku.
+      short: >
+        {count} {count|podstrona ma|podstrony mają|podstron ma} opis dłuższy niż {max} znaków, więc Google
+        może go uciąć. Skróć każdy taki opis i zacznij od najważniejszej informacji.
+      technical: >
+        Treść <meta name="description"> dłuższa niż {max} znaków (próg orientacyjny, Google ucina według
+        szerokości ekranu) na {count} {count|podstronie|podstronach|podstronach}.
+    en:
+      title: "{count} {count|page has|pages have} an overly long description for Google"
+      summary: Google cuts long descriptions short, so customers may not see the end.
+      whatIsWrong: >
+        {count} {count|page has a description|pages have descriptions} longer than {max} characters.
+      whyItMatters: >
+        Google sets no fixed limit, but it cuts the description in search results to fit the screen
+        width. Information at the end of a long description may not show.
+      howToFix:
+        - Shorten the descriptions to {max} characters at most and put the key information first.
+      short: >
+        {count} {count|page has a description|pages have descriptions} longer than {max} characters,
+        which Google may cut short. Shorten each one and start with the key information.
+      technical: >
+        <meta name="description"> content longer than {max} characters (a rule of thumb; Google truncates
+        by screen width) on {count} {count|page|pages}.
+  duplicate:
+    priority: minor
+    pl:
+      title: "{count} {count|podstrona ma|podstrony mają|podstron ma} ten sam opis dla Google"
+      summary: Takie same opisy nie pomagają klientom odróżnić podstron w wynikach wyszukiwania.
+      whatIsWrong: >
+        {count} {count|podstrona ma|podstrony mają|podstron ma} identyczny opis dla Google (meta
+        description).
+      whyItMatters: >
+        Klient widzi w wynikach kilka podstron z tym samym opisem i nie wie, czym się różnią. Google
+        rzadziej pokazuje takie powtarzające się opisy i bierze zamiast nich fragment treści.
+      howToFix:
+        - Napisz dla każdej z tych podstron własny opis, który mówi, co na niej jest.
+      short: >
+        {count} {count|podstrona ma|podstrony mają|podstron ma} identyczny opis dla Google. Napisz dla
+        każdej własny opis jej treści.
+      technical: >
+        Identyczny <meta name="description"> na {count} {count|podstronie|podstronach|podstronach}.
+    en:
+      title: "{count} {count|page has|pages have} the same description for Google"
+      summary: Identical descriptions do not help customers tell the pages apart in search results.
+      whatIsWrong: >
+        {count} {count|page has|pages have} an identical description for Google (meta description).
+      whyItMatters: >
+        Customers see several pages with the same description in the results and cannot tell how they
+        differ. Google is also less likely to show such repeated descriptions and uses a snippet of the
+        content instead.
+      howToFix:
+        - Write each of these pages its own description that says what is on it.
+      short: >
+        {count} {count|page has|pages have} an identical description for Google. Write each one its own
+        description of its content.
+      technical: >
+        Identical <meta name="description"> on {count} {count|page|pages}.

@@ -1,0 +1,11 @@
+---
+import LegalPage from '../../components/LegalPage.astro';
+import { useTranslations } from '../../i18n';
+import Base from '../../layouts/Base.astro';
+
+const t = useTranslations('en').privacyPage;
+---
+
+<Base lang="en" page="privacy" title={t.title} description={t.description}>
+  <LegalPage lang="en" doc="privacy" />
+</Base>

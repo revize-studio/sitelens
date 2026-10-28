@@ -1,0 +1,47 @@
+id: perf/images-format
+priority: important
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Zdjęcia są zapisane w lekkich formatach i dobrze skompresowane.
+  en: Images are saved in light formats and well compressed.
+pl:
+  title: Zdjęcia są zapisane ciężej, niż trzeba
+  summary: W nowszym formacie albo z mocniejszą kompresją zdjęcia ważyłyby łącznie do ok. {savings:size} mniej.
+  whatIsWrong: >
+    {count} {count|zdjęcie można|zdjęcia można|zdjęć można} zapisać lżej: w formacie WebP lub AVIF
+    albo z mocniejszą kompresją. Razem ważyłyby do ok. {savings:size} mniej.
+  whyItMatters: >
+    Lżejsze zdjęcia przy podobnej jakości szybciej się wczytują, a Twoi klienci zużywają mniej
+    danych z pakietu w telefonie.
+  howToFix:
+    - Zapisuj zdjęcia w formacie WebP lub AVIF albo włącz automatyczną zamianę formatu we wtyczce, w CDN lub na serwerze.
+    - Ustaw mocniejszą kompresję przy zapisywaniu zdjęć w programie graficznym albo we wtyczce do optymalizacji.
+    - Zostaw wersję JPEG lub PNG jako zapasową dla starszych przeglądarek.
+  short: >
+    W nowszym formacie albo z mocniejszą kompresją zdjęcia ważyłyby łącznie do ok. {savings:size}
+    mniej. Włącz optymalizację zdjęć we wtyczce albo na serwerze.
+  technical: >
+    Obrazy, które w nowoczesnym formacie lub z mocniejszą kompresją byłyby wyraźnie mniejsze
+    (Lighthouse image-delivery-insight, telefon): {count} {count|obraz|obrazy|obrazów}, szacowana
+    łączna oszczędność ok. {savings:size}.
+en:
+  title: Images are saved heavier than they need to be
+  summary: In a newer format or with stronger compression, the images would weigh up to about {savings:size} less in total.
+  whatIsWrong: >
+    {count} {count|image|images} could be saved lighter: as WebP or AVIF, or with stronger
+    compression. Together they would weigh up to about {savings:size} less.
+  whyItMatters: >
+    Lighter images of similar quality load faster and use less of your customers' mobile data.
+  howToFix:
+    - Save images as WebP or AVIF, or turn on automatic conversion in a plugin, a CDN or on the server.
+    - Use stronger compression when saving images, in your image editor or an optimisation plugin.
+    - Keep a JPEG or PNG version as a fallback for older browsers.
+  short: >
+    In a newer format or with stronger compression, the images would weigh up to about
+    {savings:size} less in total. Turn on image optimisation in a plugin or on the server.
+  technical: >
+    Images that would be noticeably smaller in a modern format or with stronger compression
+    (Lighthouse image-delivery-insight, mobile): {count} {count|image|images}, estimated total
+    savings about {savings:size}.

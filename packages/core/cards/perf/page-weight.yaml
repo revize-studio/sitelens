@@ -1,0 +1,48 @@
+id: perf/page-weight
+priority: minor
+whoFixes: developer
+effort: medium
+review: reviewed
+passed:
+  pl: Żadna ze sprawdzonych podstron nie jest za ciężka.
+  en: None of the checked pages is too heavy.
+pl:
+  title: "{count} {count|podstrona waży|podstrony ważą|podstron waży} za dużo"
+  summary: Najcięższa podstrona waży {bytes:size}, więc na telefonie wczytuje się dłużej i zużywa więcej danych.
+  whatIsWrong: >
+    Żeby wyświetlić najcięższą ze sprawdzonych podstron, przeglądarka pobiera {bytes:size} danych,
+    razem ze zdjęciami, skryptami i czcionkami. Za dużo uznajemy więcej niż {limit:size}.
+  whyItMatters: >
+    Im więcej danych, tym dłużej strona wczytuje się na telefonie, zwłaszcza przy słabym zasięgu.
+    Zużywa też więcej danych z pakietu w telefonie Twoich klientów.
+  howToFix:
+    - Sprawdź w załączniku technicznym, jakie rodzaje plików ważą najwięcej, i zacznij od nich.
+    - Zmniejsz zdjęcia i zapisz je w formacie WebP lub AVIF, bo często to one ważą najwięcej.
+    - Usuń skrypty, style i czcionki, których strona nie używa.
+    - Wczytuj filmy i czat dopiero wtedy, gdy ktoś w nie kliknie.
+  short: >
+    Najcięższa podstrona waży {bytes:size}, więc na telefonie wczytuje się dłużej. Zacznij od tego,
+    co waży najwięcej, często od zdjęć.
+  technical: >
+    Łączna waga pobranych zasobów najcięższej podstrony (Lighthouse total-byte-weight, telefon)
+    {bytes:size}. Powyżej progu {limit:size}: {count} {count|podstrona|podstrony|podstron}.
+en:
+  title: "{count} {count|page weighs|pages weigh} too much"
+  summary: The heaviest page weighs {bytes:size}, so on a phone it takes longer to load and uses more data.
+  whatIsWrong: >
+    To show the heaviest page checked, the browser downloads {bytes:size} of data, including images,
+    scripts and fonts. We count more than {limit:size} as too much.
+  whyItMatters: >
+    The more data there is, the longer the page takes to load on a phone, especially with a weak
+    signal. It also uses up more of your customers' mobile data.
+  howToFix:
+    - Check in the technical appendix which types of files weigh the most, and start with those.
+    - Resize images and save them as WebP or AVIF, since images are often the heaviest part.
+    - Remove scripts, styles and fonts the site does not use.
+    - Load videos and chat only when someone clicks on them.
+  short: >
+    The heaviest page weighs {bytes:size}, so it takes longer to load on a phone. Start with what
+    weighs the most, often the images.
+  technical: >
+    Total byte weight of the heaviest page (Lighthouse total-byte-weight, mobile) {bytes:size}. Above
+    the {limit:size} threshold: {count} {count|page|pages}.

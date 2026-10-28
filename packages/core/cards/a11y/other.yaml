@@ -1,0 +1,48 @@
+id: a11y/other
+priority: minor
+whoFixes: developer
+effort: medium
+review: reviewed
+passed:
+  pl: Strona przechodzi pozostałe automatyczne testy dostępności.
+  en: The site passes the other automated accessibility tests.
+pl:
+  title: Część elementów nie spełnia innych wymagań dostępności
+  summary: Automatyczny test wykrył błędy, które utrudniają części osób korzystanie ze strony.
+  whatIsWrong: >
+    Na sprawdzonych podstronach {count} {count|element nie spełnia|elementy nie spełniają|elementów nie spełnia}
+    innych wymagań WCAG. Do tej grupy należą np. za małe lub zbyt ciasno ułożone przyciski, linki
+    odróżnione od tekstu tylko kolorem, filmy bez napisów i błędne atrybuty ARIA, z których korzystają
+    czytniki ekranu.
+  whyItMatters: >
+    Zależnie od rodzaju błędu utrudniają one korzystanie ze strony np. osobom niewidomym, niedosłyszącym
+    albo tym, którym trudno trafić palcem w mały przycisk.
+  howToFix:
+    - Przekaż developerowi listę reguł z załącznika technicznego.
+    - Popraw każdy element według opisu reguły w dokumentacji axe-core. Zacznij od elementów szablonu, które powtarzają się na wielu podstronach.
+  short: >
+    {count} {count|element nie spełnia|elementy nie spełniają|elementów nie spełnia} innych wymagań
+    dostępności. Lista reguł jest w załączniku technicznym.
+  technical: >
+    axe: {rules}. {count} {count|element|elementy|elementów} łącznie. Opis każdej reguły i sposób
+    naprawy są w dokumentacji axe-core (Deque University).
+en:
+  title: Some elements fail other accessibility requirements
+  summary: The automated test found errors that make the site harder to use for some people.
+  whatIsWrong: >
+    On the pages checked, {count} {count|element fails|elements fail} other WCAG requirements. This
+    group covers, for example, buttons that are too small or too close together, links set apart from
+    the text only by colour, videos without captions and incorrect ARIA attributes, which screen
+    readers rely on.
+  whyItMatters: >
+    Depending on the error, they get in the way of, for example, blind or hard-of-hearing visitors, or
+    anyone who finds it hard to tap a small button.
+  howToFix:
+    - Pass the list of rules from the technical appendix to the developer.
+    - Fix each element as the axe-core documentation describes for its rule. Start with template elements that repeat on many pages.
+  short: >
+    {count} {count|element fails|elements fail} other accessibility requirements. The list of rules is
+    in the technical appendix.
+  technical: >
+    axe: {rules}. {count} {count|element|elements} in total. Each rule's description and fix are in
+    the axe-core documentation (Deque University).

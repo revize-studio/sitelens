@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        # 22 is the oldest line the CLI supports; Vercel builds the site on 24
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+          # The runner's cached Node can lag a patch behind, and Astro 7.4 needs 22.23.4 or newer
+          check-latest: true
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm cards --check
+      - run: pnpm typecheck
+      - run: pnpm lint
+      # ubuntu-latest has Google Chrome installed, so the browser tests run too
+      - run: pnpm test
+        env:
+          SITELENS_SKIP_LIGHTHOUSE: '1'
+      - run: pnpm --filter @sitelens/site build
+      - run: pnpm --filter @sitelens/site lint:colors

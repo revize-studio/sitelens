@@ -1,0 +1,559 @@
+@import "../../../../public/brand/tokens.css";
+@import "./theme.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/*
+  Strength of the light that follows the pointer over glass (0–1). Registered so it can be
+  transitioned: the light fades in where the pointer is and fades out where it left.
+*/
+@property --light {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--sl-bg);
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + var(--sl-nav-h) + 32px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  /* Ambient light may reach past the container; clip keeps sticky elements working */
+  overflow-x: clip;
+  background: var(--sl-bg);
+  color: var(--sl-text);
+  font: 400 var(--sl-fs-body) / 1.55 var(--sl-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, p, figure, blockquote, ul, ol, dl, dd { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+code, kbd, pre, samp { font-family: var(--sl-font-mono); font-size: 1em; }
+
+h1 {
+  font-size: var(--sl-fs-h1);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+h2 {
+  font-size: var(--sl-fs-h2);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+h3 {
+  font-size: var(--sl-fs-h3);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+a {
+  color: var(--sl-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color 0.2s var(--sl-ease-out);
+}
+a:hover { color: var(--sl-accent-hover); }
+
+:focus-visible {
+  outline: 3px solid var(--sl-accent);
+  outline-offset: 3px;
+}
+::selection { background: var(--sl-accent-soft); color: var(--sl-text); }
+
+.container {
+  width: min(100% - 2 * var(--sl-gutter), var(--sl-max));
+  margin-inline: auto;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 18px;
+  border-radius: var(--sl-radius-pill);
+  background: var(--sl-surface);
+  color: var(--sl-text);
+  font-weight: 600;
+  box-shadow: var(--sl-shadow-m);
+  transform: translateY(-160%);
+}
+.skip-link:focus-visible { transform: none; }
+
+/*
+  Liquid glass. A gradient tint with a heavy blur and saturation, a bright upper-left rim and
+  a softer lower-right rim (light coming from the top left), and a sheen that follows the
+  pointer (--mx, --my from scripts/glass-pointer.ts).
+*/
+.glass,
+.tile {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(520px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--sl-glass-spot) calc(var(--light) * 100%), transparent), transparent 62%),
+    radial-gradient(520px circle at 18% -20%, var(--sl-glass-spot), transparent 62%),
+    var(--sl-glass-bg);
+  transition: --light 0.7s var(--sl-ease-draw);
+  -webkit-backdrop-filter: blur(var(--sl-glass-blur)) saturate(1.9) brightness(1.04);
+  backdrop-filter: blur(var(--sl-glass-blur)) saturate(1.9) brightness(1.04);
+  box-shadow:
+    inset 1px 1px 0 0 var(--sl-glass-hi),
+    inset -1px -1px 0 0 var(--sl-glass-lo),
+    0 0 0 1px var(--sl-glass-line),
+    0 1px 2px color-mix(in srgb, var(--sl-text) 6%, transparent),
+    0 24px 60px -24px var(--sl-tile-glow);
+}
+.glass::after,
+.tile::after,
+.lq::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--sl-prism);
+  opacity: 0.4;
+  pointer-events: none;
+  mask:
+    linear-gradient(var(--sl-text) 0 0) content-box exclude,
+    linear-gradient(var(--sl-text) 0 0);
+}
+/* Monochrome dark theme: the rim catches neutral light instead of the Pryzmat colours */
+:root[data-theme="dark"] :is(.glass, .tile, .lq)::after {
+  background: linear-gradient(150deg, var(--sl-light), transparent 42%, transparent 64%, var(--sl-light));
+  opacity: 0.2;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass, .tile, .lq, .lq-btn, .btn-secondary { background: var(--sl-surface); }
+}
+
+/*
+  Liquid Glass for controls that float over content: the nav, secondary buttons and icon
+  buttons. A clear tint and a light blur, so what scrolls underneath stays recognisable,
+  a bright top rim, a fainter bottom rim where the light leaves the glass, an inner shade
+  that gives it thickness, and a spot of light that follows the pointer.
+*/
+.lq,
+.lq-btn,
+.btn-secondary {
+  --lq-lift: 0 2px 6px -2px var(--sl-lq-shadow), 0 16px 36px -18px var(--sl-lq-shadow);
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(220px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--sl-lq-glow) calc(var(--light) * 100%), transparent), transparent 70%),
+    linear-gradient(180deg, var(--sl-lq-top), var(--sl-lq-tint) 62%);
+  transition: --light 0.7s var(--sl-ease-draw);
+  -webkit-backdrop-filter: blur(var(--sl-lq-blur)) saturate(2) brightness(var(--sl-lq-bright));
+  backdrop-filter: blur(var(--sl-lq-blur)) saturate(2) brightness(var(--sl-lq-bright));
+  box-shadow:
+    inset 0 1px 0.5px 0 var(--sl-lq-spec),
+    inset 0 -1px 0.5px 0 var(--sl-lq-spec-soft),
+    inset 0 0 0 0.5px var(--sl-lq-spec-soft),
+    inset 0 -14px 20px -18px var(--sl-lq-depth),
+    0 0 0 0.5px var(--sl-lq-edge),
+    var(--lq-lift);
+}
+.lq-btn,
+.btn-secondary { color: var(--sl-text); }
+.lq-btn:hover,
+.btn-secondary:hover {
+  --lq-lift: 0 3px 8px -2px var(--sl-lq-shadow), 0 20px 40px -16px var(--sl-lq-shadow);
+  color: var(--sl-text);
+}
+
+/*
+  Real refraction: an SVG displacement map bends what is behind the glass near its edges,
+  like Apple's Liquid Glass. Only Chromium renders SVG filters in backdrop-filter (Safari
+  accepts the syntax and draws nothing), so the head script adds .refract only there.
+*/
+:root.refract .lens {
+  -webkit-backdrop-filter: url(#sl-lens) blur(5px) saturate(1.9) brightness(var(--sl-lq-bright));
+  backdrop-filter: url(#sl-lens) blur(5px) saturate(1.9) brightness(var(--sl-lq-bright));
+}
+:root.refract .lens-wide {
+  -webkit-backdrop-filter: url(#sl-lens-wide) blur(7px) saturate(2) brightness(var(--sl-lq-bright));
+  backdrop-filter: url(#sl-lens-wide) blur(7px) saturate(2) brightness(var(--sl-lq-bright));
+}
+
+/* Fixed light behind the whole page, so every glass card has colour to bend while scrolling */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(640px 560px at -6% 12%, var(--sl-glow-1), transparent 70%),
+    radial-gradient(620px 600px at 106% 48%, var(--sl-glow-2), transparent 70%),
+    radial-gradient(700px 520px at 4% 108%, var(--sl-glow-3), transparent 70%);
+  opacity: var(--sl-backdrop-opacity);
+}
+
+.section {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--sl-section-pad);
+}
+
+/*
+  Section light: glass only reads as glass when something colourful sits behind it.
+  The layer spans the whole viewport width, so a light ends at the screen edge and not at
+  the container, and it fades out towards the section's top and bottom, so neighbouring
+  sections never meet at a hard line. Lights sit behind the cards, below the heading, so
+  heading text stays on the plain background.
+*/
+.ambient {
+  position: absolute;
+  inset: 0 calc(50% - 50vw);
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(620px 520px at 16% 58%, var(--sl-glow-1), transparent 70%),
+    radial-gradient(560px 520px at 86% 46%, var(--sl-glow-2), transparent 70%),
+    radial-gradient(760px 400px at 50% 72%, var(--sl-glow-3), transparent 70%);
+  -webkit-mask-image: linear-gradient(transparent, var(--sl-text) 24%, var(--sl-text) 76%, transparent);
+  mask-image: linear-gradient(transparent, var(--sl-text) 24%, var(--sl-text) 76%, transparent);
+}
+.ambient.alt {
+  background:
+    radial-gradient(620px 520px at 84% 60%, var(--sl-glow-1), transparent 70%),
+    radial-gradient(560px 520px at 14% 46%, var(--sl-glow-3), transparent 70%),
+    radial-gradient(760px 400px at 50% 72%, var(--sl-glow-2), transparent 70%);
+}
+/* A narrow centred column (FAQ): one wide halo instead of lights at the sides */
+.ambient.center {
+  background:
+    radial-gradient(640px 520px at calc(50% - 220px) 52%, var(--sl-glow-1), transparent 70%),
+    radial-gradient(600px 480px at calc(50% + 240px) 60%, var(--sl-glow-2), transparent 70%);
+}
+/* Long pages: lights along the screen edges, so text in the middle stays on the plain background */
+.ambient.sides {
+  background:
+    radial-gradient(560px 720px at -4% 16%, var(--sl-glow-1), transparent 70%),
+    radial-gradient(560px 720px at 104% 40%, var(--sl-glow-2), transparent 70%),
+    radial-gradient(560px 720px at -4% 66%, var(--sl-glow-3), transparent 70%),
+    radial-gradient(560px 720px at 104% 90%, var(--sl-glow-1), transparent 70%);
+  -webkit-mask-image: linear-gradient(transparent, var(--sl-text) 6%, var(--sl-text) 94%, transparent);
+  mask-image: linear-gradient(transparent, var(--sl-text) 6%, var(--sl-text) 94%, transparent);
+}
+
+.section-head {
+  max-width: 46rem;
+  margin: 0 auto var(--sl-space-8);
+  text-align: center;
+}
+.section-head h2 {
+  font-size: var(--sl-fs-section);
+  letter-spacing: -0.032em;
+  line-height: 1.08;
+}
+.section-head p {
+  max-width: 38rem;
+  margin: var(--sl-space-5) auto 0;
+  color: var(--sl-text-2);
+  font-size: var(--sl-fs-sub);
+  line-height: 1.45;
+}
+
+.tile { border-radius: var(--sl-radius-xl); }
+
+/* 3D icons (Icon3D.astro): a cobalt plate and a frosted glass glyph that lifts off it on hover */
+.icon-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.ig-p1 { stop-color: var(--sl-icon-plate-hi); }
+.ig-p2 { stop-color: var(--sl-icon-plate-mid); }
+.ig-p3 { stop-color: var(--sl-icon-plate-lo); }
+.ig-sheen { stop-color: var(--sl-light); stop-opacity: 0.4; }
+.ig-sheen-mid { stop-color: var(--sl-light); stop-opacity: 0.07; }
+.ig-clear { stop-color: var(--sl-light); stop-opacity: 0; }
+.ig-rim-top { stop-color: var(--sl-light); stop-opacity: 0.9; }
+.ig-rim-mid { stop-color: var(--sl-light); stop-opacity: 0.08; }
+.ig-rim-bottom { stop-color: var(--sl-light); stop-opacity: 0.35; }
+.ig-hi { stop-color: var(--sl-light); }
+.ig-lo { stop-color: var(--sl-icon-glyph-lo); }
+.ig-drop { flood-color: var(--sl-icon-glyph-shadow); flood-opacity: 0.5; }
+.ig-glass { fill: var(--sl-light); fill-opacity: 0.18; }
+.ig-cut { stroke: var(--sl-icon-plate-mid); }
+
+/* Syntax colours for commands and code (lib/highlight.ts) */
+.t-cmd { color: var(--sl-term-blue); font-weight: 600; }
+.t-bin { color: var(--sl-text); font-weight: 600; }
+/* A flag never splits at its own hyphens; lines break between arguments */
+.t-flag { color: var(--sl-term-violet); white-space: nowrap; }
+.t-url { color: var(--sl-term-cyan); }
+.t-num { color: var(--sl-term-yellow); }
+.t-str { color: var(--sl-term-green); }
+.t-key { color: var(--sl-term-blue); }
+.t-dim { color: var(--sl-text-2); }
+.t-ok { color: var(--sl-term-green); }
+.t-err { color: var(--sl-term-red); }
+.t-pair { white-space: nowrap; }
+
+/* Dock app icons (DockIcon.astro) */
+.da-files-hi { stop-color: var(--sl-app-files-hi); }
+.da-files-lo { stop-color: var(--sl-app-files-lo); }
+.da-mail-hi { stop-color: var(--sl-app-mail-hi); }
+.da-mail-lo { stop-color: var(--sl-app-mail-lo); }
+.da-sky-hi { stop-color: var(--sl-app-sky-hi); }
+.da-sky-lo { stop-color: var(--sl-app-sky-lo); }
+.da-plate-hi { stop-color: var(--sl-app-plate-hi); }
+.da-plate-lo { stop-color: var(--sl-app-plate-lo); }
+.da-ink-hi { stop-color: var(--sl-app-ink-hi); }
+.da-ink-lo { stop-color: var(--sl-app-ink-lo); }
+.da-yellow-hi { stop-color: var(--sl-app-yellow-hi); }
+.da-yellow-lo { stop-color: var(--sl-app-yellow-lo); }
+.da-gear-hi { stop-color: var(--sl-app-gear-hi); }
+.da-gear-lo { stop-color: var(--sl-app-gear-lo); }
+.da-gloss-a { stop-color: var(--sl-app-white); stop-opacity: var(--sl-app-gloss); }
+.da-gloss-b { stop-color: var(--sl-app-white); stop-opacity: 0; }
+.da-white { fill: var(--sl-app-white); }
+.da-folder { fill: var(--sl-app-folder); }
+.da-envelope { fill: var(--sl-app-envelope); }
+.da-flap { stroke: var(--sl-app-flap); }
+.da-sheet { fill: var(--sl-app-sheet); }
+.da-line { stroke: var(--sl-app-line); }
+.da-red { fill: var(--sl-app-red); }
+.da-glyph { stroke: var(--sl-app-glyph); }
+.da-glyph-fill { fill: var(--sl-app-glyph); }
+.da-hub { fill: var(--sl-app-hub); }
+.da-loupe { stroke: var(--sl-app-loupe); }
+
+.icon3d {
+  --size: 56px;
+  display: inline-grid;
+  flex-shrink: 0;
+  width: var(--size);
+  height: var(--size);
+  transform-style: preserve-3d;
+  transition: transform 0.7s var(--sl-ease-spring);
+}
+.icon3d.size-36 { --size: 36px; }
+.icon3d.size-44 { --size: 44px; }
+.icon3d.size-72 { --size: 72px; }
+.icon3d.size-96 { --size: 96px; }
+.icon3d > svg {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transition: transform 0.7s var(--sl-ease-spring);
+}
+.icon3d .plate {
+  filter:
+    drop-shadow(0 1px 1.5px color-mix(in srgb, var(--sl-icon-plate-lo) 30%, transparent))
+    drop-shadow(0 10px 16px color-mix(in srgb, var(--sl-icon-plate-lo) 30%, transparent));
+}
+/* The plate's filter makes it a stacking context, so the glyph needs its own to stay on top */
+.icon3d .glyph {
+  position: relative;
+  z-index: 1;
+  transform: translateZ(1px);
+}
+:is(.lift:hover, .lift:focus-within) .icon3d {
+  transform: perspective(420px) rotateX(16deg) rotateY(-16deg) translateY(-3px);
+}
+:is(.lift:hover, .lift:focus-within) .icon3d .glyph {
+  transform: translate3d(3px, -5px, 22px) scale(1.06);
+}
+
+.btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sl-space-2);
+  height: 52px;
+  padding: 0 var(--sl-space-6);
+  border: 0;
+  border-radius: var(--sl-radius-pill);
+  font: 600 1.0625rem / 1 var(--sl-font);
+  white-space: nowrap;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.2s var(--sl-ease-out),
+    box-shadow 0.2s var(--sl-ease-out),
+    color 0.2s var(--sl-ease-out),
+    transform 0.4s var(--sl-ease-spring),
+    --light 0.7s var(--sl-ease-draw);
+}
+.btn:active { transform: scale(0.97); }
+@media (hover: hover) {
+  :is(.glass, .tile, .lq, .lq-btn, .btn):hover { --light: 1; }
+}
+/*
+  Prominent glass button: cobalt glass lit from above (a brighter top, a deeper base, a bright
+  rim and a fainter one at the bottom), a coloured glow under it and a light that follows the
+  pointer. The label sits on the middle of the gradient, which is the brand button colour.
+*/
+.btn-primary {
+  --lq-lift: 0 2px 5px -1px var(--sl-btn-glow), 0 14px 30px -12px var(--sl-btn-glow);
+  background:
+    radial-gradient(150px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--sl-btn-spot) calc(var(--light) * 100%), transparent), transparent 70%),
+    radial-gradient(150px circle at 50% -55%, var(--sl-btn-spot), transparent 70%),
+    linear-gradient(180deg, var(--sl-btn-hi), var(--sl-btn-bg) 50%, var(--sl-btn-lo));
+  color: var(--sl-btn-text);
+  text-shadow: 0 1px 1px var(--sl-btn-text-shadow);
+  box-shadow:
+    inset 0 1px 0.5px 0 var(--sl-btn-spec),
+    inset 0 -1px 0.5px 0 var(--sl-btn-spec-soft),
+    inset 0 0 0 0.5px var(--sl-btn-spec-soft),
+    inset 0 -12px 18px -14px var(--sl-btn-depth),
+    0 0 0 0.5px var(--sl-btn-edge),
+    var(--lq-lift);
+}
+.btn-primary:hover {
+  --lq-lift: 0 3px 8px -1px var(--sl-btn-glow), 0 20px 38px -12px var(--sl-btn-glow);
+  color: var(--sl-btn-text);
+}
+.btn-small {
+  height: 40px;
+  padding: 0 var(--sl-space-4);
+  font-size: var(--sl-fs-small);
+}
+
+.steps {
+  display: grid;
+  gap: var(--sl-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+.steps > li {
+  position: relative;
+  min-width: 0;
+  padding-left: 44px;
+  counter-increment: step;
+}
+/* Step numbers as small glass beads, the same material as the controls */
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  top: -2px;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--sl-lq-top), var(--sl-lq-tint));
+  box-shadow:
+    inset 0 1px 0.5px 0 var(--sl-lq-spec),
+    inset 0 0 0 0.5px var(--sl-lq-spec-soft),
+    0 0 0 0.5px var(--sl-lq-edge),
+    0 2px 6px -2px var(--sl-lq-shadow);
+  color: var(--sl-accent);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+  Scroll reveal. scripts/reveal.ts adds .reveal-ready only once it runs, so if the script
+  never loads nothing stays hidden.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal]:not(.is-in) {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(32px) scale(0.985);
+  }
+  .reveal-ready [data-reveal] {
+    transition:
+      opacity 0.9s var(--sl-ease-out),
+      filter 0.9s var(--sl-ease-out),
+      transform 1.1s var(--sl-ease-out),
+      --light 0.7s var(--sl-ease-draw);
+  }
+  .reveal-ready [data-reveal="2"] { transition-delay: 0.08s; }
+  .reveal-ready [data-reveal="3"] { transition-delay: 0.16s; }
+  .reveal-ready [data-reveal="4"] { transition-delay: 0.24s; }
+}
+
+/* No default cross-fade: the new theme pours in from the toggle (scripts/theme-toggle.ts). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
+/*
+  The edge of the theme reveal (scripts/theme-toggle.ts) reads as the rim of a lens: a soft glow
+  inside, a bright line on the edge and the Pryzmat split just past it, silver in the dark theme.
+  It lives in the new theme, so the mask (solid to 90% of the radius) fades the split as it goes.
+*/
+.theme-wave {
+  --wave-1: color-mix(in srgb, var(--sl-prism-1) 80%, transparent);
+  --wave-2: color-mix(in srgb, var(--sl-prism-2) 70%, transparent);
+  --wave-3: color-mix(in srgb, var(--sl-prism-3) 60%, transparent);
+  position: fixed;
+  top: var(--wave-y);
+  left: var(--wave-x);
+  z-index: 1000;
+  width: var(--wave-size);
+  height: var(--wave-size);
+  pointer-events: none;
+  transform: scale(0);
+  background: radial-gradient(
+    closest-side,
+    transparent 70%,
+    color-mix(in srgb, var(--sl-light) 8%, transparent) 80%,
+    color-mix(in srgb, var(--sl-light) 75%, transparent) 89%,
+    var(--wave-1) 91%,
+    var(--wave-2) 94%,
+    var(--wave-3) 97%,
+    transparent
+  );
+}
+:root[data-theme="dark"] .theme-wave {
+  --wave-1: color-mix(in srgb, var(--sl-light) 30%, transparent);
+  --wave-2: color-mix(in srgb, var(--sl-light) 16%, transparent);
+  --wave-3: color-mix(in srgb, var(--sl-light) 6%, transparent);
+}
+/* While the theme switches, colours change at once so the reveal shows the finished theme */
+:root[data-theme-switch] *:not(.theme-toggle, .theme-toggle *),
+:root[data-theme-switch] *::before,
+:root[data-theme-switch] *::after {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}

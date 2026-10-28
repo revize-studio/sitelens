@@ -1,0 +1,24 @@
+{
+  "description": "Thresholds of the brand analysis. Colour differences are CIEDE2000; shares are fractions of 1.",
+  "chromaAccent": 12,
+  "matchDeltaE": 3,
+  "aliasDeltaE": 0.5,
+  "nearDeltaE": 4.5,
+  "strayClusterDeltaE": 3,
+  "strayMinShare": 0.03,
+  "roleMinShare": 0.01,
+  "textMinShare": 0.02,
+  "proportionMinShare": 0.01,
+  "maxSwatchesPerGroup": 8,
+  "maxTextSizes": 12,
+  "maxRadii": 6,
+  "themeColorDeltaE": 5,
+  "kindWeights": {
+    "background": 1,
+    "text": 1,
+    "border": 0.3
+  },
+  "darkBase": "#121212",
+  "lightBase": "#FFFFFF",
+  "maxUnusedAccents": 4
+}

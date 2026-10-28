@@ -1,0 +1,46 @@
+id: seo/broken-links
+priority: important
+whoFixes: owner
+effort: small
+review: reviewed
+passed:
+  pl: Wszystkie sprawdzone linki wewnątrz strony działają.
+  en: All the links inside the site that we checked work.
+pl:
+  title: "{count} {count|link na stronie nie działa|linki na stronie nie działają|linków na stronie nie działa}"
+  summary: Klient klika link i zamiast treści widzi błąd.
+  whatIsWrong: >
+    {count} {count|link wewnątrz strony prowadzi|linki wewnątrz strony prowadzą|linków wewnątrz strony prowadzi}
+    do błędu, np. „nie znaleziono” (404), zamiast do treści.
+  whyItMatters: >
+    Klient, który kliknie taki link, zamiast obiecanej treści zobaczy błąd i będzie musiał sam szukać
+    drogi dalej.
+  howToFix:
+    - Sprawdź w załączniku technicznym, które adresy nie działają. Podstrony z tymi linkami są wymienione w polu „Dotyczy”.
+    - Popraw adres w linku albo usuń link, jeśli podstrony już nie ma.
+    - Ustaw stałe przekierowanie (301) ze starego adresu na nowy, jeśli podstrona zmieniła adres.
+  short: >
+    {count} {count|link na stronie nie działa|linki na stronie nie działają|linków na stronie nie działa}.
+    Popraw adresy w linkach albo ustaw przekierowania na nowe adresy podstron.
+  technical: >
+    {count} {count|link wewnętrzny zwraca|linki wewnętrzne zwracają|linków wewnętrznych zwraca} kod
+    4xx/5xx albo nie odpowiada (np. timeout, pętla przekierowań).
+en:
+  title: "{count} {count|link on the site is|links on the site are} broken"
+  summary: A customer clicks a link and gets an error instead of content.
+  whatIsWrong: >
+    {count} {count|link inside the site leads|links inside the site lead} to an error, such as
+    “not found” (404), instead of content.
+  whyItMatters: >
+    A customer who clicks such a link gets an error instead of the content they expected and has to
+    find their own way from there.
+  howToFix:
+    - Check the technical appendix to see which addresses do not work. The pages with these links are listed under “Affects”.
+    - Correct the address in the link, or remove the link if the page no longer exists.
+    - Set up a permanent (301) redirect from the old address to the new one if a page has moved.
+  short: >
+    {count} {count|link on the site is|links on the site are} broken. Correct the link addresses or
+    redirect the old addresses to the new pages.
+  technical: >
+    {count} internal {count|link returns|links return} a 4xx/5xx status or no response (e.g. timeout,
+    redirect loop).

@@ -1,0 +1,49 @@
+id: perf/cls
+priority: minor
+whoFixes: developer
+effort: medium
+review: reviewed
+passed:
+  pl: Układ strony pozostaje stabilny podczas ładowania.
+  en: The layout stays stable while the page loads.
+pl:
+  title: Układ strony przeskakuje podczas ładowania
+  summary: Treść przesuwa się, gdy strona się wczytuje, więc łatwo kliknąć nie to, co trzeba.
+  whatIsWrong: >
+    Podczas wczytywania tekst i przyciski przesuwają się, najczęściej dlatego, że zdjęcia, reklamy
+    albo banery pojawiają się bez zarezerwowanego miejsca. Na podstronie z najgorszym wynikiem
+    wskaźnik przesunięć układu wynosi {value:decimal}, a dobry wynik to najwyżej {good:decimal}.
+  whyItMatters: >
+    Odwiedzający gubi miejsce, w którym czytał, albo trafia w inny link lub przycisk, niż chciał.
+    Stabilność układu to też jeden z sygnałów, które Google bierze pod uwagę przy ustalaniu
+    kolejności wyników wyszukiwania.
+  howToFix:
+    - Podaj szerokość i wysokość każdego zdjęcia i filmu, żeby przeglądarka zarezerwowała dla nich miejsce.
+    - Zarezerwuj miejsce na banery, reklamy i osadzone elementy, zanim się wczytają.
+    - Nie wstawiaj nowych elementów nad treścią, którą ktoś już czyta.
+  short: >
+    Podczas wczytywania treść przesuwa się (wskaźnik {value:decimal}, dobry wynik to najwyżej
+    {good:decimal}). Podaj wymiary zdjęć i zarezerwuj miejsce na banery oraz reklamy.
+  technical: >
+    CLS {value:decimal} (Lighthouse, telefon, tylko przesunięcia podczas wczytywania), dobrze ≤
+    {good:decimal}. Powyżej progu na {count} z {total} {total|podstrony|podstron|podstron}.
+en:
+  title: The layout jumps while the page loads
+  summary: Content moves while the page loads, so it is easy to tap the wrong thing.
+  whatIsWrong: >
+    While the page loads, text and buttons move, most often because images, ads or banners appear
+    without space reserved for them. On the page with the worst result, the layout shift score is
+    {value:decimal}; a good score is {good:decimal} or less.
+  whyItMatters: >
+    Visitors lose their place while reading or tap a different link or button than they meant to.
+    Layout stability is also one of the signals Google uses when it ranks search results.
+  howToFix:
+    - Give every image and video a width and height so the browser can reserve space for it.
+    - Reserve space for banners, ads and embedded content before they load.
+    - Do not insert new elements above content someone is already reading.
+  short: >
+    Content moves while the page loads (score {value:decimal}; a good score is {good:decimal} or
+    less). Set image dimensions and reserve space for banners and ads.
+  technical: >
+    CLS {value:decimal} (Lighthouse, mobile, load-time shifts only), good ≤ {good:decimal}. Above
+    the threshold on {count} of {total} {total|page|pages}.

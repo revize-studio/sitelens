@@ -1,0 +1,252 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { SAMPLE_BRANDBOOK_URL, SAMPLE_REPORT_URL } from '../config';
+import { useTranslations, type Lang } from '../i18n';
+import { fill } from '../lib/rich';
+
+interface Props {
+  lang: Lang;
+  /** The sample audit report (portrait pages) or the sample brandbook (landscape pages) */
+  kind?: 'report' | 'brandbook';
+}
+
+const { lang, kind = 'report' } = Astro.props;
+const dictionary = useTranslations(lang);
+const t = kind === 'brandbook' ? dictionary.brandbookPage.sample : dictionary.report;
+const reportFiles = import.meta.glob<ImageMetadata>('../../../../public/raport/podglad/raport-strona-*.webp', {
+  eager: true,
+  import: 'default',
+});
+const brandbookFiles = import.meta.glob<ImageMetadata>('../../../../public/brandbook/podglad/brandbook-strona-*.webp', {
+  eager: true,
+  import: 'default',
+});
+const files = kind === 'brandbook' ? brandbookFiles : reportFiles;
+const images = Object.keys(files)
+  .sort()
+  .map((key) => files[key]);
+const total = t.pages.length;
+const titleId = `${kind}-viewer-title`;
+const download = kind === 'brandbook' ? SAMPLE_BRANDBOOK_URL : SAMPLE_REPORT_URL;
+---
+
+<section class="section" id={t.id} aria-labelledby={titleId}>
+  <div class="ambient alt" aria-hidden="true"></div>
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <h2 id={titleId}>{t.title}</h2>
+      <p>{t.lead}</p>
+    </header>
+
+    <div class:list={['viewer', { landscape: kind === 'brandbook' }]} role="region" aria-label={t.region} data-viewer tabindex="-1">
+      <div class="frame" data-reveal="1">
+        {
+          t.pages.map((page, i) => (
+            <Image
+              class="sheet"
+              src={images[i]}
+              alt={fill(t.alt, { n: i + 1, title: page.title })}
+              widths={kind === 'brandbook' ? [480, 720, 960, 1280, 1440] : [360, 480, 640, 800, 1000]}
+              sizes={kind === 'brandbook' ? '(min-width: 960px) 720px, calc(100vw - 48px)' : '(min-width: 960px) 500px, calc(100vw - 48px)'}
+              data-sheet={i}
+              aria-hidden={i === 0 ? undefined : 'true'}
+            />
+          ))
+        }
+        <button class="arrow prev lq-btn" type="button" aria-label={t.prev} data-step="-1" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14.5 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <button class="arrow next lq-btn" type="button" aria-label={t.next} data-step="1">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+      </div>
+
+      <div class="meta tile" data-reveal="2">
+        <div class="caption" aria-live="polite">
+          <p class="counter" data-counter data-template={t.pageOf} data-total={total}>{fill(t.pageOf, { n: 1, total })}</p>
+          <h3 data-title>{t.pages[0].title}</h3>
+        </div>
+        <p class="page-desc" data-desc>{t.pages[0].desc}</p>
+        <div class="thumbs" role="group" aria-label={t.thumbs}>
+          {
+            t.pages.map((page, i) => (
+              <button
+                class="thumb"
+                type="button"
+                data-go={i}
+                data-title={page.title}
+                data-desc={page.desc}
+                aria-label={fill(t.thumb, { n: i + 1, title: page.title })}
+                aria-current={i === 0 ? 'true' : undefined}
+              >
+                <Image src={images[i]} alt="" widths={[120, 180]} sizes="90px" />
+              </button>
+            ))
+          }
+        </div>
+        <a class="btn btn-secondary download" href={download} download>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span class="download-text">
+            <span>{t.download}</span>
+            <span class="download-meta">{t.downloadMeta}</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .viewer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sl-space-7);
+    align-items: center;
+  }
+  .viewer:focus { outline: none; }
+
+  .frame {
+    position: relative;
+    display: grid;
+    width: min(100%, 500px);
+    margin-inline: auto;
+  }
+  .sheet {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 0 0 1px var(--sl-line), var(--sl-shadow-l);
+    opacity: 0;
+    transition: opacity 0.35s var(--sl-ease-out);
+  }
+  .sheet:first-child,
+  .viewer[data-ready] .sheet[data-active] { opacity: 1; }
+  .viewer[data-ready] .sheet:not([data-active]) { opacity: 0; }
+  :global(:root[data-theme="dark"]) .sheet { filter: brightness(0.9); }
+
+  .arrow {
+    position: absolute;
+    top: 50%;
+    display: none;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: var(--sl-text);
+    translate: 0 -50%;
+    transition: opacity 0.2s var(--sl-ease-out), transform 0.4s var(--sl-ease-spring), --light 0.7s var(--sl-ease-draw);
+  }
+  .arrow svg { width: 22px; height: 22px; }
+  .arrow:active { transform: scale(0.92); }
+  .arrow:disabled { opacity: 0.35; cursor: default; }
+  .arrow:disabled:active { transform: none; }
+  .prev { left: -26px; }
+  .next { right: -26px; }
+  .viewer[data-ready] .arrow { display: grid; }
+
+  .meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sl-space-4);
+    justify-items: center;
+    padding: clamp(24px, 3vw, 40px);
+    text-align: center;
+  }
+  .counter {
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+  h3 {
+    margin-top: 4px;
+    font-size: clamp(1.5rem, 1.25rem + 0.8vw, 1.875rem);
+    letter-spacing: -0.025em;
+  }
+  .page-desc {
+    max-width: 26rem;
+    min-height: 3.1em;
+    color: var(--sl-text-2);
+  }
+
+  .thumbs {
+    display: flex;
+    gap: 10px;
+    max-width: 100%;
+    margin-block: var(--sl-space-2);
+    padding: 4px;
+    overflow-x: auto;
+  }
+  .thumb {
+    flex: 0 0 auto;
+    width: 64px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    opacity: 0.55;
+    transition: opacity 0.2s var(--sl-ease-out), box-shadow 0.2s var(--sl-ease-out);
+  }
+  .thumb :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px var(--sl-line);
+  }
+  .thumb:hover { opacity: 0.85; }
+  .thumb[aria-current="true"] {
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--sl-bg), 0 0 0 4px var(--sl-accent);
+  }
+  .thumb:focus-visible { outline-offset: 4px; }
+
+  .download {
+    gap: var(--sl-space-3);
+    height: auto;
+    min-height: 60px;
+    padding: 10px 26px 10px 20px;
+    white-space: normal;
+  }
+  .download svg { flex-shrink: 0; width: 20px; height: 20px; }
+  .download-text {
+    display: grid;
+    gap: 2px;
+    text-align: left;
+    line-height: 1.25;
+  }
+  .download-meta {
+    color: var(--sl-text-2);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .landscape .frame { width: min(100%, 720px); }
+  .landscape .thumb { width: 88px; }
+
+  @media (min-width: 960px) {
+    .viewer { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .frame { width: min(100%, 500px); }
+    .landscape { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); }
+    .landscape .frame { width: 100%; }
+    .landscape .thumbs { grid-template-columns: repeat(3, 88px); }
+    .landscape .thumb { width: 88px; }
+    .meta { justify-items: start; text-align: left; }
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(3, 76px);
+      padding: 4px;
+    }
+    .thumb { width: 76px; }
+  }
+  @media (max-width: 599px) {
+    .prev { left: 8px; }
+    .next { right: 8px; }
+    .arrow { width: 44px; height: 44px; }
+    /* The arrows and the page counter are enough on a phone; tiny thumbnails only add a row to scroll past */
+    .thumbs { display: none; }
+  }
+</style>

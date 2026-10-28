@@ -1,0 +1,11 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { useTranslations } from '../i18n';
+import Base from '../layouts/Base.astro';
+
+const t = useTranslations('pl').termsPage;
+---
+
+<Base lang="pl" page="terms" title={t.title} description={t.description}>
+  <LegalPage lang="pl" doc="terms" />
+</Base>

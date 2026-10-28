@@ -1,0 +1,60 @@
+/* sitelens – design tokens (jasny motyw domyślny + ciemny) */
+:root {
+  color-scheme: light;
+  /* Jasny motyw */
+  --sl-bg: #F2F3F6;           /* Mgła – tło strony */
+  --sl-surface: #FCFCFD;      /* Perła – karty i powierzchnie (zamiast czystej bieli) */
+  --sl-surface-2: #F2F3F6;    /* Mgła – powierzchnie zagnieżdżone */
+  --sl-line: #E3E5EB;         /* Szron – linie i obramowania */
+  --sl-text: #1C1D22;         /* Grafit – tekst główny */
+  --sl-text-2: #61646E;       /* Łupek – tekst drugorzędny */
+  --sl-accent: #2B5CF0;       /* Kobalt – linki, pierścień wyniku */
+  --sl-accent-hover: #1F48CC; /* Głęboki kobalt */
+  --sl-accent-soft: #E9EEFF;  /* Mgiełka kobaltu – tło zaznaczeń */
+  --sl-btn-bg: #2B5CF0;       /* przycisk główny */
+  --sl-btn-text: #FCFCFD;
+  --sl-glass: rgba(252, 252, 253, .62);
+  --sl-prism: linear-gradient(135deg, #A9BEFF 0%, #CDBFFF 50%, #A3E6F0 100%);
+  --sl-prism-edge: rgba(205, 191, 255, .55);
+  /* Priorytety: tylko kropki, paski, pierścienie; tekst obok zawsze --sl-text */
+  --sl-critical: #C4421A; --sl-important: #B5830F; --sl-minor: #5E6B85; --sl-good: #1E8A5F;
+  /* Cienie */
+  --sl-shadow-s: 0 1px 2px rgba(17,20,32,.06);
+  --sl-shadow-m: 0 1px 1px rgba(17,20,32,.04), 0 14px 34px rgba(17,20,32,.06);
+  --sl-shadow-l: 0 2px 4px rgba(17,20,32,.05), 0 30px 70px rgba(17,20,32,.14);
+
+  /* Wspólne dla obu motywów */
+  --sl-font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sl-font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --sl-ease-spring: cubic-bezier(.3, 1.22, .4, 1);   /* soczewka, ikona słońce/księżyc */
+  --sl-ease-out: cubic-bezier(.22, 1, .36, 1);       /* wejścia, przesunięcia */
+  --sl-ease-draw: cubic-bezier(.65, 0, .35, 1);      /* rysowanie pierścienia */
+  --sl-ease-pour: cubic-bezier(.6, 0, .2, 1);        /* „wylewanie” motywu */
+  --sl-radius-s: 10px; --sl-radius-m: 16px; --sl-radius-l: 24px; --sl-radius-xl: 32px;
+}
+
+/* Ciemny motyw: „Noc”. Chłodny grafit z domieszką granatu, nigdy czysta czerń. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --sl-bg: #101217;           /* Noc – tło strony */
+  --sl-surface: #171A21;      /* Atrament – karty i powierzchnie */
+  --sl-surface-2: #1F232C;    /* Głębia – powierzchnie wyniesione, menu */
+  --sl-line: #2A2F3A;         /* Cień – linie i obramowania */
+  --sl-text: #ECEEF3;         /* Księżyc – tekst główny */
+  --sl-text-2: #9A9FAD;       /* Popiół – tekst drugorzędny */
+  --sl-accent: #7B9BFF;       /* Kobalt nocny – linki, pierścień wyniku */
+  --sl-accent-hover: #8DA8FF;
+  --sl-accent-soft: #1A2340;  /* Mgiełka nocna */
+  --sl-btn-bg: #7B9BFF;       /* świecący przycisk z ciemnym tekstem */
+  --sl-btn-text: #101217;
+  --sl-glass: rgba(23, 26, 33, .62);
+  --sl-prism: linear-gradient(135deg, #7F9BFF 0%, #A88FFF 50%, #6FD3E3 100%);
+  --sl-prism-edge: rgba(168, 143, 255, .35);
+  --sl-critical: #F0693E; --sl-important: #E2B240; --sl-minor: #8B97B3; --sl-good: #3FB884;
+  --sl-shadow-s: 0 1px 2px rgba(0,0,0,.4);
+  --sl-shadow-m: 0 1px 1px rgba(0,0,0,.3), 0 14px 34px rgba(0,0,0,.35);
+  --sl-shadow-l: 0 2px 4px rgba(0,0,0,.3), 0 30px 70px rgba(0,0,0,.5);
+}
+
+@font-face { font-family: "Instrument Sans"; src: url("/fonts/InstrumentSans-Variable.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("/fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }

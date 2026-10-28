@@ -1,0 +1,48 @@
+id: perf/ttfb
+priority: important
+whoFixes: developer
+effort: medium
+review: reviewed
+passed:
+  pl: Serwer szybko odpowiada.
+  en: The server responds quickly.
+pl:
+  title: Serwer długo odpowiada
+  summary: Zanim cokolwiek się pojawi, przeglądarka czeka na odpowiedź serwera nawet {value:ms}.
+  whatIsWrong: >
+    Na najwolniejszej podstronie przeglądarka czeka {value:ms}, zanim serwer zacznie wysyłać stronę.
+    Dobry czas to najwyżej {limit:ms}.
+  whyItMatters: >
+    Przez ten czas na ekranie nie pojawia się nic z Twojej strony, a zdjęcia, style i skrypty
+    przeglądarka zaczyna pobierać dopiero później. Wolny serwer wydłuża więc ładowanie całej strony.
+  howToFix:
+    - Włącz pamięć podręczną stron (cache) w panelu strony lub u dostawcy hostingu.
+    - Sprawdź, czy wtyczki albo zapytania do bazy danych nie spowalniają serwera.
+    - Rozważ szybszy hosting albo sieć CDN, która wysyła stronę z serwerów położonych bliżej odwiedzających.
+  short: >
+    Serwer zaczyna wysyłać stronę dopiero po {value:ms}, a dobry czas to najwyżej {limit:ms}. Włącz
+    pamięć podręczną stron albo rozważ szybszy hosting.
+  technical: >
+    Czas odpowiedzi serwera na dokument HTML (Lighthouse server-response-time, telefon; bez DNS,
+    połączenia i przekierowań) do {value:ms}, próg {limit:ms} (dobry TTFB według web.dev). Powyżej
+    progu: {count} {count|podstrona|podstrony|podstron}.
+en:
+  title: The server is slow to respond
+  summary: Before anything appears, the browser waits up to {value:ms} for the server to respond.
+  whatIsWrong: >
+    On the slowest page, the browser waits {value:ms} before the server starts sending the page. A
+    good time is {limit:ms} or less.
+  whyItMatters: >
+    During that time nothing from your site appears on the screen, and the browser only starts
+    downloading images, styles and scripts afterwards. A slow server makes the whole page load longer.
+  howToFix:
+    - Turn on page caching in the admin panel or with your hosting provider.
+    - Check whether plugins or database queries slow the server down.
+    - Consider faster hosting or a CDN, which sends the site from servers closer to your visitors.
+  short: >
+    The server starts sending the page only after {value:ms}; a good time is {limit:ms} or less.
+    Turn on page caching or consider faster hosting.
+  technical: >
+    Server response time for the HTML document (Lighthouse server-response-time, mobile; excludes
+    DNS, connection and redirects) up to {value:ms}, threshold {limit:ms} (good TTFB per web.dev).
+    Above the threshold: {count} {count|page|pages}.

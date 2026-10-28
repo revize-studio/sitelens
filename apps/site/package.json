@@ -1,0 +1,27 @@
+{
+  "name": "@sitelens/site",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/headers.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint:colors": "node scripts/lint-colors.mjs"
+  },
+  "dependencies": {
+    "@sitelens/brand": "workspace:*",
+    "@sitelens/collect-web": "workspace:*",
+    "@sitelens/core": "workspace:*",
+    "@sitelens/report": "workspace:*",
+    "astro": "7.4.2",
+    "fflate": "0.8.3",
+    "sharp": "0.35.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "subset-font": "2.9.0",
+    "typescript": "6.0.3"
+  }
+}

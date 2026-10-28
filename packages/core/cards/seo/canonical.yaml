@@ -1,0 +1,114 @@
+id: seo/canonical
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Adresy kanoniczne podstron są ustawione i działają.
+  en: The canonical addresses of the pages are set and work.
+variants:
+  other-site:
+    priority: important
+    pl:
+      title: "{count} {count|podstrona wskazuje|podstrony wskazują|podstron wskazuje} Google inną domenę jako główny adres"
+      summary: Google może pokazywać w wynikach adresy z innej domeny zamiast Twoich.
+      whatIsWrong: >
+        {count} {count|podstrona ma|podstrony mają|podstron ma} adres kanoniczny w innej domenie.
+        Adres kanoniczny to wskazówka dla Google, który adres jest główną wersją treści.
+      whyItMatters: >
+        Google traktuje adres kanoniczny jako silną wskazówkę. Jeśli za nią pójdzie, w wynikach
+        wyszukiwania pokaże adres z tamtej domeny zamiast Twojego.
+      howToFix:
+        - Ustaw adres kanoniczny każdej podstrony na jej własny adres w Twojej domenie.
+        - Sprawdź w ustawieniach strony i wtyczki SEO, czy nie jest tam wpisana stara albo testowa domena.
+        - Zostaw adres kanoniczny w innej domenie tylko tam, gdzie treść celowo powtarza inną stronę, np. przy przedruku artykułu.
+      short: >
+        {count} {count|podstrona wskazuje|podstrony wskazują|podstron wskazuje} Google inną domenę jako
+        główny adres. Ustaw adres kanoniczny każdej podstrony na jej własny adres.
+      technical: >
+        rel=canonical wskazuje inną domenę na {count} {count|podstronie|podstronach|podstronach}.
+    en:
+      title: "{count} {count|page points|pages point} Google to another domain as the main address"
+      summary: Google may show addresses from another domain in its results instead of yours.
+      whatIsWrong: >
+        {count} {count|page has its|pages have their} canonical address on another domain. The canonical
+        address tells Google which address is the main version of the content.
+      whyItMatters: >
+        Google treats the canonical address as a strong hint. If it follows it, search results will show
+        the address on that domain instead of yours.
+      howToFix:
+        - Set the canonical address of every page to its own address on your domain.
+        - Check the site and SEO plugin settings for an old or test domain entered there.
+        - Keep a canonical address on another domain only where the content deliberately repeats another site, such as a republished article.
+      short: >
+        {count} {count|page points|pages point} Google to another domain as the main address. Set each
+        page's canonical address to its own address.
+      technical: >
+        rel=canonical points to another domain on {count} {count|page|pages}.
+  broken:
+    priority: important
+    pl:
+      title: "Adres kanoniczny prowadzi do błędu na {count} {count|podstronie|podstronach|podstronach}"
+      summary: Wskazówka dla Google, który adres jest główny, prowadzi do niedziałającej podstrony.
+      whatIsWrong: >
+        Na {count} {count|podstronie|podstronach|podstronach} adres kanoniczny, czyli wskazówka dla
+        Google, który adres jest główny, prowadzi do podstrony zwracającej błąd, np. 404.
+      whyItMatters: >
+        Google nie pokazuje w wynikach adresów, które zwracają błąd, więc nie skorzysta z tej wskazówki
+        i sam wybierze adres podstrony.
+      howToFix:
+        - Ustaw adres kanoniczny na działający adres tej samej podstrony, zwykle na jej własny adres.
+      short: >
+        Na {count} {count|podstronie|podstronach|podstronach} adres kanoniczny prowadzi do błędu. Ustaw
+        go na działający adres tej samej podstrony.
+      technical: >
+        rel=canonical wskazuje adres z kodem 4xx/5xx na {count} {count|podstronie|podstronach|podstronach}.
+    en:
+      title: "The canonical address leads to an error on {count} {count|page|pages}"
+      summary: The hint telling Google which address is the main one leads to a page that does not work.
+      whatIsWrong: >
+        On {count} {count|page|pages}, the canonical address (the hint telling Google which address is
+        the main one) leads to a page that returns an error, such as 404.
+      whyItMatters: >
+        Google does not show addresses that return an error, so it cannot use this hint and picks an
+        address for the page itself.
+      howToFix:
+        - Set the canonical address to a working address of the same page, usually its own address.
+      short: >
+        On {count} {count|page|pages} the canonical address leads to an error. Set it to a working address
+        of the same page.
+      technical: >
+        rel=canonical points to a 4xx/5xx address on {count} {count|page|pages}.
+  missing:
+    priority: minor
+    pl:
+      title: "{count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} adresu kanonicznego"
+      summary: Google sam wybiera, który adres podstrony jest główny.
+      whatIsWrong: >
+        {count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} adresu kanonicznego,
+        czyli wskazówki dla Google, który adres podstrony jest główny.
+      whyItMatters: >
+        Ta sama podstrona bywa dostępna pod kilkoma adresami, np. z dopisanymi parametrami. Bez wskazówki
+        Google sam wybiera adres do wyników, nie zawsze ten, który chcesz.
+      howToFix:
+        - Dodaj na każdej podstronie adres kanoniczny wskazujący jej własny adres, np. przez wtyczkę SEO albo w szablonie strony.
+      short: >
+        {count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} adresu kanonicznego.
+        Dodaj go na każdej podstronie, np. przez wtyczkę SEO.
+      technical: >
+        Brak <link rel="canonical"> na {count} z {total} {total|podstrony|podstron|podstron}.
+    en:
+      title: "{count} of {total} {total|page|pages} {count|has|have} no canonical address"
+      summary: Google picks the main address of each page on its own.
+      whatIsWrong: >
+        {count} of {total} {total|page|pages} {count|has|have} no canonical address, the hint that tells
+        Google which address of a page is the main one.
+      whyItMatters: >
+        The same page is often reachable under several addresses, for example with parameters added.
+        Without the hint Google picks the address for its results itself, not always the one you want.
+      howToFix:
+        - Add a canonical address pointing to the page's own address on every page, for example with an SEO plugin or in the site template.
+      short: >
+        {count} of {total} {total|page|pages} {count|has|have} no canonical address. Add one to every page,
+        for example with an SEO plugin.
+      technical: >
+        No <link rel="canonical"> on {count} of {total} {total|page|pages}.

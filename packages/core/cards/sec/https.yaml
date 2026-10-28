@@ -1,0 +1,110 @@
+id: sec/https
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Strona działa przez szyfrowane połączenie (https) i przekierowuje na nie z http.
+  en: The site uses a secure connection (https) and redirects http to it.
+variants:
+  no-https:
+    priority: critical
+    pl:
+      title: Strona nie używa szyfrowanego połączenia (https)
+      summary: Przeglądarki oznaczają Twoją stronę jako niezabezpieczoną.
+      whatIsWrong: Strona otwiera się przez zwykłe http, bez szyfrowania.
+      whyItMatters: >
+        Chrome oznacza taką stronę jako „Niezabezpieczona” albo ostrzega przed wejściem, a dane
+        z formularzy ktoś po drodze, np. w publicznym Wi-Fi, może podejrzeć lub zmienić. Google też zwraca
+        uwagę na bezpieczne połączenie, gdy ocenia strony.
+      howToFix:
+        - Włącz certyfikat bezpieczeństwa w panelu hostingu, np. darmowy Let's Encrypt, jeśli hosting go oferuje.
+        - Ustaw stałe przekierowanie (301) z http na https dla całej strony.
+        - Zmień w panelu strony jej adres na wersję z https i sprawdź, czy zdjęcia i skrypty też wczytują się przez https.
+      short: >
+        Strona działa bez szyfrowania i przeglądarki oznaczają ją jako niezabezpieczoną. Włącz certyfikat
+        bezpieczeństwa w panelu hostingu i przekieruj http na https.
+      technical: "Adres końcowy strony głównej po przekierowaniach:"
+    en:
+      title: The site does not use a secure connection (https)
+      summary: Browsers mark your site as not secure.
+      whatIsWrong: The site opens over plain http, without encryption.
+      whyItMatters: >
+        Chrome marks such a site as “Not secure” or warns before opening it, and form data can be read or
+        changed by someone along the way, for example on public Wi-Fi. Google also looks at whether the
+        connection is secure when it assesses pages.
+      howToFix:
+        - Turn on a security certificate in your hosting panel, e.g. a free Let's Encrypt one if your host offers it.
+        - Set a permanent (301) redirect from http to https for the whole site.
+        - Change the site's address to the https version in the admin panel and check that images and scripts also load over https.
+      short: >
+        The site runs without encryption and browsers mark it as not secure. Turn on a security
+        certificate in your hosting panel and redirect http to https.
+      technical: "Final homepage address after redirects:"
+  no-redirect:
+    priority: critical
+    pl:
+      title: Adres z http nie przekierowuje na bezpieczną wersję strony
+      summary: Kto otworzy stary link z http, może zostać na wersji strony bez szyfrowania.
+      whatIsWrong: >
+        Strona działa przez https, ale adres z http (z www albo bez) nie przekierowuje na tę bezpieczną
+        wersję.
+      whyItMatters: >
+        Odwiedzający, którzy trafią na adres z http, np. ze starej wizytówki lub linku, mogą zostać na
+        wersji bez szyfrowania, a to, co wpiszą w formularze, nie będzie chronione. Google widzi przy tym
+        dwie wersje tej samej strony i sam wybiera, którą pokazać.
+      howToFix:
+        - Ustaw stałe przekierowanie (301) z http na https dla całej strony, zarówno dla adresu z www, jak i bez www.
+        - Sprawdź po zmianie kilka podstron, wpisując ich adresy z http:// na początku.
+      short: >
+        Adres z http nie przekierowuje na https. Ustaw stałe przekierowanie (301) z http na https dla
+        całej strony.
+      technical: "Adresy http://, które nie przekierowują na https (adres → kod odpowiedzi):"
+    en:
+      title: The http address does not redirect to the secure version
+      summary: Anyone who opens an old http link may stay on the unencrypted version of the site.
+      whatIsWrong: >
+        The site works over https, but the http address (with or without www) does not redirect to the
+        secure version.
+      whyItMatters: >
+        Visitors who reach an http address, for example from an old business card or link, may stay on
+        the unencrypted version, and what they type into forms is not protected. Google also sees two
+        versions of the same page and picks which one to show.
+      howToFix:
+        - Set a permanent (301) redirect from http to https for the whole site, both with and without www.
+        - Check a few pages after the change by typing their addresses with http:// at the start.
+      short: >
+        The http address does not redirect to https. Set a permanent (301) redirect from http to https
+        for the whole site.
+      technical: "http:// addresses that do not redirect to https (address → response status):"
+  temporary-redirect:
+    priority: important
+    pl:
+      title: Przekierowanie z http na https jest ustawione jako tymczasowe
+      summary: Google może dalej pokazywać w wynikach wyszukiwania stary adres z http.
+      whatIsWrong: >
+        Adres z http przekierowuje na https przekierowaniem tymczasowym (302, 303 lub 307), a nie stałym
+        (301 lub 308).
+      whyItMatters: >
+        Przekierowanie tymczasowe mówi Google, że zmiana jest przejściowa, więc w wynikach wyszukiwania
+        może zostać adres z http zamiast bezpiecznego.
+      howToFix:
+        - Zmień przekierowanie z http na https na stałe (301 lub 308) w ustawieniach serwera lub w panelu hostingu.
+      short: >
+        Przekierowanie z http na https jest tymczasowe, więc Google może dalej pokazywać stary adres.
+        Zmień je na stałe (301).
+      technical: "Pierwsze przekierowanie z http:// ma kod tymczasowy (adres → kod i cel):"
+    en:
+      title: The redirect from http to https is set as temporary
+      summary: Google may keep showing the old http address in search results.
+      whatIsWrong: >
+        The http address redirects to https with a temporary redirect (302, 303 or 307) instead of a
+        permanent one (301 or 308).
+      whyItMatters: >
+        A temporary redirect tells Google that the change will not last, so search results may keep the
+        http address instead of the secure one.
+      howToFix:
+        - Change the http to https redirect to a permanent one (301 or 308) in the server settings or the hosting panel.
+      short: >
+        The http to https redirect is temporary, so Google may keep showing the old address. Make it
+        permanent (301).
+      technical: "The first redirect from http:// has a temporary status (address → status and target):"

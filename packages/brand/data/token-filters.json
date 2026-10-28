@@ -1,0 +1,38 @@
+{
+  "description": "Which CSS custom properties are not the brand's own colours. Each entry is the source of a case-insensitive regular expression tested against the property name.",
+  "framework": [
+    "^--color-(red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|slate|gray|zinc|neutral|stone|mauve|olive|mist|taupe)-\\d+$",
+    "^--color-(black|white)$",
+    "^--bs-(blue|indigo|purple|pink|red|orange|yellow|green|teal|cyan|black|white|gray|gray-dark|gray-\\d+)(-rgb)?$",
+    "^--wp--preset--color--(black|cyan-bluish-gray|white|pale-pink|vivid-red|luminous-vivid-orange|luminous-vivid-amber|light-green-cyan|vivid-green-cyan|pale-cyan-blue|vivid-cyan-blue|vivid-purple)$",
+    "^--chakra-colors-(whiteAlpha|blackAlpha|gray|red|orange|yellow|green|teal|blue|cyan|purple|pink|linkedin|facebook|messenger|whatsapp|twitter|telegram)-\\d+$",
+    "^--mantine-color-(dark|gray|red|pink|grape|violet|indigo|blue|cyan|teal|green|lime|yellow|orange)-\\d$",
+    "^--mui-palette-(common|grey)-"
+  ],
+  "internal": [
+    "^--tw-",
+    "^--wp-(admin|components|block)-",
+    "^--wp--style--",
+    "^--swiper-",
+    "^--toastify-",
+    "^--rdp-",
+    "^--radix-",
+    "^--plyr-",
+    "^--fa-",
+    "^--ck-",
+    "^--cc-",
+    "^--cky-",
+    "^--cmplz",
+    "^--cookie",
+    "^--wpforms",
+    "^--gform",
+    "^--elementor-(?!global)",
+    "^--e-(a|p|n)-",
+    "^--trustpilot",
+    "^--grecaptcha"
+  ],
+  "decorative": "(chart|scale|pattern|marker|indicator|tooltip|skeleton|glyph|(^|-)tl-|shimmer|confetti|syntax|shiki|hljs|code-(bg|fg|token)|scrollbar|selection|plate|dock|wallpaper|mockup|demo)",
+  "semantic": "(critical|important|minor|good|error|danger|success|warning|info|negative|positive|caution|alert|destructive|notice)",
+  "brandish": "(accent|brand|primary|secondary|tertiary|highlight|cta|link)",
+  "stateVariant": "(hover|active|focus|pressed|visited|disabled)$"
+}

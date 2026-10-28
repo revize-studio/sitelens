@@ -1,0 +1,158 @@
+---
+import { pageLinks, useTranslations, type Lang } from '../i18n';
+import { rich } from '../lib/rich';
+import PageHero from './PageHero.astro';
+
+interface Props {
+  lang: Lang;
+  doc: 'privacy' | 'terms';
+}
+
+const { lang, doc } = Astro.props;
+const dict = useTranslations(lang);
+const t = doc === 'privacy' ? dict.privacyPage : dict.termsPage;
+const links = pageLinks(lang);
+const label = (i: number) => (t.numbering ? `${t.numbering} ${i + 1}.` : `${i + 1}.`);
+
+// Paragraphs starting with “• ” are list items; consecutive ones become one list.
+type Block = { kind: 'p'; text: string } | { kind: 'ul'; items: string[] };
+const blocks = (body: string[]) =>
+  body.reduce<Block[]>((out, text) => {
+    if (!text.startsWith('• ')) return [...out, { kind: 'p', text }];
+    const last = out.at(-1);
+    if (last?.kind === 'ul') {
+      last.items.push(text.slice(2));
+      return out;
+    }
+    return [...out, { kind: 'ul', items: [text.slice(2)] }];
+  }, []);
+---
+
+<article class="container legal">
+  <PageHero icon={doc === 'privacy' ? 'lock' : 'document'} heading={t.heading} meta={t.updated} lead={t.intro} />
+
+  <div class="layout">
+    <nav class="toc tile" aria-label={dict.legal.toc}>
+      <p class="toc-title">{dict.legal.toc}</p>
+      <ol role="list">
+        {
+          t.sections.map((section, i) => (
+            <li>
+              <a href={`#${doc}-${i + 1}`}>
+                <span class="num">{label(i)}</span> {section.title}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <div class="content tile">
+      {
+        t.sections.map((section, i) => (
+          <section id={`${doc}-${i + 1}`} aria-labelledby={`${doc}-${i + 1}-title`}>
+            <h2 id={`${doc}-${i + 1}-title`}>
+              <span class="num">{label(i)}</span> {section.title}
+            </h2>
+            {blocks(section.body).map((block) =>
+              block.kind === 'p' ? (
+                <p set:html={rich(block.text, links)} />
+              ) : (
+                <ul>
+                  {block.items.map((item) => (
+                    <li set:html={rich(item, links)} />
+                  ))}
+                </ul>
+              ),
+            )}
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</article>
+
+<style>
+  .legal { padding-bottom: var(--sl-section-pad); }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sl-space-5);
+    align-items: start;
+  }
+
+  .toc {
+    padding: var(--sl-space-5) var(--sl-space-5) var(--sl-space-4);
+    font-size: var(--sl-fs-small);
+  }
+  .toc-title {
+    margin-bottom: var(--sl-space-3);
+    font-weight: 600;
+  }
+  .toc ol {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .toc a {
+    display: block;
+    padding: 6px 10px;
+    border-radius: var(--sl-radius-s);
+    color: var(--sl-text-2);
+    text-decoration: none;
+  }
+  .toc a:hover {
+    background: color-mix(in srgb, var(--sl-text) 6%, transparent);
+    color: var(--sl-text);
+  }
+  .num {
+    color: var(--sl-text-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .content {
+    padding: clamp(24px, 4vw, 56px);
+  }
+  section + section {
+    margin-top: var(--sl-space-7);
+    padding-top: var(--sl-space-7);
+    border-top: 1px solid var(--sl-lg-edge);
+  }
+  h2 {
+    margin-bottom: var(--sl-space-4);
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+    letter-spacing: -0.015em;
+  }
+  h2 .num { margin-right: 4px; }
+  p,
+  li { max-width: 68ch; }
+  p + p,
+  p + ul,
+  ul + p { margin-top: var(--sl-space-3); }
+  ul {
+    display: grid;
+    gap: var(--sl-space-2);
+    margin: 0;
+    padding-left: 1.2em;
+  }
+  li::marker { color: var(--sl-accent); }
+  .content :global(code) {
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--sl-text) 7%, transparent);
+    font-size: 0.9em;
+  }
+
+  @media (min-width: 960px) {
+    .layout { grid-template-columns: 280px minmax(0, 1fr); }
+    .toc {
+      position: sticky;
+      top: calc(env(safe-area-inset-top, 0px) + var(--sl-nav-h) + 28px);
+      max-height: calc(100dvh - var(--sl-nav-h) - 56px);
+      overflow-y: auto;
+    }
+  }
+</style>

@@ -1,0 +1,70 @@
+id: privacy/policy-link
+whoFixes: owner
+effort: small
+review: reviewed
+passed:
+  pl: Link do polityki prywatności jest na każdej sprawdzonej podstronie.
+  en: Every page checked links to the privacy policy.
+variants:
+  missing:
+    priority: important
+    pl:
+      title: Na stronie nie ma linku do polityki prywatności
+      summary: Odwiedzający nie znajdzie informacji, co dzieje się z jego danymi.
+      whatIsWrong: Na żadnej ze sprawdzonych podstron nie ma linku do polityki prywatności.
+      whyItMatters: >
+        Jeśli strona zbiera jakiekolwiek dane, np. przez formularz, statystyki odwiedzin albo ciasteczka,
+        RODO wymaga, żeby informacja o tym, co się z nimi dzieje, była łatwo dostępna. To nie jest porada prawna.
+      howToFix:
+        - Przygotuj stronę z polityką prywatności, która opisuje, jakie dane zbiera strona, po co i komu je przekazuje.
+        - Dodaj link do niej w stopce, żeby był widoczny na każdej podstronie.
+        - Jeśli strona ma formularz, dodaj link do polityki także przy nim.
+      short: Na stronie nie ma linku do polityki prywatności. Dodaj go w stopce, żeby był na każdej podstronie.
+      technical: >
+        Brak linku do polityki prywatności na żadnej z {total} {total|sprawdzonej podstrony|sprawdzonych podstron|sprawdzonych podstron}
+        (szukamy w treści i adresie linku słów: polityka prywatności, prywatność, RODO, ochrona danych, privacy, GDPR).
+    en:
+      title: The site has no link to a privacy policy
+      summary: Visitors cannot find out what happens to their data.
+      whatIsWrong: None of the pages checked links to a privacy policy.
+      whyItMatters: >
+        If the site collects any data, e.g. through a form, visitor statistics or cookies, the GDPR requires
+        information about what happens to it to be easy to reach. This is not legal advice.
+      howToFix:
+        - Prepare a privacy policy page that says what data the site collects, why, and who it is shared with.
+        - Link to it in the footer so it shows on every page.
+        - If the site has a form, link to the policy next to it as well.
+      short: The site has no link to a privacy policy. Add one in the footer so it is on every page.
+      technical: >
+        No privacy policy link on any of the {total} {total|page|pages} checked (we look for privacy,
+        GDPR and their Polish equivalents in the link text and address).
+  some-pages:
+    priority: minor
+    pl:
+      title: Część podstron nie ma linku do polityki prywatności
+      summary: Polityka prywatności nie jest dostępna z każdej podstrony.
+      whatIsWrong: "{count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} linku do polityki prywatności."
+      whyItMatters: >
+        Informacja o tym, co dzieje się z danymi odwiedzających, powinna być łatwo dostępna z każdego
+        miejsca strony, zwłaszcza z podstron z formularzem. To nie jest porada prawna.
+      howToFix:
+        - Umieść link w stopce, która jest wspólna dla wszystkich podstron.
+        - Sprawdź podstrony wymienione w załączniku. Często mają osobny szablon, np. landing page albo strony ofert.
+      short: >
+        {count} z {total} {total|podstrony|podstron|podstron} nie {count|ma|mają|ma} linku do polityki
+        prywatności. Umieść go w stopce wspólnej dla wszystkich podstron.
+      technical: Brak linku do polityki prywatności na {count} z {total} {total|podstrony|podstron|podstron}.
+    en:
+      title: Some pages have no link to the privacy policy
+      summary: The privacy policy cannot be reached from every page.
+      whatIsWrong: "{count} of {total} {total|page|pages} {count|has|have} no link to the privacy policy."
+      whyItMatters: >
+        Information about what happens to visitors' data should be easy to reach from anywhere on the
+        site, especially from pages with a form. This is not legal advice.
+      howToFix:
+        - Put the link in the footer shared by all pages.
+        - Check the pages listed in the appendix. They often use a separate template, e.g. a landing page or offer pages.
+      short: >
+        {count} of {total} {total|page|pages} {count|has|have} no link to the privacy policy. Put it in the
+        footer shared by all pages.
+      technical: No privacy policy link on {count} of {total} {total|page|pages}.

@@ -1,0 +1,149 @@
+id: seo/robots-txt
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Plik robots.txt jest poprawny.
+  en: The robots.txt file is correct.
+variants:
+  missing:
+    priority: minor
+    pl:
+      title: Plik robots.txt jest niedostępny
+      summary: Wyszukiwarki nie dostają pliku z zasadami odwiedzania strony.
+      whatIsWrong: >
+        Adres /robots.txt nie zwraca pliku z instrukcjami dla wyszukiwarek, np. zwraca błąd „nie
+        znaleziono” (404).
+      whyItMatters: >
+        Gdy pliku nie ma (404), Google uznaje, że może odwiedzać całą stronę, co zwykle nie szkodzi. Gdy
+        zamiast pliku serwer zwraca błąd (5xx), Google może na pewien czas wstrzymać odwiedzanie całej
+        strony.
+      howToFix:
+        - Dodaj plik robots.txt, np. przez wtyczkę SEO, i wpisz w nim adres mapy strony.
+        - Poproś developera albo firmę hostingową o naprawę, jeśli adres zwraca błąd serwera (5xx).
+      short: >
+        Plik robots.txt jest niedostępny. Dodaj go z adresem mapy strony, a błąd serwera (5xx) zgłoś
+        developerowi.
+      technical: >
+        /robots.txt nie zwraca 200. Google traktuje 4xx jak brak ograniczeń, a 5xx jak tymczasową blokadę
+        całej strony.
+    en:
+      title: The robots.txt file is not available
+      summary: Search engines get no file with the rules for crawling the site.
+      whatIsWrong: >
+        The /robots.txt address does not return the file with instructions for search engines; for
+        example, it returns “not found” (404).
+      whyItMatters: >
+        When the file is missing (404), Google assumes it may crawl the whole site, which is usually
+        fine. When the server returns an error instead (5xx), Google may pause crawling the whole site
+        for a while.
+      howToFix:
+        - Add a robots.txt file, for example with an SEO plugin, and put the sitemap address in it.
+        - Ask the developer or the hosting company to fix it if the address returns a server error (5xx).
+      short: >
+        The robots.txt file is not available. Add one with the sitemap address, and report a server
+        error (5xx) to the developer.
+      technical: >
+        /robots.txt does not return 200. Google treats 4xx as no restrictions and 5xx as a temporary
+        block of the whole site.
+  blocks-assets:
+    priority: minor
+    pl:
+      title: robots.txt blokuje Google pliki potrzebne do wyświetlenia strony
+      summary: Google nie widzi strony tak jak klienci, bo nie może pobrać części jej stylów lub skryptów.
+      whatIsWrong: >
+        Plik robots.txt blokuje Google {count} {count|plik|pliki|plików} stylów lub skryptów, których
+        używają Twoje podstrony.
+      whyItMatters: >
+        Google wczytuje stronę tak jak przeglądarka, razem ze stylami i skryptami. Bez nich może gorzej
+        zrozumieć jej treść i układ, co może obniżyć pozycję w wynikach.
+      howToFix:
+        - Usuń z robots.txt reguły, które blokują katalogi ze stylami i skryptami, albo dodaj dla nich regułę Allow.
+      short: >
+        robots.txt blokuje Google {count} {count|plik|pliki|plików} stylów lub skryptów potrzebnych do
+        wyświetlenia strony. Usuń reguły, które je blokują.
+      technical: >
+        Disallow w robots.txt (grupa Googlebot lub *) obejmuje {count} {count|plik|pliki|plików} CSS/JS
+        ładowanych przez podstrony.
+    en:
+      title: robots.txt blocks files Google needs to render the site
+      summary: Google cannot see the site the way customers do, because it cannot download some of its styles or scripts.
+      whatIsWrong: >
+        robots.txt blocks Google from {count} style or script {count|file|files} that your pages use.
+      whyItMatters: >
+        Google renders a page the way a browser does, with its styles and scripts. Without them it may
+        understand the content and layout less well, which can lower the site's position in results.
+      howToFix:
+        - Remove the robots.txt rules that block folders with styles and scripts, or add an Allow rule for them.
+      short: >
+        robots.txt blocks Google from {count} style or script {count|file|files} needed to render the
+        site. Remove the rules that block them.
+      technical: >
+        robots.txt Disallow (Googlebot or * group) covers {count} CSS/JS {count|file|files} loaded by the
+        pages.
+  syntax:
+    priority: minor
+    pl:
+      title: Plik robots.txt ma wiersze, których wyszukiwarki nie rozumieją
+      summary: Google pomija błędne wiersze, więc zapisane w nich reguły nie działają.
+      whatIsWrong: >
+        Wyszukiwarki nie rozumieją {count} {count|wiersza|wierszy|wierszy} w pliku robots.txt (numery
+        wierszy: {lines}).
+      whyItMatters: >
+        Wiersz, którego Google nie rozumie, jest pomijany, więc blokada lub zgoda, którą miał ustawić, nie
+        obowiązuje.
+      howToFix:
+        - "Popraw wskazane wiersze. Każdy powinien mieć postać „Nazwa: wartość” z nazwą znaną wyszukiwarkom, np. „User-agent”, „Disallow”, „Allow” lub „Sitemap”."
+      short: >
+        Wyszukiwarki nie rozumieją {count} {count|wiersza|wierszy|wierszy} w robots.txt (numery wierszy:
+        {lines}). {count|Popraw go|Popraw je|Popraw je}, bo Google pomija błędne wiersze.
+      technical: >
+        Nierozpoznane wiersze robots.txt ({count}): {lines}.
+    en:
+      title: The robots.txt file has lines search engines do not understand
+      summary: Google skips invalid lines, so the rules written in them do not work.
+      whatIsWrong: >
+        Search engines do not understand {count} {count|line|lines} in robots.txt (line numbers:
+        {lines}).
+      whyItMatters: >
+        Google skips a line it does not understand, so the block or permission it was meant to set does
+        not apply.
+      howToFix:
+        - "Fix the lines listed. Each should look like “Name: value” with a name search engines know, such as “User-agent”, “Disallow”, “Allow” or “Sitemap”."
+      short: >
+        Search engines do not understand {count} {count|line|lines} in robots.txt (line numbers:
+        {lines}). {count|Fix it|Fix them}, because Google skips invalid lines.
+      technical: >
+        Unrecognised robots.txt lines ({count}): {lines}.
+  no-sitemap-line:
+    priority: minor
+    pl:
+      title: robots.txt nie podaje adresu mapy strony
+      summary: Wyszukiwarki łatwiej znajdą mapę strony, jeśli robots.txt podaje jej adres.
+      whatIsWrong: >
+        Mapa strony jest dostępna pod /sitemap.xml, ale plik robots.txt nie podaje jej adresu w wierszu
+        „Sitemap:”.
+      whyItMatters: >
+        Wiersz „Sitemap:” w robots.txt to prosty sposób, żeby Google i inne wyszukiwarki znalazły mapę
+        strony bez zgłaszania jej w każdej z nich osobno.
+      howToFix:
+        - "Dopisz do robots.txt wiersz „Sitemap:” z pełnym adresem mapy strony, razem z domeną."
+      short: >
+        robots.txt nie podaje adresu mapy strony. Dopisz wiersz „Sitemap:” z jej pełnym adresem.
+      technical: >
+        Brak wpisu Sitemap w robots.txt, choć /sitemap.xml zwraca 200.
+    en:
+      title: robots.txt does not give the sitemap address
+      summary: Search engines find the sitemap more easily when robots.txt gives its address.
+      whatIsWrong: >
+        The sitemap is available at /sitemap.xml, but robots.txt does not give its address in a
+        “Sitemap:” line.
+      whyItMatters: >
+        A “Sitemap:” line in robots.txt is a simple way for Google and other search engines to find the
+        sitemap without you submitting it to each of them.
+      howToFix:
+        - "Add a “Sitemap:” line with the full sitemap address, including the domain, to robots.txt."
+      short: >
+        robots.txt does not give the sitemap address. Add a “Sitemap:” line with its full address.
+      technical: >
+        No Sitemap entry in robots.txt, although /sitemap.xml returns 200.

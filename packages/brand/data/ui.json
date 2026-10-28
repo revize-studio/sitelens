@@ -1,0 +1,5 @@
+{
+  "description": "Interface parts that are not the brand's own. `consent`: cookie banners and consent tools, matched against class, id and aria-label of an ancestor. `skipLink`: text of in-page links that skip to the content. Both case-insensitive.",
+  "consent": "cookie|consent|gdpr|rodo|\\bcmp\\b|onetrust|cookiebot|usercentrics|didomi|iubenda|cmplz|cky-|cc-window|cc_banner|termly|quantcast|klaro|osano|axeptio|complianz|borlabs",
+  "skipLink": "^(skip|przejdź|pomiń|go to (the )?(main )?content|jump to|zum inhalt|aller au contenu|saltar al contenido)"
+}

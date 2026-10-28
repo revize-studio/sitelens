@@ -1,0 +1,48 @@
+id: a11y/structure
+priority: minor
+whoFixes: developer
+effort: medium
+review: reviewed
+passed:
+  pl: Struktura podstron jest poprawnie oznaczona dla czytników ekranu.
+  en: The page structure is marked up correctly for screen readers.
+pl:
+  title: Struktura strony jest niejasna dla czytników ekranu
+  summary: Błędy w budowie podstron utrudniają poruszanie się po nich czytnikiem ekranu i klawiaturą.
+  whatIsWrong: >
+    Na sprawdzonych podstronach {count} {count|element ma|elementy mają|elementów ma} błędy w budowie,
+    np. listy lub tabele oznaczone niezgodnie z zasadami HTML, przycisk umieszczony w linku albo
+    przewijane okienko, do którego nie da się dojść klawiaturą.
+  whyItMatters: >
+    Osoby korzystające z czytników ekranu poruszają się po listach, tabelach i obszarach strony,
+    a część osób obsługuje stronę tylko klawiaturą. Błędy w budowie sprawiają, że gubią się w treści
+    albo nie mogą dotrzeć do jej części.
+  howToFix:
+    - Buduj listy i tabele ze znaczników przeznaczonych do tego w HTML (ul, ol, li, table, th) i nie wkładaj przycisków ani linków jeden w drugi.
+    - Pozwól przewijać klawiaturą każdy przewijany obszar, np. nadając mu tabindex="0".
+    - Popraw pozostałe elementy z załącznika technicznego według opisu reguł w dokumentacji axe-core.
+  short: >
+    {count} {count|element ma|elementy mają|elementów ma} błędy w budowie strony, które utrudniają
+    korzystanie z czytnika ekranu lub klawiatury. Szczegóły są w załączniku technicznym.
+  technical: >
+    axe: {rules}. {count} {count|element|elementy|elementów}.
+en:
+  title: The page structure is unclear to screen readers
+  summary: Errors in how the pages are built make them harder to navigate with a screen reader or a keyboard.
+  whatIsWrong: >
+    On the pages checked, {count} {count|element has|elements have} structural errors, for example
+    lists or tables that do not follow HTML rules, a button placed inside a link, or a scrolling box
+    that cannot be reached with the keyboard.
+  whyItMatters: >
+    Screen reader users move through lists, tables and page regions, and some people use a site with
+    the keyboard only. Structural errors make them lose their way or keep them from reaching part of
+    the content.
+  howToFix:
+    - Build lists and tables from the HTML elements meant for them (ul, ol, li, table, th) and do not nest buttons and links inside each other.
+    - Make every scrolling area scrollable with the keyboard, e.g. by giving it tabindex="0".
+    - Fix the other elements listed in the technical appendix as the axe-core documentation describes for each rule.
+  short: >
+    {count} {count|element has|elements have} structural errors that get in the way of screen reader
+    or keyboard users. The details are in the technical appendix.
+  technical: >
+    axe: {rules}. {count} {count|element|elements}.

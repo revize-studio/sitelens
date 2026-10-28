@@ -1,0 +1,46 @@
+id: perf/render-blocking
+priority: important
+whoFixes: developer
+effort: medium
+review: reviewed
+passed:
+  pl: Style i skrypty nie opóźniają wyraźnie wyświetlenia strony.
+  en: Styles and scripts do not noticeably delay the page from appearing.
+pl:
+  title: Style i skrypty opóźniają wyświetlenie strony
+  summary: Zanim cokolwiek pokaże, przeglądarka musi pobrać {count} {count|plik|pliki|plików} ze stylami lub skryptami.
+  whatIsWrong: >
+    Zanim strona się pokaże, przeglądarka musi pobrać {count} {count|plik|pliki|plików} ze stylami
+    lub skryptami. Pobranie takiego pliku trwa na telefonie do ok. {ms:ms}.
+  whyItMatters: >
+    Dopóki te pliki się nie pobiorą, odwiedzający patrzy na pusty ekran. Opóźnia to też wczytanie
+    głównej treści, które Google bierze pod uwagę przy ustalaniu kolejności wyników wyszukiwania.
+  howToFix:
+    - Wczytuj skrypty, które nie są potrzebne od razu, z atrybutem defer lub async.
+    - Wstaw style potrzebne do pierwszego ekranu bezpośrednio w kod strony, a resztę wczytuj później.
+    - Usuń style i skrypty, których strona nie używa.
+  short: >
+    Zanim strona się pokaże, przeglądarka musi pobrać {count} {count|plik|pliki|plików} ze stylami
+    lub skryptami. Wczytuj skrypty z atrybutem defer i usuń nieużywane style.
+  technical: >
+    Zasoby blokujące renderowanie (Lighthouse render-blocking-insight, telefon): do {count}
+    {count|pliku|plików|plików} na jednej podstronie; najdłuższe pobieranie jednego pliku ok. {ms:ms}.
+en:
+  title: Styles and scripts delay the page from appearing
+  summary: Before it shows anything, the browser has to download {count} style or script {count|file|files}.
+  whatIsWrong: >
+    Before the page appears, the browser has to download {count} style or script {count|file|files}.
+    On a phone, downloading such a file takes up to about {ms:ms}.
+  whyItMatters: >
+    Until these files arrive, the visitor looks at a blank screen. It also delays the main content,
+    whose loading time Google takes into account when it ranks search results.
+  howToFix:
+    - Load scripts that are not needed right away with the defer or async attribute.
+    - Put the styles needed for the first screen straight into the page code and load the rest later.
+    - Remove styles and scripts the site does not use.
+  short: >
+    Before the page appears, the browser has to download {count} style or script {count|file|files}.
+    Load scripts with defer and remove unused styles.
+  technical: >
+    Render-blocking resources (Lighthouse render-blocking-insight, mobile): up to {count}
+    {count|file|files} per page; longest single download about {ms:ms}.

@@ -1,0 +1,22 @@
+{
+  "description": "How logo candidates are recognised and scored. Patterns are case-insensitive regular expressions.",
+  "hint": "logo|logotyp|brand|wordmark|lockup|site-?title|navbar-brand|custom-logo|site-branding",
+  "lightVersion": "(^|[-_./])(white|light|negative|neg|inverse|inverted|reverse|reversed|bial[ayey]|jasn[ayey])([-_./]|$)",
+  "darkVersion": "(^|[-_./])(black|dark|ciemn[ayey]|czarn[ayey])([-_./]|$)",
+  "scores": {
+    "inlineSvg": 3,
+    "svgFile": 2,
+    "header": 3,
+    "nav": 2,
+    "footer": 1,
+    "homeLink": 2,
+    "hint": 2,
+    "nearTop": 2,
+    "sensibleSize": 1,
+    "hidden": -2
+  },
+  "nearTopPx": 200,
+  "markAspect": [0.75, 1.33],
+  "lockupAspect": 1.8,
+  "darkBackgroundLuminance": 0.2
+}

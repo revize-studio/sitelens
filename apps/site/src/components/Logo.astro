@@ -1,0 +1,35 @@
+---
+// Inlined because the hover animation doesn't run when the SVG is loaded through <img>.
+import { LOGO_SVG as raw, LOGO_VIEWBOX } from '../lib/logo';
+
+interface Props {
+  /** Unique per page – prefixes the ids inside <defs>. */
+  id: string;
+}
+
+const { id } = Astro.props;
+const prefix = `${id}-`;
+
+let svg = raw
+  .replace(
+    /<svg[^>]*>/,
+    `<svg xmlns="http://www.w3.org/2000/svg" class="sl-anim" viewBox="${LOGO_VIEWBOX}" aria-hidden="true" focusable="false">`,
+  )
+  .replace(/<title>[\s\S]*?<\/title>\s*/, '');
+
+const ids = [...svg.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
+for (const name of ids) {
+  svg = svg
+    .replaceAll(`id="${name}"`, `id="${prefix}${name}"`)
+    .replaceAll(`url(#${name})`, `url(#${prefix}${name})`)
+    .replaceAll(`href="#${name}"`, `href="#${prefix}${name}"`);
+}
+
+// The last path is the “sitelens” wordmark: let it follow the text colour of the theme.
+const last = svg.lastIndexOf('<path');
+svg = svg.slice(0, last) + svg.slice(last).replace(/fill="[^"]*"/, 'fill="currentColor"');
+
+svg = svg.replace(/(<\/defs>)/, `$1<g id="${prefix}art">`).replace(/<\/svg>\s*$/, '</g></svg>');
+---
+
+<Fragment set:html={svg} />

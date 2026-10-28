@@ -1,0 +1,86 @@
+id: sec/hsts
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Przeglądarki wiedzą, że mają łączyć się ze stroną tylko przez https.
+  en: Browsers are told to connect to the site only over https.
+variants:
+  missing:
+    priority: important
+    pl:
+      title: Przeglądarki nie wiedzą, że mają zawsze używać https
+      summary: Wejście przez adres z http może zostać przechwycone, zanim strona przekieruje odwiedzającego na https.
+      whatIsWrong: >
+        Serwer nie wysyła nagłówka HSTS (Strict-Transport-Security), który każe przeglądarce otwierać
+        Twoją stronę tylko przez szyfrowane połączenie (https).
+      whyItMatters: >
+        Bez niego każde wejście przez adres z http, np. ze starego linku, zaczyna się od połączenia bez
+        szyfrowania. Ktoś w tej samej sieci, np. w publicznym Wi-Fi, może je przechwycić i zatrzymać
+        odwiedzającego na wersji bez szyfrowania.
+      howToFix:
+        - Upewnij się, że cała strona, z www i bez www, działa przez https.
+        - Włącz nagłówek Strict-Transport-Security w ustawieniach serwera lub u dostawcy hostingu, np. z wartością max-age=31536000 (rok).
+        - Zacznij od krótszego czasu, np. tygodnia, i wydłuż go, gdy sprawdzisz, że wszystko działa.
+      short: >
+        Serwer nie wysyła nagłówka HSTS, więc przeglądarki nie wiedzą, że mają zawsze używać https.
+        Włącz Strict-Transport-Security w ustawieniach serwera.
+      technical: >
+        Brak nagłówka Strict-Transport-Security w odpowiedziach https. Przykład: Strict-Transport-Security:
+        max-age=31536000; includeSubDomains (includeSubDomains tylko wtedy, gdy wszystkie subdomeny
+        działają przez https).
+    en:
+      title: Browsers are not told to always use https
+      summary: A visit that starts at an http address can be intercepted before the site redirects it to https.
+      whatIsWrong: >
+        The server does not send the HSTS header (Strict-Transport-Security), which tells browsers to open
+        your site only over a secure connection (https).
+      whyItMatters: >
+        Without it, every visit through an http address, for example from an old link, starts with an
+        unencrypted connection. Someone on the same network, such as public Wi-Fi, can intercept it and
+        keep the visitor on the unencrypted version.
+      howToFix:
+        - Make sure the whole site, with and without www, works over https.
+        - Turn on the Strict-Transport-Security header in the server settings or with your hosting provider, e.g. with max-age=31536000 (a year).
+        - Start with a shorter time, such as a week, and extend it once you have checked that everything works.
+      short: >
+        The server does not send an HSTS header, so browsers are not told to always use https. Turn on
+        Strict-Transport-Security in the server settings.
+      technical: >
+        No Strict-Transport-Security header on https responses. Example: Strict-Transport-Security:
+        max-age=31536000; includeSubDomains (includeSubDomains only if every subdomain works over
+        https).
+  short:
+    priority: minor
+    pl:
+      title: Ustawienie HSTS obowiązuje zbyt krótko
+      summary: Przeglądarki szybko zapominają, że mają łączyć się z Twoją stroną tylko przez https.
+      whatIsWrong: >
+        Nagłówek HSTS każe przeglądarce pamiętać o używaniu https tylko przez {days}
+        {days|dzień|dni|dni}.
+      whyItMatters: >
+        Jeśli klient nie odwiedzi strony w tym czasie, przeglądarka zapomni to ustawienie i jego następne
+        wejście przez adres z http znów nie będzie chronione. Zalecany czas to co najmniej pół roku.
+      howToFix:
+        - Ustaw w nagłówku Strict-Transport-Security max-age na co najmniej 15552000 sekund (180 dni), a najlepiej na rok (31536000) lub dłużej.
+      short: >
+        HSTS obowiązuje tylko {days} {days|dzień|dni|dni}. Ustaw max-age na co najmniej 180 dni, a
+        najlepiej na rok.
+      technical: >
+        Najkrótszy max-age w Strict-Transport-Security to {days} {days|dzień|dni|dni} (próg: 15552000 s,
+        czyli 180 dni):
+    en:
+      title: The HSTS setting is too short
+      summary: Browsers soon forget that they should connect to your site only over https.
+      whatIsWrong: >
+        The HSTS header tells browsers to remember to use https for only {days} {days|day|days}.
+      whyItMatters: >
+        If a customer does not visit the site within that time, the browser forgets the setting and their
+        next visit through an http address is unprotected again. At least six months is recommended.
+      howToFix:
+        - Set max-age in the Strict-Transport-Security header to at least 15552000 seconds (180 days), ideally a year (31536000) or longer.
+      short: >
+        HSTS lasts only {days} {days|day|days}. Set max-age to at least 180 days, ideally a year.
+      technical: >
+        Shortest max-age in Strict-Transport-Security is {days} {days|day|days} (threshold: 15552000 s,
+        or 180 days):

@@ -1,0 +1,13 @@
+---
+import AuditSoon from '../components/AuditSoon.astro';
+import OnlineAudit from '../components/OnlineAudit.astro';
+import { onlineAuditReady } from '../config';
+import { useTranslations } from '../i18n';
+import Base from '../layouts/Base.astro';
+
+const t = useTranslations('pl').auditPage;
+---
+
+<Base lang="pl" page="audit" title={t.title} description={onlineAuditReady ? t.online.description : t.description}>
+  {onlineAuditReady ? <OnlineAudit lang="pl" /> : <AuditSoon lang="pl" />}
+</Base>

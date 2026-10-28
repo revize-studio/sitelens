@@ -1,0 +1,76 @@
+{
+  "description": "Heuristics for how a site addresses its visitors. Word lists are matched as whole words; `secondPersonVerb` is a regular expression for verb endings, minus the listed exceptions.",
+  "pl": {
+    "secondPerson": [
+      "ty",
+      "tobie",
+      "ciebie",
+      "cię",
+      "twój",
+      "twoja",
+      "twoje",
+      "twojej",
+      "twoim",
+      "twoją",
+      "twoich",
+      "twoi",
+      "twojego",
+      "twojemu"
+    ],
+    "secondPersonVerb": "(?<!\\p{L})\\p{L}+(?:esz|isz|ysz|asz)(?!\\p{L})",
+    "verbExceptions": [
+      "nasz",
+      "wasz",
+      "kosz",
+      "kapelusz",
+      "gulasz",
+      "afisz",
+      "tusz",
+      "marsz",
+      "mysz",
+      "plusz",
+      "arkusz",
+      "grosz",
+      "kalosz",
+      "listonosz",
+      "judasz",
+      "kontrabasz"
+    ],
+    "formal": [
+      "pan",
+      "pani",
+      "państwo",
+      "państwa",
+      "państwu",
+      "panu",
+      "panią",
+      "panem",
+      "paniom",
+      "pańskiej",
+      "pański",
+      "pańska"
+    ],
+    "formalNeedsCapital": true,
+    "titleCaseWords": "\\s\\p{Lu}\\p{Ll}+\\s\\p{Lu}"
+  },
+  "en": {
+    "secondPerson": [
+      "you",
+      "your",
+      "yours",
+      "yourself",
+      "yourselves",
+      "you're",
+      "you'll",
+      "you've"
+    ],
+    "secondPersonVerb": null,
+    "verbExceptions": [],
+    "formal": [],
+    "formalNeedsCapital": false,
+    "titleCaseWords": "\\s\\p{Lu}\\p{Ll}+\\s\\p{Lu}\\p{Ll}+"
+  },
+  "ctaMaxLength": 40,
+  "ctaMinLength": 3,
+  "languageCode": "^[A-Z]{2}$"
+}

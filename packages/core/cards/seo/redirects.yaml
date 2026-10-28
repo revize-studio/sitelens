@@ -1,0 +1,45 @@
+id: seo/redirects
+priority: minor
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Podstrony otwierają się bez zbędnych przekierowań.
+  en: Pages open without unnecessary redirects.
+pl:
+  title: "{count} {count|adres prowadzi do podstrony|adresy prowadzą do podstron|adresów prowadzi do podstron} przez kilka przekierowań"
+  summary: Każde dodatkowe przekierowanie opóźnia otwarcie podstrony.
+  whatIsWrong: >
+    {count} {count|adres przechodzi|adresy przechodzą|adresów przechodzi} przez kilka przekierowań po
+    kolei, zanim otworzy się podstrona. Najdłuższy łańcuch ma {hops}
+    {hops|przekierowanie|przekierowania|przekierowań}.
+  whyItMatters: >
+    Każde przekierowanie to dodatkowe zapytanie do serwera, więc podstrona otwiera się później. Google
+    zaleca, żeby przekierowanie prowadziło od razu do adresu docelowego.
+  howToFix:
+    - Ustaw każde przekierowanie tak, żeby prowadziło od razu do adresu docelowego.
+    - Popraw linki na stronie i adresy w mapie strony, żeby wskazywały od razu adres docelowy.
+  short: >
+    {count} {count|adres prowadzi do podstrony|adresy prowadzą do podstron|adresów prowadzi do podstron} przez kilka
+    przekierowań, najwięcej {hops} pod rząd. Ustaw przekierowania i linki tak, żeby prowadziły od razu
+    do celu.
+  technical: >
+    Łańcuchy przekierowań (2 lub więcej) na {count} {count|adresie|adresach|adresach}, najdłuższy:
+    {hops}.
+en:
+  title: "{count} {count|address goes|addresses go} through several redirects before the page opens"
+  summary: Every extra redirect delays the page opening.
+  whatIsWrong: >
+    {count} {count|address goes|addresses go} through several redirects in a row before the page opens.
+    The longest chain has {hops} {hops|redirect|redirects}.
+  whyItMatters: >
+    Every redirect is an extra request to the server, so the page opens later. Google recommends that a
+    redirect lead straight to the final address.
+  howToFix:
+    - Set every redirect to lead straight to the final address.
+    - Update links on the site and addresses in the sitemap so they point straight to the final address.
+  short: >
+    {count} {count|address goes|addresses go} through several redirects, up to {hops} in a row. Point
+    redirects and links straight to the final address.
+  technical: >
+    Redirect chains (2 or more hops) on {count} {count|address|addresses}, longest: {hops}.

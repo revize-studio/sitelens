@@ -1,0 +1,44 @@
+id: a11y/zoom
+priority: important
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Strona nie blokuje powiększania na telefonie.
+  en: The site does not block zooming on phones.
+pl:
+  title: Strona blokuje powiększanie na telefonie
+  summary: Na części telefonów nie da się powiększyć strony palcami, więc drobny tekst może być nieczytelny.
+  whatIsWrong: >
+    Ustawienie viewport w kodzie strony wyłącza albo ogranicza powiększanie dwoma palcami. Safari na
+    iPhonie tę blokadę pomija, ale Chrome na Androidzie domyślnie jej przestrzega.
+  whyItMatters: >
+    Osoby słabowidzące powiększają stronę, żeby przeczytać drobny tekst. Wytyczne WCAG wymagają, żeby
+    tekst dało się powiększyć do 200% bez utraty treści.
+  howToFix:
+    - Usuń z ustawienia viewport fragmenty user-scalable=no i maximum-scale, zostawiając width=device-width, initial-scale=1.
+    - Sprawdź potem na telefonie z Androidem, czy stronę da się powiększyć dwoma palcami.
+  short: >
+    Strona blokuje powiększanie na części telefonów. Usuń user-scalable=no i maximum-scale z ustawienia
+    viewport.
+  technical: >
+    <meta name="viewport"> z user-scalable=no (lub 0) albo maximum-scale poniżej 2 (WCAG 1.4.4, reguła
+    axe meta-viewport). Znaleziona wartość:
+en:
+  title: The site blocks zooming on phones
+  summary: On some phones the site cannot be zoomed with two fingers, so small text may be unreadable.
+  whatIsWrong: >
+    The viewport setting in the page code turns off or limits pinch-to-zoom. Safari on iPhone ignores
+    this block, but Chrome on Android follows it by default.
+  whyItMatters: >
+    People with low vision zoom in to read small text. WCAG requires that text can be enlarged to 200%
+    without losing content.
+  howToFix:
+    - Remove user-scalable=no and maximum-scale from the viewport setting, leaving width=device-width, initial-scale=1.
+    - Then check on an Android phone that the site can be zoomed with two fingers.
+  short: >
+    The site blocks zooming on some phones. Remove user-scalable=no and maximum-scale from the viewport
+    setting.
+  technical: >
+    <meta name="viewport"> with user-scalable=no (or 0) or maximum-scale below 2 (WCAG 1.4.4, axe rule
+    meta-viewport). Value found:

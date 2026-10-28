@@ -1,0 +1,84 @@
+id: sec/certificate
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Certyfikat bezpieczeństwa jest ważny do {expires:date}.
+  en: The security certificate is valid until {expires:date}.
+variants:
+  invalid:
+    priority: critical
+    pl:
+      title: Certyfikat bezpieczeństwa strony jest nieważny lub źle ustawiony
+      summary: Zamiast Twojej strony przeglądarka może pokazać ostrzeżenie, że połączenie nie jest prywatne.
+      whatIsWrong: >
+        Certyfikat bezpieczeństwa nie przeszedł sprawdzenia, więc przeglądarka nie może potwierdzić, że
+        łączy się z Twoją stroną. Komunikat błędu dla developera: {reason}.
+      whyItMatters: >
+        Przeglądarka może pokazać klientom zamiast strony pełnoekranowe ostrzeżenie „Połączenie nie jest
+        prywatne”. Nie da się też potwierdzić, że dane z formularzy trafiają do Ciebie, a nie do kogoś,
+        kto podszywa się pod Twoją stronę.
+      howToFix:
+        - Odnów lub wymień certyfikat w panelu hostingu albo poproś o to firmę hostingową. Jeśli hosting oferuje darmowy certyfikat Let's Encrypt, włącz go z automatycznym odnawianiem.
+        - Sprawdź, czy certyfikat obejmuje adres strony z www i bez www.
+        - Poproś developera o sprawdzenie, czy serwer wysyła pełny łańcuch certyfikatów, razem z certyfikatem pośrednim.
+      short: >
+        Certyfikat bezpieczeństwa strony nie przeszedł sprawdzenia (błąd: {reason}). Odnów lub wymień go
+        w panelu hostingu.
+      technical: "Weryfikacja certyfikatu TLS w Node.js nie powiodła się (błąd; wystawca):"
+    en:
+      title: The security certificate is invalid or misconfigured
+      summary: Instead of your site, browsers may show a warning that the connection is not private.
+      whatIsWrong: >
+        The security certificate failed verification, so the browser cannot confirm that it is really
+        connecting to your site. Error message for the developer: {reason}.
+      whyItMatters: >
+        Browsers may show your customers a full-page “Your connection is not private” warning instead of
+        the site. There is also no way to confirm that form data reaches you and not someone impersonating
+        your site.
+      howToFix:
+        - Renew or replace the certificate in your hosting panel, or ask your hosting provider to do it. If your host offers a free Let's Encrypt certificate, turn it on with automatic renewal.
+        - Check that the certificate covers the site's address both with and without www.
+        - Ask your developer to check that the server sends the full certificate chain, including the intermediate certificate.
+      short: >
+        The security certificate failed verification (error: {reason}). Renew or replace it in your
+        hosting panel.
+      technical: "TLS certificate verification in Node.js failed (error; issuer):"
+  expiring:
+    priority: important
+    pl:
+      title: Certyfikat bezpieczeństwa wkrótce wygaśnie
+      summary: Certyfikat bezpieczeństwa jest ważny tylko do {expires:date}, a potem przeglądarki pokażą zamiast strony ostrzeżenie.
+      whatIsWrong: >
+        Certyfikat bezpieczeństwa strony jest ważny do {expires:date}, czyli jeszcze tylko {days}
+        {days|dzień|dni|dni}.
+      whyItMatters: >
+        Po tej dacie przeglądarki pokażą klientom zamiast Twojej strony ostrzeżenie „Połączenie nie jest
+        prywatne”, dopóki certyfikat nie zostanie odnowiony.
+      howToFix:
+        - Odnów certyfikat w panelu hostingu albo poproś o to firmę hostingową lub developera.
+        - Sprawdź, czy automatyczne odnawianie jest włączone i działa. Zwykle certyfikat odnawia się wcześniej, więc tak krótki termin może oznaczać, że coś je zatrzymało.
+      short: >
+        Certyfikat bezpieczeństwa wygasa {expires:date}. Odnów go w panelu hostingu i sprawdź, czy
+        automatyczne odnawianie działa.
+      technical: >
+        Certyfikat TLS wygasa za {days} {days|dzień|dni|dni} (próg ostrzeżenia: 14 dni). Koniec ważności
+        i wystawca:
+    en:
+      title: The security certificate expires soon
+      summary: The security certificate is valid only until {expires:date}, and after that browsers will show a warning instead of the site.
+      whatIsWrong: >
+        The site's security certificate is valid until {expires:date}, only {days} more
+        {days|day|days}.
+      whyItMatters: >
+        After that date, browsers will show your customers a “Your connection is not private” warning
+        instead of your site until the certificate is renewed.
+      howToFix:
+        - Renew the certificate in your hosting panel, or ask your hosting provider or developer to do it.
+        - Check that automatic renewal is turned on and working. Renewal usually happens earlier, so a certificate this close to expiry may mean something has stopped it.
+      short: >
+        The security certificate expires on {expires:date}. Renew it in your hosting panel and check that
+        automatic renewal works.
+      technical: >
+        TLS certificate expires in {days} {days|day|days} (warning threshold: 14 days). Expiry date and
+        issuer:

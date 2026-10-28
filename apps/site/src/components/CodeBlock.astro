@@ -1,0 +1,65 @@
+---
+import { highlightYaml } from '../lib/highlight';
+
+interface Props {
+  code: string;
+  file: string;
+  copyLabel: string;
+  copiedLabel: string;
+  announcement: string;
+}
+
+const { code, file, copyLabel, copiedLabel, announcement } = Astro.props;
+---
+
+<div class="code" data-copy-root>
+  <div class="head">
+    <span class="file">{file}</span>
+    <button
+      class="btn btn-secondary btn-small"
+      type="button"
+      data-copy={code}
+      data-label={copyLabel}
+      data-done={copiedLabel}
+      data-announcement={announcement}>{copyLabel}</button
+    >
+    <span class="visually-hidden" role="status" data-copy-status></span>
+  </div>
+  <!-- tabindex: lets keyboard users scroll long lines (WCAG 2.1.1) -->
+  <pre tabindex="0" aria-label={file}><code set:html={highlightYaml(code)} /></pre>
+</div>
+
+<style>
+  .code {
+    overflow: hidden;
+    border-radius: var(--sl-radius-l);
+    background: var(--sl-surface);
+    box-shadow: inset 0 0 0 1px var(--sl-line);
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sl-space-4);
+    padding: 10px 10px 10px 20px;
+    border-bottom: 1px solid var(--sl-line);
+  }
+  .file {
+    overflow: hidden;
+    color: var(--sl-text-2);
+    font-family: var(--sl-font-mono);
+    font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .btn { min-width: 104px; }
+  pre {
+    margin: 0;
+    padding: 20px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.65;
+    tab-size: 2;
+  }
+  pre:focus-visible { outline-offset: -3px; }
+</style>

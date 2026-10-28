@@ -1,0 +1,17 @@
+{
+  "name": "@sitelens/collect-web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@sitelens/brand": "workspace:*",
+    "@sitelens/core": "workspace:*",
+    "@sitelens/crawl": "workspace:*"
+  },
+  "devDependencies": {
+    "@sitelens/collect-node": "workspace:*"
+  }
+}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="sitelens">
+<title>sitelens</title>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCFCFD"/><stop offset="1" stop-color="#EBEDF2"/></linearGradient></defs>
+<rect x="4" y="4" width="192" height="192" rx="50" fill="url(#g)" stroke="#E3E5EB" stroke-width="4"/>
+<rect x="38" y="46" width="70" height="18" rx="9" fill="#1C1D22"/>
+<rect x="38" y="80" width="80" height="13" rx="6.5" fill="#C5CAD4"/>
+<rect x="38" y="106" width="56" height="13" rx="6.5" fill="#C5CAD4"/>
+<circle cx="128" cy="128" r="42" fill="#FAFBFD" stroke="#2B5CF0" stroke-width="14"/>
+</svg>

@@ -1,0 +1,5 @@
+# Copy to .dev.vars for `pnpm --filter @sitelens/proxy dev`. These are Cloudflare's public
+# Turnstile test values (the always-pass secret), not real secrets.
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+ALLOWED_ORIGINS=http://localhost:4321,http://127.0.0.1:4321,http://127.0.0.1:4322
+TURNSTILE_TEST=true

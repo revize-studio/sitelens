@@ -1,0 +1,15 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": ["packages/core/src/checks/seo.ts"],
+        "createdAt": "2026-10-24T15:51:28.821Z",
+        "reason": "Claude: false positive, '<img>' appears inside an English details string of an audit check, not in rendered markup"
+      }
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+id: perf/inp
+priority: minor
+whoFixes: developer
+effort: medium
+review: reviewed
+passed:
+  pl: Podczas wczytywania strona szybko reaguje na kliknięcia.
+  en: The page responds quickly to taps while it loads.
+pl:
+  title: Podczas wczytywania strona reaguje na kliknięcia z opóźnieniem
+  summary: Gdy strona się wczytuje, przeglądarka jest zajęta i nie reaguje od razu na kliknięcia.
+  whatIsWrong: >
+    Na podstronie z najgorszym wynikiem przeglądarka na telefonie jest podczas wczytywania zajęta,
+    najczęściej wykonywaniem skryptów, i łącznie przez {value:ms} nie może od razu zareagować na
+    kliknięcie. Dobry wynik to najwyżej {good:ms}.
+  whyItMatters: >
+    Odwiedzający klika i nic się nie dzieje, więc klika jeszcze raz albo uznaje, że strona nie działa.
+  howToFix:
+    - Usuń skrypty, których strona nie potrzebuje, zwłaszcza dodatki i widżety innych firm.
+    - Wczytuj czat i osadzone filmy dopiero wtedy, gdy ktoś chce z nich skorzystać, a nie razem ze stroną.
+    - Podziel długie zadania skryptów na mniejsze części, żeby przeglądarka mogła między nimi reagować na kliknięcia.
+  short: >
+    Podczas wczytywania strona łącznie przez {value:ms} nie reaguje od razu na kliknięcia (dobry
+    wynik to najwyżej {good:ms}). Usuń zbędne skrypty, zwłaszcza dodatki innych firm.
+  technical: >
+    TBT {value:ms} (Lighthouse, telefon), dobrze ≤ {good:ms}. Powyżej progu na {count} z {total}
+    {total|podstrony|podstron|podstron}. TBT to laboratoryjny wskaźnik zastępczy dla INP, którego
+    test bez interakcji nie mierzy.
+en:
+  title: The page responds to taps with a delay while it loads
+  summary: While the page loads, the browser is busy and does not respond to taps right away.
+  whatIsWrong: >
+    On the page with the worst result, the browser on a phone is busy while the page loads, most
+    often running scripts, and for {value:ms} in total it cannot respond to a tap right away. A good
+    result is {good:ms} or less.
+  whyItMatters: >
+    A visitor taps and nothing happens, so they tap again or decide the site is broken.
+  howToFix:
+    - Remove scripts the site does not need, especially third-party add-ons and widgets.
+    - Load chat and embedded videos only when someone wants to use them, not together with the page.
+    - Split long script tasks into smaller parts so the browser can respond to taps in between.
+  short: >
+    While loading, the page cannot respond to taps right away for {value:ms} in total (a good result
+    is {good:ms} or less). Remove scripts you do not need, especially third-party add-ons.
+  technical: >
+    TBT {value:ms} (Lighthouse, mobile), good ≤ {good:ms}. Above the threshold on {count} of {total}
+    {total|page|pages}. TBT is a lab proxy for INP, which a test without interactions does not measure.

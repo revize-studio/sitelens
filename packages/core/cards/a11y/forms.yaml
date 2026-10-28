@@ -1,0 +1,47 @@
+id: a11y/forms
+priority: important
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Pola formularzy mają opisy czytelne dla czytników ekranu.
+  en: Form fields have labels that screen readers can read out.
+pl:
+  title: Część pól formularzy jest źle opisana
+  summary: Osoba korzystająca z czytnika ekranu może nie wiedzieć, co wpisać w pole formularza.
+  whatIsWrong: >
+    Na sprawdzonych podstronach {count} {count|pole formularza nie ma|pola formularza nie mają|pól formularza nie ma}
+    poprawnego opisu w kodzie, np. etykiety „Imię” czy „E-mail”. Pole bez etykiety czytnik ekranu
+    ogłasza tylko jako pole do wypełnienia, bez informacji, co w nie wpisać.
+  whyItMatters: >
+    Osoba niewidoma może przez to nie wysłać formularza kontaktowego ani zamówienia. Etykieta
+    powiązana z polem pomaga też innym, bo kliknięcie w nią aktywuje pole, więc na telefonie łatwiej
+    w nie trafić.
+  howToFix:
+    - Dodaj do każdego pola widoczną etykietę, np. „Imię”, „E-mail”, „Wiadomość”, i powiąż ją z polem (znacznik label z atrybutem for).
+    - Popraw też pola z kilkoma etykietami albo z błędną wartością autocomplete, jeśli wymienia je załącznik techniczny.
+  short: >
+    {count} {count|pole formularza nie ma|pola formularza nie mają|pól formularza nie ma} poprawnego
+    opisu dla czytników ekranu. Dodaj do każdego pola widoczną etykietę powiązaną z polem.
+  technical: >
+    axe: {rules}. {count} {count|pole|pola|pól} bez powiązanej etykiety lub innej nazwy dostępnej,
+    z kilkoma etykietami albo z niepoprawną wartością autocomplete.
+en:
+  title: Some form fields are not labelled correctly
+  summary: A screen reader user may not know what to type into a form field.
+  whatIsWrong: >
+    On the pages checked, {count} form {count|field has|fields have} no proper label in the page code,
+    such as “Name” or “Email”. A screen reader announces a field without a label only as something to
+    fill in, without saying what to type.
+  whyItMatters: >
+    Because of this, a blind visitor may be unable to send the contact form or an order. A label linked
+    to its field helps everyone else too: clicking it activates the field, so it is easier to hit on a phone.
+  howToFix:
+    - Give every field a visible label, e.g. “Name”, “Email”, “Message”, and link it to the field (a label element with a for attribute).
+    - Also fix fields with several labels or an invalid autocomplete value if the technical appendix lists them.
+  short: >
+    {count} form {count|field has|fields have} no proper label for screen readers. Give every field a
+    visible label linked to it.
+  technical: >
+    axe: {rules}. {count} {count|field|fields} without a linked label or other accessible name, with
+    several labels, or with an invalid autocomplete value.

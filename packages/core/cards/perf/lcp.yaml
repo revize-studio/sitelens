@@ -1,0 +1,48 @@
+id: perf/lcp
+priority: important
+whoFixes: developer
+effort: medium
+review: reviewed
+passed:
+  pl: Na telefonie główna treść pojawia się szybko.
+  en: On a phone, the main content appears quickly.
+pl:
+  title: Strona ładuje się za wolno na telefonie
+  summary: Na telefonie główna treść pojawia się nawet po {value:s}, a dobry wynik to najwyżej {good:s}.
+  whatIsWrong: >
+    Na najwolniejszej podstronie główna treść, czyli największe zdjęcie, film lub blok tekstu na
+    pierwszym ekranie, pojawia się na telefonie dopiero po {value:s}. Dobry wynik to najwyżej {good:s}.
+  whyItMatters: >
+    Im dłużej trzeba czekać, tym więcej osób rezygnuje, zanim zobaczy Twoją ofertę. Google bierze też
+    szybkość ładowania pod uwagę przy ustalaniu kolejności wyników wyszukiwania.
+  howToFix:
+    - Zmniejsz największe zdjęcie na górze strony, jeśli takie jest, i zapisz je w formacie WebP lub AVIF.
+    - Wyłącz dla tego zdjęcia opóźnione wczytywanie (lazy loading), żeby przeglądarka pobierała je od razu.
+    - Ogranicz style i skrypty, które przeglądarka musi pobrać, zanim cokolwiek pokaże.
+    - "Ustaw czcionki tak, żeby tekst był widoczny, zanim się wczytają (np. font-display: swap)."
+  short: >
+    Na telefonie główna treść pojawia się nawet po {value:s}, a dobry wynik to najwyżej {good:s}.
+    Zacznij od największego zdjęcia na górze strony: zmniejsz je i zapisz w formacie WebP lub AVIF.
+  technical: >
+    LCP {value:s} (Lighthouse, telefon, symulowane wolne 4G), dobrze ≤ {good:s}. Powyżej progu na
+    {count} z {total} {total|podstrony|podstron|podstron}.
+en:
+  title: The site loads too slowly on phones
+  summary: On a phone the main content takes up to {value:s} to appear; a good result is {good:s} or less.
+  whatIsWrong: >
+    On the slowest page, the main content (the largest image, video or block of text on the first
+    screen) appears on a phone only after {value:s}. A good result is {good:s} or less.
+  whyItMatters: >
+    The longer people have to wait, the more of them leave before they see your offer. Google also
+    takes loading speed into account when it ranks search results.
+  howToFix:
+    - Shrink the largest image at the top of the page, if there is one, and save it as WebP or AVIF.
+    - Turn off lazy loading for that image so the browser downloads it straight away.
+    - Cut down the styles and scripts the browser has to download before it can show anything.
+    - "Set up fonts so text is visible before they finish loading (for example font-display: swap)."
+  short: >
+    On a phone the main content takes up to {value:s} to appear; a good result is {good:s} or less.
+    Start with the largest image at the top of the page: shrink it and save it as WebP or AVIF.
+  technical: >
+    LCP {value:s} (Lighthouse, mobile, simulated slow 4G), good ≤ {good:s}. Above the threshold on
+    {count} of {total} {total|page|pages}.

@@ -1,0 +1,11 @@
+---
+import TerminalGuide from '../../components/TerminalGuide.astro';
+import { useTranslations } from '../../i18n';
+import Base from '../../layouts/Base.astro';
+
+const t = useTranslations('en').terminalPage;
+---
+
+<Base lang="en" page="terminal" title={t.title} description={t.description}>
+  <TerminalGuide lang="en" />
+</Base>

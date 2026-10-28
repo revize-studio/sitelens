@@ -1,0 +1,109 @@
+---
+import { routes, useTranslations, type Lang } from '../i18n';
+import { rich } from '../lib/rich';
+import CodeBlock from './CodeBlock.astro';
+import CopyCommand from './CopyCommand.astro';
+import Icon3D from './Icon3D.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).start;
+const copy = { copyLabel: t.copy, copiedLabel: t.copied, announcement: t.copiedAnnouncement };
+---
+
+<section class="section" id={t.id} aria-labelledby="start-title">
+  <div class="ambient alt" aria-hidden="true"></div>
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <h2 id="start-title">{t.title}</h2>
+      <p>{t.lead}</p>
+    </header>
+
+    <div class="ways">
+      <article class="tile lift way" data-reveal="1">
+        <Icon3D name="browser" />
+        <h3>{t.online.title}</h3>
+        <ol class="steps">{t.online.steps.map((step) => <li>{step}</li>)}</ol>
+        <a class="btn btn-primary" href={routes.audit[lang]}>{t.online.cta}</a>
+      </article>
+
+      <article class="tile lift way" data-reveal="2">
+        <Icon3D name="terminal" />
+        <h3>{t.terminal.title}</h3>
+        <ol class="steps">
+          <li>{t.terminal.steps[0]}</li>
+          <li>
+            {t.terminal.steps[1]}
+            <CopyCommand command={t.terminal.command} {...copy} />
+          </li>
+          <li>{t.terminal.steps[2]}</li>
+        </ol>
+        <a class="guide" href={routes.terminal[lang]}>{t.terminal.guide}</a>
+      </article>
+    </div>
+
+    <article class="tile lift ci" data-reveal="3">
+      <div class="ci-text">
+        <Icon3D name="code" />
+        <h3>{t.ci.title}</h3>
+        <p set:html={rich(t.ci.text)} />
+      </div>
+      <CodeBlock code={t.ci.yaml} file={t.ci.file} {...copy} />
+    </article>
+  </div>
+</section>
+
+<style>
+  .ways {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sl-space-5);
+  }
+  .way {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sl-space-5);
+    padding: clamp(28px, 3.4vw, 44px);
+  }
+  h3 {
+    font-size: clamp(1.5rem, 1.2rem + 0.9vw, 1.875rem);
+    letter-spacing: -0.025em;
+  }
+  .steps { width: 100%; }
+  .steps :global(.cmd) { margin-top: var(--sl-space-3); }
+  .way .btn,
+  .guide { margin-top: auto; }
+  .guide { font-weight: 500; }
+
+  .ci {
+    display: grid;
+    gap: var(--sl-space-5);
+    margin-top: var(--sl-space-5);
+    padding: clamp(28px, 3.4vw, 44px);
+  }
+  .ci-text h3 { margin-top: var(--sl-space-5); }
+  .ci-text p {
+    max-width: 40rem;
+    margin-top: var(--sl-space-3);
+    color: var(--sl-text-2);
+  }
+  .ci-text :global(code) {
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: var(--sl-surface-2);
+    color: var(--sl-text);
+    font-size: 0.9em;
+  }
+
+  @media (max-width: 899px) {
+    .ways { grid-template-columns: minmax(0, 1fr); }
+  }
+  /* Nobody sets up CI from a phone; the card keeps its description, the workflow file waits for a desktop */
+  @media (max-width: 639px) {
+    .ci > :global(.code) { display: none; }
+  }
+</style>

@@ -1,0 +1,13 @@
+{
+  "name": "@sitelens/proxy",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes wrangler@4.152.0 dev",
+    "deploy": "npx --yes wrangler@4.152.0 deploy"
+  },
+  "dependencies": {
+    "@sitelens/core": "workspace:*"
+  }
+}

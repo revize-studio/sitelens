@@ -1,0 +1,159 @@
+---
+import { Font } from 'astro:assets';
+import cli from '../../../../packages/cli/package.json';
+import tokens from '../../../../public/brand/tokens.json';
+import Footer from '../components/Footer.astro';
+import IconDefs from '../components/IconDefs.astro';
+import Nav from '../components/Nav.astro';
+import { CONTACT_EMAIL, STUDIO_URL } from '../config';
+import { languages, routes, useTranslations, type Lang, type PageKey } from '../i18n';
+import '../styles/global.css';
+
+interface Props {
+  lang: Lang;
+  /** Omit for pages without a translated twin, such as 404. */
+  page?: PageKey;
+  title: string;
+  description: string;
+  structuredData?: boolean;
+  /** Pages that should stay out of search results, such as 404 */
+  noindex?: boolean;
+}
+
+const { lang, page, title, description, structuredData = false, noindex = false } = Astro.props;
+const t = useTranslations(lang);
+const site = Astro.site ?? new URL(Astro.url.origin);
+const canonical = page ? new URL(routes[page][lang], site).href : undefined;
+const alternates = page ? languages.map((l) => ({ lang: l, href: new URL(routes[page][l], site).href })) : [];
+const home = new URL(routes.home[lang], site).href;
+const ogImage = new URL(lang === 'en' ? '/og/og-image-en.png' : '/og/og-image.png', site).href;
+const otherLocales = languages.filter((l) => l !== lang).map((l) => useTranslations(l).locale);
+// FAQ answers mark links as [text](target); structured data gets the text only
+const plain = (text: string) => text.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/`([^`]+)`/g, '$1');
+const light = tokens.theme.light.bg;
+const dark = tokens.theme.dark.bg;
+
+const studio = { '@id': `${STUDIO_URL}/#organization` };
+const jsonLd = structuredData
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        { '@type': 'Organization', ...studio, name: 'Revize Studio', url: STUDIO_URL, email: CONTACT_EMAIL },
+        { '@type': 'WebSite', '@id': `${home}#website`, name: 'sitelens', url: home, inLanguage: lang, publisher: studio },
+        {
+          '@type': 'SoftwareApplication',
+          name: 'sitelens',
+          description: t.meta.description,
+          url: canonical,
+          image: ogImage,
+          inLanguage: lang,
+          applicationCategory: 'DeveloperApplication',
+          operatingSystem: 'macOS, Windows, Linux',
+          softwareVersion: cli.version,
+          downloadUrl: 'https://www.npmjs.com/package/sitelens',
+          isAccessibleForFree: true,
+          license: 'https://opensource.org/licenses/MIT',
+          offers: { '@type': 'Offer', price: '0', priceCurrency: 'PLN' },
+          publisher: studio,
+        },
+        {
+          '@type': 'FAQPage',
+          mainEntity: t.faq.items.map((item) => ({
+            '@type': 'Question',
+            name: item.q,
+            acceptedAnswer: { '@type': 'Answer', text: plain(item.a) },
+          })),
+        },
+      ],
+    })
+  : undefined;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content={light} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    <script is:inline define:vars={{ light, dark }}>
+      // Runs before first paint. A theme picked with the switch wins, otherwise the system's.
+      var d = document.documentElement;
+      var ua = navigator.userAgentData;
+      var stored = null;
+      try { stored = localStorage.getItem('sitelens-theme'); } catch (e) {}
+      var theme = stored === 'dark' || stored === 'light' ? stored : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      d.classList.add('js');
+      d.setAttribute('data-theme', theme);
+      // Visitors in Poland (Polish time zone or browser language) get Polish, everyone else English,
+      // until they pick a language with the switch. Crawlers and test tools stay where they are.
+      var languages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+      var local = Intl.DateTimeFormat().resolvedOptions().timeZone === 'Europe/Warsaw' || /^pl\b/i.test(languages[0]) ? 'pl' : 'en';
+      d.setAttribute('data-local-lang', local);
+      var chosen = null;
+      try { chosen = localStorage.getItem('sitelens-lang'); } catch (e) {}
+      var wanted = chosen === 'pl' || chosen === 'en' ? chosen : local;
+      var version = document.querySelector('link[rel="alternate"][hreflang="' + wanted + '"]');
+      // Lighthouse and PageSpeed Insights send client hints without the decoy brand every real Chromium adds
+      var measuring = ua && ua.brands && !ua.brands.some(function (b) { return /not.?a.?brand/i.test(b.brand); });
+      if (version && wanted !== d.lang && !measuring && !/bot|crawl|spider|slurp|lighthouse|headless|sitelens/i.test(navigator.userAgent))
+        location.replace(new URL(version.href).pathname + location.search + location.hash);
+      // Only Chromium draws SVG filters in backdrop-filter; elsewhere the glass falls back to blur.
+      if (ua && ua.brands && ua.brands.some(function (b) { return /Chromium/.test(b.brand); })) d.classList.add('refract');
+      // The terminal guide opens on the visitor's system without a layout shift.
+      var platform = (ua && ua.platform) || navigator.platform;
+      if (/win/i.test(platform)) d.setAttribute('data-os', 'windows');
+      else if (/linux/i.test(platform) && !/android/i.test(navigator.userAgent)) d.setAttribute('data-os', 'linux');
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? dark : light);
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    {page && <link rel="alternate" hreflang="x-default" href={new URL(routes[page].pl, site).href} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="sitelens" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.meta.ogImageAlt} />
+    <meta property="og:locale" content={t.locale} />
+    {otherLocales.map((locale) => <meta property="og:locale:alternate" content={locale} />)}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={t.meta.ogImageAlt} />
+
+    <link rel="icon" href="/favicon/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <Font cssVariable="--sl-font-face-sans" preload />
+    <Font cssVariable="--sl-font-face-mono" />
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+  </head>
+  <body>
+    <IconDefs />
+    <div class="backdrop" aria-hidden="true"></div>
+    <a class="skip-link" href="#tresc">{t.skipLink}</a>
+    <Nav lang={lang} page={page} />
+    <main id="tresc" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} page={page} />
+  </body>
+</html>
+
+<style>
+  main:focus { outline: none; }
+</style>
+
+<script>
+  import '../scripts/site';
+</script>

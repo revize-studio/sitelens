@@ -1,0 +1,48 @@
+id: seo/image-alt
+priority: minor
+whoFixes: owner
+effort: small
+review: reviewed
+passed:
+  pl: Zdjęcia na stronie mają opisy (tekst alternatywny), z których korzysta Google.
+  en: Images on the site have descriptions (alternative text) that Google can use.
+pl:
+  title: "{count} {count|zdjęcie nie ma|zdjęcia nie mają|zdjęć nie ma} opisu dla Google"
+  summary: Google ma mniej wskazówek, co pokazują Twoje zdjęcia, więc trudniej je znaleźć w Grafice Google.
+  whatIsWrong: >
+    {count} {count|zdjęcie na stronie nie ma|zdjęcia na stronie nie mają|zdjęć na stronie nie ma}
+    tekstu alternatywnego (atrybutu alt), czyli krótkiego opisu tego, co widać na zdjęciu.
+  whyItMatters: >
+    Google ustala, co przedstawia zdjęcie, na podstawie tekstu alternatywnego, samego obrazu i treści
+    podstrony. Bez opisu trudniej dopasować zdjęcie do wyszukiwań w Grafice Google, a zdjęcie będące
+    linkiem nie mówi Google, dokąd ten link prowadzi.
+  howToFix:
+    - Kliknij zdjęcie w panelu strony i w polu „Tekst alternatywny” opisz krótko, co na nim widać, np. „Tort weselny z białymi różami”.
+    - Pisz naturalnie, bez wyliczania słów kluczowych, bo Google odradza takie opisy.
+    - Poproś developera o opisy zdjęć, których nie da się zmienić w panelu, np. wstawionych w szablonie strony.
+  short: >
+    {count} {count|zdjęcie nie ma|zdjęcia nie mają|zdjęć nie ma} opisu, z którego Google odczytuje, co
+    jest na zdjęciu. Uzupełnij pole „Tekst alternatywny” przy zdjęciach w panelu strony.
+  technical: >
+    {count} {count|element img|elementy img|elementów img} bez atrybutu alt (pominięte dekoracyjne:
+    alt="", role=presentation/none, aria-hidden).
+en:
+  title: "{count} {count|image has|images have} no description for Google"
+  summary: Google has fewer clues about what your images show, which makes them harder to find in Google Images.
+  whatIsWrong: >
+    {count} {count|image on the site has|images on the site have} no alternative text (alt attribute),
+    the short description of what the image shows.
+  whyItMatters: >
+    Google works out what an image shows from its alternative text, the image itself and the page
+    content. Without a description the image is harder to match to searches in Google Images, and an
+    image used as a link does not tell Google where the link leads.
+  howToFix:
+    - Click the image in the admin panel and briefly describe what it shows in the “Alternative text” field, e.g. “Wedding cake with white roses”.
+    - Write naturally, without lists of keywords, because Google advises against them.
+    - Ask the developer to add descriptions to images you cannot edit in the admin panel, such as those built into the site template.
+  short: >
+    {count} {count|image has|images have} no description that Google can read to learn what the image
+    shows. Fill in the “Alternative text” field for the images in the admin panel.
+  technical: >
+    {count} <img> {count|element|elements} without an alt attribute (decorative ones skipped: alt="",
+    role=presentation/none, aria-hidden).

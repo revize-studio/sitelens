@@ -1,0 +1,73 @@
+id: a11y/language
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Strona podaje w kodzie, w jakim języku jest napisana.
+  en: The site's code says what language it is written in.
+variants:
+  missing:
+    priority: important
+    pl:
+      title: Strona nie podaje, w jakim języku jest napisana
+      summary: Czytnik ekranu może przeczytać tekst z wymową niewłaściwego języka.
+      whatIsWrong: >
+        W kodzie strony brakuje atrybutu lang, który mówi przeglądarce i czytnikowi ekranu, w jakim
+        języku jest treść.
+      whyItMatters: >
+        Czytnik ekranu dobiera wymowę do języka strony. Bez tej informacji może czytać tekst według
+        zasad innego języka, np. polski tekst z angielską wymową, co trudno zrozumieć.
+      howToFix:
+        - Dodaj do znacznika <html> atrybut lang z kodem języka treści, np. <html lang="pl">.
+        - Podaj właściwy kod na podstronach w innych językach, np. lang="en" w wersji angielskiej.
+      short: Kod strony nie podaje języka treści. Dodaj do znacznika <html> atrybut lang, np. lang="pl".
+      technical: Brak atrybutu lang w <html> albo pusta wartość (WCAG 3.1.1).
+    en:
+      title: The site does not say what language it is written in
+      summary: A screen reader may read the text with the pronunciation of the wrong language.
+      whatIsWrong: >
+        The page code lacks the lang attribute, which tells browsers and screen readers what language
+        the content is in.
+      whyItMatters: >
+        A screen reader matches its pronunciation to the page language. Without this information it may
+        read the text by the rules of another language, for example English text with Polish
+        pronunciation, which is hard to follow.
+      howToFix:
+        - Add a lang attribute with the content language code to the <html> tag, e.g. <html lang="en">.
+        - Give pages in other languages their own code, e.g. lang="pl" on the Polish version.
+      short: The page code does not declare the content language. Add a lang attribute to the <html> tag, e.g. lang="en".
+      technical: No lang attribute on <html>, or an empty one (WCAG 3.1.1).
+  invalid:
+    priority: important
+    pl:
+      title: Strona podaje błędny kod języka
+      summary: Czytnik ekranu może nie rozpoznać języka strony i przeczytać tekst z niewłaściwą wymową.
+      whatIsWrong: >
+        Atrybut lang w kodzie strony ma wartość, która nie jest poprawnym kodem języka (znalezioną
+        wartość podajemy w załączniku technicznym). Poprawny kod to np. pl albo pl-PL, z łącznikiem,
+        a nie z podkreślnikiem.
+      whyItMatters: >
+        Czytnik ekranu może nie rozpoznać takiego kodu i czytać tekst według zasad innego języka,
+        co trudno zrozumieć.
+      howToFix:
+        - Wpisz poprawny kod języka, np. lang="pl" albo lang="pl-PL".
+      short: Atrybut lang ma niepoprawną wartość. Wpisz poprawny kod języka, np. lang="pl".
+      technical: >
+        Wartość lang w <html> niezgodna ze składnią kodu języka BCP 47 (WCAG 3.1.1). Znalezione
+        wartości:
+    en:
+      title: The site declares an invalid language code
+      summary: A screen reader may not recognise the site language and read the text with the wrong pronunciation.
+      whatIsWrong: >
+        The lang attribute in the page code holds a value that is not a valid language code (the value
+        found is in the technical appendix). A valid code looks like en or en-GB, with a hyphen, not an
+        underscore.
+      whyItMatters: >
+        A screen reader may not recognise such a code and read the text by the rules of another
+        language, which is hard to follow.
+      howToFix:
+        - Use a valid language code, e.g. lang="en" or lang="en-GB".
+      short: The lang attribute holds an invalid value. Use a valid language code, e.g. lang="en".
+      technical: >
+        The lang value on <html> does not follow the BCP 47 language tag syntax (WCAG 3.1.1). Values
+        found:

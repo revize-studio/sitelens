@@ -1,0 +1,46 @@
+id: perf/images-size
+priority: important
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Zdjęcia mają rozmiar dopasowany do ekranu.
+  en: Images are sized to fit the screen.
+pl:
+  title: Zdjęcia są większe, niż trzeba
+  summary: Zdjęcia są pobierane w większym rozmiarze, niż są wyświetlane, co niepotrzebnie dokłada ok. {savings:size} danych.
+  whatIsWrong: >
+    {count} {count|zdjęcie jest pobierane|zdjęcia są pobierane|zdjęć jest pobieranych} w większym
+    rozmiarze, niż potrzeba do wyświetlenia na ekranie telefonu. Po zmniejszeniu
+    {count|ważyłoby|ważyłyby łącznie|ważyłyby łącznie} ok. {savings:size} mniej.
+  whyItMatters: >
+    Za duże zdjęcia spowalniają stronę i zużywają dane z pakietu w telefonie Twoich klientów.
+  howToFix:
+    - Zmniejsz zdjęcia do rozmiaru, w jakim są wyświetlane, z zapasem na ekrany o wysokiej rozdzielczości.
+    - Przygotuj kilka rozmiarów każdego zdjęcia i pozwól przeglądarce wybrać właściwy (srcset), żeby telefon pobierał mniejszy plik.
+    - Zmniejszaj nowe zdjęcia przed wgraniem na stronę.
+  short: >
+    {count} {count|zdjęcie jest większe|zdjęcia są większe|zdjęć jest większych}, niż trzeba.
+    Zmniejszenie do wyświetlanego rozmiaru oszczędzi ok. {savings:size}.
+  technical: >
+    Obrazy większe niż ich wyświetlany rozmiar (Lighthouse image-delivery-insight, telefon,
+    z uwzględnieniem gęstości pikseli): {count} {count|obraz|obrazy|obrazów}, łączna oszczędność
+    ok. {savings:size}.
+en:
+  title: Images are bigger than they need to be
+  summary: Images are downloaded at a larger size than they are shown at, which adds about {savings:size} of unnecessary data.
+  whatIsWrong: >
+    {count} {count|image is|images are} downloaded at a larger size than a phone screen needs.
+    Resized, {count|it|together they} would weigh about {savings:size} less.
+  whyItMatters: >
+    Oversized images slow the site down and use up your customers' mobile data.
+  howToFix:
+    - Resize images to the size at which they are displayed, with some headroom for high-resolution screens.
+    - Prepare several sizes of each image and let the browser pick the right one (srcset), so phones download a smaller file.
+    - Resize new images before you upload them.
+  short: >
+    {count} {count|image is|images are} bigger than needed. Resizing to the displayed size saves
+    about {savings:size}.
+  technical: >
+    Images larger than their displayed size (Lighthouse image-delivery-insight, mobile, device pixel
+    ratio included): {count} {count|image|images}, about {savings:size} to save in total.

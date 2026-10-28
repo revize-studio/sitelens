@@ -1,0 +1,263 @@
+/* Derived values only; brand colours live in public/brand/tokens.css. */
+:root {
+  /* Subsets of the brand fonts with metric-matched fallbacks (see astro.config.mjs) */
+  --sl-font: var(--sl-font-face-sans);
+  --sl-font-mono: var(--sl-font-face-mono);
+
+  /* Form field boundary: 3:1 against bg/surface (WCAG 1.4.11) */
+  --sl-field-line: #868A95;
+
+  /* Pryzmat stops (tokens.json → theme.*.prism) for ambient light and 3D icons */
+  --sl-prism-1: #A9BEFF;
+  --sl-prism-2: #CDBFFF;
+  --sl-prism-3: #A3E6F0;
+  /* Kept low so --sl-text-2 stays above 4.5:1 where text sits on the light */
+  --sl-ambient: 42%;
+  /* Page and section lights (.backdrop, .ambient): Pryzmat pastels on Mgła */
+  --sl-glow-1: color-mix(in srgb, var(--sl-prism-1) var(--sl-ambient), transparent);
+  --sl-glow-2: color-mix(in srgb, var(--sl-prism-2) var(--sl-ambient), transparent);
+  --sl-glow-3: color-mix(in srgb, var(--sl-prism-3) var(--sl-ambient), transparent);
+  --sl-backdrop-opacity: 1;
+  /* Light that glass cards cast on the page below them */
+  --sl-tile-glow: color-mix(in srgb, var(--sl-accent) 28%, transparent);
+
+  /* Light and shade for specular highlights and depth; the same in both themes */
+  --sl-light: #FCFCFD;
+  --sl-shade: #101217;
+
+  /*
+    3D icons: a cobalt plate under a frosted glass glyph. Like app icons they look the same
+    in both themes. The Pryzmat stays on glass edges only, as the brand asks.
+  */
+  --sl-icon-plate-hi: #6F93FF;
+  --sl-icon-plate-mid: #2B5CF0;
+  --sl-icon-plate-lo: #1A3AB4;
+  --sl-icon-glyph-lo: #D3DEFF;
+  --sl-icon-glyph-shadow: #0B2580;
+
+  /*
+    Liquid Glass for controls that float over content (nav, buttons, icon buttons): clearer
+    than the content glass, so what scrolls underneath stays recognisable. Text on it uses
+    --sl-text, which keeps 4.5:1 even over the darkest content blurred underneath.
+  */
+  --sl-lq-top: color-mix(in srgb, var(--sl-surface) 66%, transparent);
+  --sl-lq-tint: color-mix(in srgb, var(--sl-surface) 34%, transparent);
+  --sl-lq-spec: var(--sl-light);
+  --sl-lq-spec-soft: color-mix(in srgb, var(--sl-light) 60%, transparent);
+  --sl-lq-depth: color-mix(in srgb, var(--sl-text) 12%, transparent);
+  --sl-lq-edge: color-mix(in srgb, var(--sl-text) 11%, transparent);
+  --sl-lq-shadow: color-mix(in srgb, var(--sl-text) 16%, transparent);
+  --sl-lq-glow: color-mix(in srgb, var(--sl-light) 85%, transparent);
+  --sl-lq-blur: 14px;
+  --sl-lq-bright: 1.06;
+
+  /* Prominent glass button: the cobalt pill with a lit top and a deeper base */
+  --sl-btn-hi: color-mix(in srgb, var(--sl-btn-bg) 78%, var(--sl-light));
+  --sl-btn-lo: color-mix(in srgb, var(--sl-btn-bg) 82%, var(--sl-shade));
+  --sl-btn-spec: color-mix(in srgb, var(--sl-light) 72%, transparent);
+  --sl-btn-spec-soft: color-mix(in srgb, var(--sl-light) 26%, transparent);
+  --sl-btn-spot: color-mix(in srgb, var(--sl-light) 30%, transparent);
+  --sl-btn-depth: color-mix(in srgb, var(--sl-shade) 34%, transparent);
+  --sl-btn-edge: color-mix(in srgb, var(--sl-btn-bg) 55%, var(--sl-shade));
+  --sl-btn-glow: color-mix(in srgb, var(--sl-btn-bg) 52%, transparent);
+  --sl-btn-text-shadow: color-mix(in srgb, var(--sl-shade) 30%, transparent);
+
+  /* Liquid glass, built only from brand tokens so it follows the theme */
+  --sl-lg-tint: color-mix(in srgb, var(--sl-surface) 58%, transparent);
+  --sl-lg-tint-strong: color-mix(in srgb, var(--sl-surface) 80%, transparent);
+  --sl-lg-rim: color-mix(in srgb, var(--sl-surface) 96%, transparent);
+  --sl-lg-rim-low: color-mix(in srgb, var(--sl-text) 8%, transparent);
+  --sl-lg-glow: color-mix(in srgb, var(--sl-surface) 50%, transparent);
+  --sl-lg-sheen: color-mix(in srgb, var(--sl-surface) 75%, transparent);
+  --sl-lg-edge: color-mix(in srgb, var(--sl-text) 8%, transparent);
+  --sl-glass-card: color-mix(in srgb, var(--sl-surface) 52%, transparent);
+
+  /* Liquid glass: gradient tint, bright upper-left rim, softer lower-right rim, pointer sheen */
+  --sl-glass-bg: linear-gradient(
+    140deg,
+    color-mix(in srgb, var(--sl-surface) 74%, transparent),
+    color-mix(in srgb, var(--sl-surface) 40%, transparent)
+  );
+  --sl-glass-hi: color-mix(in srgb, var(--sl-surface) 95%, transparent);
+  --sl-glass-lo: color-mix(in srgb, var(--sl-surface) 40%, transparent);
+  --sl-glass-line: color-mix(in srgb, var(--sl-surface) 70%, transparent);
+  --sl-glass-spot: color-mix(in srgb, var(--sl-surface) 55%, transparent);
+  --sl-glass-blur: 28px;
+  /* Window glass that carries text over the desktop wallpaper; keeps --sl-text-2 above 4.5:1 */
+  --sl-window: color-mix(in srgb, var(--sl-surface) 82%, transparent);
+
+  /*
+    Terminal palette from brand colours, darkened with the text colour where needed:
+    every colour stays above 4.5:1 on the terminal glass, even over the darkest wallpaper.
+  */
+  --sl-term-green: color-mix(in srgb, var(--sl-good) 78%, var(--sl-text));
+  --sl-term-yellow: color-mix(in srgb, var(--sl-important) 60%, var(--sl-text));
+  --sl-term-red: color-mix(in srgb, var(--sl-critical) 80%, var(--sl-text));
+  --sl-term-blue: color-mix(in srgb, var(--sl-accent) 82%, var(--sl-text));
+  --sl-term-cyan: color-mix(in srgb, color-mix(in srgb, var(--sl-good) 50%, var(--sl-accent)) 80%, var(--sl-text));
+  --sl-term-violet: color-mix(in srgb, var(--sl-prism-2) 38%, var(--sl-text));
+
+  /*
+    Dock app icons in the hero window: generic look-alikes of system apps, not brand colours.
+    The dark theme below swaps them for macOS-style dark icons.
+  */
+  --sl-app-files-hi: #6CB8FF;
+  --sl-app-files-lo: #1767E8;
+  --sl-app-mail-hi: #5BCBFF;
+  --sl-app-mail-lo: #1A7CF0;
+  --sl-app-sky-hi: #5BCBFF;
+  --sl-app-sky-lo: #1A7CF0;
+  --sl-app-plate-hi: #FAFBFC;
+  --sl-app-plate-lo: #D3D8DF;
+  --sl-app-ink-hi: #3B3F48;
+  --sl-app-ink-lo: #17181D;
+  --sl-app-yellow-hi: #FFD95C;
+  --sl-app-yellow-lo: #F2B600;
+  --sl-app-gear-hi: #C5CAD2;
+  --sl-app-gear-lo: #6F7581;
+  --sl-app-red: #F2483B;
+  --sl-app-white: #FCFCFD;
+  --sl-app-line: #C3C9D2;
+  --sl-app-glyph: #E6E9EF;
+  --sl-app-folder: var(--sl-app-white);
+  --sl-app-envelope: var(--sl-app-white);
+  --sl-app-flap: #1767E8;
+  --sl-app-sheet: var(--sl-app-white);
+  --sl-app-hub: #6F7581;
+  --sl-app-loupe: #3B3F48;
+  --sl-app-gloss: 0.55;
+  --sl-app-shadow: color-mix(in srgb, var(--sl-shade) 24%, transparent);
+
+  /* macOS window controls; not brand colours, they only make the window read as a Mac window */
+  --sl-tl-close: #FF5F57;
+  --sl-tl-min: #FEBC2E;
+  --sl-tl-max: #28C840;
+  --sl-wp-top: color-mix(in srgb, var(--sl-prism-1) 45%, var(--sl-surface));
+  --sl-wp-bottom: color-mix(in srgb, var(--sl-prism-3) 55%, var(--sl-surface));
+  --sl-wp-deep: color-mix(in srgb, var(--sl-accent) 72%, var(--sl-prism-2));
+  /* Hero terminal text sits over the report pages; this keeps --sl-text-2 above 4.5:1 */
+  --sl-glass-strong: color-mix(in srgb, var(--sl-surface) 88%, transparent);
+
+  --sl-fs-display: clamp(2.75rem, 1.15rem + 6.2vw, 5.5rem);
+  --sl-fs-section: clamp(2rem, 1.3rem + 2.9vw, 3.5rem);
+  --sl-fs-sub: clamp(1.1875rem, 1.06rem + 0.55vw, 1.5rem);
+  --sl-fs-h1: clamp(2.375rem, 1.55rem + 3.5vw, 3.5rem);
+  --sl-fs-h2: clamp(1.625rem, 1.35rem + 1.2vw, 2rem);
+  --sl-fs-h3: 1.25rem;
+  --sl-fs-body: 1.0625rem;
+  --sl-fs-small: 0.875rem;
+  --sl-fs-mono: 0.9375rem;
+
+  --sl-dur-spring: 950ms;
+  --sl-dur-out: 700ms;
+  --sl-dur-draw: 900ms;
+  --sl-dur-pour: 650ms;
+  --sl-dur-theme-icon: 700ms;
+
+  --sl-radius-pill: 999px;
+
+  --sl-space-1: 4px;
+  --sl-space-2: 8px;
+  --sl-space-3: 12px;
+  --sl-space-4: 16px;
+  --sl-space-5: 24px;
+  --sl-space-6: 32px;
+  --sl-space-7: 48px;
+  --sl-space-8: 64px;
+  --sl-space-9: 96px;
+  --sl-space-10: 128px;
+  --sl-section-pad: clamp(88px, 10vw, 152px);
+
+  --sl-gutter: 24px;
+  --sl-max: 1120px;
+  --sl-nav-h: 60px;
+}
+
+:root[data-theme="dark"] {
+  --sl-field-line: #666D7D;
+  --sl-term-green: var(--sl-good);
+  --sl-term-yellow: var(--sl-important);
+  --sl-term-red: color-mix(in srgb, var(--sl-critical) 80%, var(--sl-text));
+  --sl-term-blue: var(--sl-accent);
+  --sl-term-cyan: color-mix(in srgb, var(--sl-good) 50%, var(--sl-accent));
+  --sl-term-violet: var(--sl-prism-2);
+  --sl-prism-1: #7F9BFF;
+  --sl-prism-2: #A88FFF;
+  --sl-prism-3: #6FD3E3;
+  --sl-ambient: 26%;
+  /*
+    The dark theme is monochrome (owner's call, 24.10.2026): the lights are white haze on Noc,
+    faint enough to keep --sl-text-2 above 4.5:1. Colour stays in the accent and the icons.
+  */
+  --sl-glow-1: color-mix(in srgb, var(--sl-light) 11%, transparent);
+  --sl-glow-2: color-mix(in srgb, var(--sl-light) 8%, transparent);
+  --sl-glow-3: color-mix(in srgb, var(--sl-light) 6%, transparent);
+  --sl-backdrop-opacity: 0.8;
+  --sl-tile-glow: color-mix(in srgb, var(--sl-shade) 60%, transparent);
+
+  /* Dark dock icons, like macOS: graphite plates, the colour moves into the glyph */
+  --sl-app-files-hi: #3B3F48;
+  --sl-app-files-lo: #1D1F25;
+  --sl-app-mail-hi: #3B3F48;
+  --sl-app-mail-lo: #1D1F25;
+  --sl-app-plate-hi: #3B3F48;
+  --sl-app-plate-lo: #1D1F25;
+  --sl-app-gear-hi: #4A4E57;
+  --sl-app-gear-lo: #24262C;
+  --sl-app-line: #5E636E;
+  --sl-app-glyph: #D2D6DD;
+  --sl-app-folder: #4FA2FF;
+  --sl-app-envelope: #4FB0FF;
+  --sl-app-flap: #1D1F25;
+  --sl-app-sheet: #464A53;
+  --sl-app-hub: #2A2D33;
+  --sl-app-loupe: #D2D6DD;
+  --sl-app-gloss: 0.14;
+  --sl-app-shadow: color-mix(in srgb, var(--sl-shade) 55%, transparent);
+
+  --sl-lq-top: color-mix(in srgb, var(--sl-surface-2) 76%, transparent);
+  --sl-lq-tint: color-mix(in srgb, var(--sl-surface-2) 60%, transparent);
+  --sl-lq-spec: color-mix(in srgb, var(--sl-light) 42%, transparent);
+  --sl-lq-spec-soft: color-mix(in srgb, var(--sl-light) 13%, transparent);
+  --sl-lq-depth: color-mix(in srgb, var(--sl-shade) 50%, transparent);
+  --sl-lq-edge: color-mix(in srgb, var(--sl-shade) 85%, transparent);
+  --sl-lq-shadow: color-mix(in srgb, var(--sl-shade) 70%, transparent);
+  --sl-lq-glow: color-mix(in srgb, var(--sl-light) 14%, transparent);
+  --sl-lq-blur: 16px;
+  --sl-lq-bright: 0.94;
+
+  --sl-btn-spec: color-mix(in srgb, var(--sl-light) 70%, transparent);
+  --sl-btn-spec-soft: color-mix(in srgb, var(--sl-light) 30%, transparent);
+  --sl-btn-spot: color-mix(in srgb, var(--sl-light) 34%, transparent);
+  --sl-btn-depth: color-mix(in srgb, var(--sl-shade) 26%, transparent);
+  --sl-btn-edge: color-mix(in srgb, var(--sl-btn-bg) 45%, var(--sl-shade));
+  --sl-btn-glow: color-mix(in srgb, var(--sl-btn-bg) 34%, transparent);
+  --sl-btn-text-shadow: color-mix(in srgb, var(--sl-light) 26%, transparent);
+
+  --sl-lg-tint: color-mix(in srgb, var(--sl-surface-2) 60%, transparent);
+  --sl-lg-tint-strong: color-mix(in srgb, var(--sl-surface-2) 82%, transparent);
+  --sl-lg-rim: color-mix(in srgb, var(--sl-text) 22%, transparent);
+  --sl-lg-rim-low: color-mix(in srgb, var(--sl-bg) 60%, transparent);
+  --sl-lg-glow: color-mix(in srgb, var(--sl-text) 4%, transparent);
+  --sl-lg-sheen: color-mix(in srgb, var(--sl-text) 10%, transparent);
+  --sl-lg-edge: color-mix(in srgb, var(--sl-text) 10%, transparent);
+  --sl-glass-card: color-mix(in srgb, var(--sl-surface-2) 50%, transparent);
+  --sl-glass-bg: linear-gradient(
+    140deg,
+    color-mix(in srgb, var(--sl-surface-2) 72%, transparent),
+    color-mix(in srgb, var(--sl-surface-2) 36%, transparent)
+  );
+  --sl-glass-hi: color-mix(in srgb, var(--sl-text) 32%, transparent);
+  --sl-glass-lo: color-mix(in srgb, var(--sl-text) 8%, transparent);
+  --sl-glass-line: color-mix(in srgb, var(--sl-text) 14%, transparent);
+  --sl-glass-spot: color-mix(in srgb, var(--sl-text) 9%, transparent);
+  --sl-window: color-mix(in srgb, var(--sl-surface) 84%, transparent);
+  --sl-wp-top: color-mix(in srgb, var(--sl-light) 13%, var(--sl-bg));
+  --sl-wp-bottom: color-mix(in srgb, var(--sl-light) 5%, var(--sl-bg));
+  --sl-wp-deep: color-mix(in srgb, var(--sl-light) 20%, var(--sl-bg));
+  --sl-glass-strong: color-mix(in srgb, var(--sl-surface) 93%, transparent);
+}
+
+@media (max-width: 600px) {
+  :root { --sl-gutter: 16px; }
+}

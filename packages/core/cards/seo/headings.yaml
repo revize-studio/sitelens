@@ -1,0 +1,110 @@
+id: seo/headings
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Podstrony mają po jednym głównym nagłówku, a kolejne nagłówki nie przeskakują poziomów.
+  en: Each page has one main heading, and the other headings do not skip levels.
+variants:
+  missing:
+    priority: minor
+    pl:
+      title: "{count} {count|podstrona nie ma|podstrony nie mają|podstron nie ma} głównego nagłówka (H1)"
+      summary: Podstrony bez głównego nagłówka nie mówią jasno, czego dotyczą.
+      whatIsWrong: >
+        {count} {count|podstrona nie ma|podstrony nie mają|podstron nie ma} nagłówka H1, czyli głównego
+        tytułu treści widocznego na podstronie.
+      whyItMatters: >
+        Google może użyć tekstu głównego nagłówka jako tytułu wyniku wyszukiwania. Osoby z czytnikami
+        ekranu przechodzą po nagłówkach, żeby szybko poznać zawartość podstrony.
+      howToFix:
+        - Oznacz tytuł treści każdej podstrony jako nagłówek 1. stopnia (H1). W edytorach stron to zwykle opcja „Nagłówek 1”.
+      short: >
+        {count} {count|podstrona nie ma|podstrony nie mają|podstron nie ma} głównego nagłówka H1. Oznacz
+        tytuł treści jako „Nagłówek 1”.
+      technical: >
+        Brak <h1> na {count} {count|podstronie|podstronach|podstronach}.
+    en:
+      title: "{count} {count|page has|pages have} no main heading (H1)"
+      summary: Pages without a main heading do not say clearly what they are about.
+      whatIsWrong: >
+        {count} {count|page has|pages have} no H1 heading, the main title of the content shown on the
+        page.
+      whyItMatters: >
+        Google may use the text of the main heading as the title of the search result. Screen reader
+        users move from heading to heading to get a quick idea of what is on the page.
+      howToFix:
+        - Mark the content title of every page as a level 1 heading (H1). In page editors this is usually the “Heading 1” option.
+      short: >
+        {count} {count|page has|pages have} no H1 heading. Mark the content title as “Heading 1”.
+      technical: >
+        No <h1> on {count} {count|page|pages}.
+  multiple:
+    priority: minor
+    pl:
+      title: "{count} {count|podstrona ma|podstrony mają|podstron ma} kilka głównych nagłówków (H1)"
+      summary: Kilka nagłówków H1 na jednej podstronie zaciera, co jest jej głównym tematem.
+      whatIsWrong: >
+        {count} {count|podstrona ma|podstrony mają|podstron ma} więcej niż jeden nagłówek H1.
+      whyItMatters: >
+        Google nie traktuje tego jako błędu, ale dobrą praktyką jest jeden nagłówek H1 z głównym tematem
+        podstrony. Taki układ jest czytelniejszy dla osób, które poruszają się po nagłówkach czytnikiem
+        ekranu.
+      howToFix:
+        - Zostaw jeden nagłówek H1 z głównym tematem podstrony, a pozostałe zmień na nagłówki niższego stopnia (H2, H3).
+      short: >
+        {count} {count|podstrona ma|podstrony mają|podstron ma} kilka nagłówków H1. Zostaw jeden z głównym
+        tematem, a resztę zmień na H2 lub H3.
+      technical: >
+        Więcej niż jeden <h1> na {count} {count|podstronie|podstronach|podstronach}.
+    en:
+      title: "{count} {count|page has|pages have} several main headings (H1)"
+      summary: Several H1 headings on one page blur what its main topic is.
+      whatIsWrong: >
+        {count} {count|page has|pages have} more than one H1 heading.
+      whyItMatters: >
+        Google does not treat this as an error, but the good practice is a single H1 that states the
+        page's main topic. That structure is clearer for people who move through headings with a screen
+        reader.
+      howToFix:
+        - Keep one H1 heading with the page's main topic and change the others to lower levels (H2, H3).
+      short: >
+        {count} {count|page has|pages have} several H1 headings. Keep one with the main topic and change
+        the rest to H2 or H3.
+      technical: >
+        More than one <h1> on {count} {count|page|pages}.
+  order:
+    priority: minor
+    pl:
+      title: "Nagłówki na {count} {count|podstronie|podstronach|podstronach} przeskakują poziomy"
+      summary: Przeskoki poziomów nagłówków utrudniają orientację osobom z czytnikami ekranu.
+      whatIsWrong: >
+        Na {count} {count|podstronie|podstronach|podstronach} po nagłówku od razu pojawia się nagłówek
+        co najmniej o dwa poziomy niższy, np. po H2 jest H4.
+      whyItMatters: >
+        Dla Google kolejność nagłówków nie ma znaczenia, ale osoby z czytnikami ekranu przechodzą po
+        nagłówkach jak po spisie treści. Przeskok wygląda dla nich jak brakująca część treści.
+      howToFix:
+        - Ustaw poziomy nagłówków po kolei (H1, H2, H3), a ich wielkość zmieniaj stylami, nie poziomem nagłówka.
+      short: >
+        Na {count} {count|podstronie|podstronach|podstronach} nagłówki przeskakują poziomy, np. po H2 jest
+        H4. Ustaw poziomy po kolei, a wielkość zmieniaj stylami.
+      technical: >
+        Przeskok poziomu nagłówka w głąb o więcej niż 1 (np. h2 → h4) na {count}
+        {count|podstronie|podstronach|podstronach}.
+    en:
+      title: "Headings skip levels on {count} {count|page|pages}"
+      summary: Skipped heading levels make it harder for screen reader users to find their way.
+      whatIsWrong: >
+        On {count} {count|page|pages} a heading is followed directly by one at least two levels lower,
+        e.g. an H4 right after an H2.
+      whyItMatters: >
+        Heading order does not matter to Google, but screen reader users move through headings like a
+        table of contents. A skipped level looks to them like a missing part of the content.
+      howToFix:
+        - Use heading levels in order (H1, H2, H3) and change their size with styles, not with the heading level.
+      short: >
+        On {count} {count|page|pages} headings skip levels, e.g. H4 after H2. Use the levels in order and
+        change the size with styles.
+      technical: >
+        Heading level skipped going down by more than one (e.g. h2 → h4) on {count} {count|page|pages}.

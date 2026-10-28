@@ -1,0 +1,90 @@
+---
+import { useTranslations, type Lang } from '../i18n';
+import Icon3D from './Icon3D.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang).plain;
+---
+
+<section class="section" aria-labelledby="plain-title">
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <h2 id="plain-title">{t.title}</h2>
+      <p>{t.lead}</p>
+    </header>
+
+    <div class="compare">
+      <figure class="tile raw" data-reveal="1">
+        <figcaption>{t.rawLabel}</figcaption>
+        <p lang="en"><code>{t.raw}</code></p>
+      </figure>
+      <figure class="tile lift ours" data-reveal="2">
+        <figcaption><Icon3D name="report" size={44} />{t.oursLabel}</figcaption>
+        <p class="ours-text">{t.ours}</p>
+        <p class="meta">{t.meta}</p>
+      </figure>
+    </div>
+    <p class="note">{t.note}</p>
+  </div>
+</section>
+
+<style>
+  .compare {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--sl-space-5);
+    align-items: stretch;
+  }
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sl-space-5);
+    margin: 0;
+    padding: clamp(28px, 3.6vw, 48px);
+  }
+  figcaption {
+    display: flex;
+    align-items: center;
+    gap: var(--sl-space-3);
+    min-height: 44px;
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+    font-weight: 600;
+  }
+
+  .raw code {
+    display: block;
+    color: var(--sl-text-2);
+    font-size: clamp(0.9375rem, 0.88rem + 0.25vw, 1.0625rem);
+    line-height: 1.6;
+  }
+
+  .ours-text {
+    font-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.25rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.22;
+  }
+  .meta {
+    margin-top: auto;
+    padding-top: var(--sl-space-4);
+    border-top: 1px solid var(--sl-line);
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+  }
+
+  .note {
+    margin-top: var(--sl-space-6);
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-small);
+    text-align: center;
+  }
+
+  @media (max-width: 799px) {
+    .compare { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

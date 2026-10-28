@@ -1,0 +1,7 @@
+{
+  "description": "Cleaning font family names as sites declare them. Patterns are regular expressions; `generic` lists names that mean the system font.",
+  "nextFont": "^__(.+?)(?:_Fallback)?_[0-9a-f]{5,}$",
+  "strip": ["\\s+Variable$", "[-_][0-9a-f]{6,}$", "\\s+(Fallback|fallback)$", "\\s+VF$", "-?Webfont$"],
+  "fallback": "(fallback|^adjusted |size-adjust)",
+  "generic": ["system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif", "serif", "monospace", "ui-sans-serif", "ui-serif", "ui-monospace", "cursive", "fantasy", "Segoe UI", "Helvetica Neue", "Arial", "Helvetica", "Times New Roman", "Times", "Georgia", "Courier New", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"]
+}

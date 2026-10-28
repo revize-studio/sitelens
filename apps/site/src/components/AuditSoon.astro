@@ -1,0 +1,47 @@
+---
+// Shown instead of the online audit when the build has no PUBLIC_ proxy, Turnstile and PSI settings.
+import { pageLinks, routes, useTranslations, type Lang } from '../i18n';
+import { rich } from '../lib/rich';
+import CopyCommand from './CopyCommand.astro';
+import PageHero from './PageHero.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const page = t.auditPage;
+---
+
+<section class="container audit">
+  <PageHero icon="browser" heading={page.heading} lead={page.soon} />
+  <div class="card tile">
+    <CopyCommand
+    command={t.hero.terminal.command}
+    copyLabel={t.hero.terminal.copy}
+    copiedLabel={t.hero.terminal.copied}
+      announcement={t.hero.terminal.copiedAnnouncement}
+    />
+    <p set:html={rich(page.guide, pageLinks(lang))} />
+  </div>
+  <a href={routes.home[lang]}>{page.back}</a>
+</section>
+
+<style>
+  .audit {
+    display: grid;
+    justify-items: center;
+    gap: var(--sl-space-6);
+    max-width: 46rem;
+    padding-bottom: var(--sl-section-pad);
+    text-align: center;
+  }
+  .card {
+    display: grid;
+    gap: var(--sl-space-5);
+    width: 100%;
+    padding: clamp(24px, 4vw, 40px);
+  }
+  .audit :global(.cmd) { width: 100%; }
+</style>

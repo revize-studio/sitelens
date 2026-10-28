@@ -1,0 +1,45 @@
+id: seo/host-consistency
+priority: important
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Wszystkie wersje adresu (z www i bez, przez http i https) prowadzą do jednej wersji strony.
+  en: Every version of the address (with and without www, over http and https) leads to one version of the site.
+pl:
+  title: Nie wszystkie wersje adresu przekierowują na główny adres strony
+  summary: Część wersji adresu (z www lub bez, http lub https) prowadzi gdzie indziej niż główny adres strony.
+  whatIsWrong: >
+    {count} {count|wersja adresu|wersje adresu|wersji adresu} (z www lub bez, przez http lub https)
+    nie {count|przekierowuje|przekierowują|przekierowuje} na {origin}. Szczegóły są w załączniku
+    technicznym.
+  whyItMatters: >
+    Jeśli kilka wersji pokazuje tę samą treść, Google traktuje je jak kopie i sam wybiera adres do
+    wyników, nie zawsze ten, który chcesz. Jeśli któraś wersja prowadzi gdzie indziej albo do błędu,
+    część klientów nie trafi na Twoją stronę.
+  howToFix:
+    - Ustaw stałe przekierowanie (301) z pozostałych wersji adresu na {origin}, np. w panelu hostingu.
+    - Sprawdź po zmianie, czy każda wersja adresu, z www i bez, przez http i https, otwiera {origin}.
+  short: >
+    {count} {count|wersja adresu nie przekierowuje|wersje adresu nie przekierowują|wersji adresu nie przekierowuje}
+    na {origin}. Ustaw z {count|niej|nich|nich} stałe przekierowanie (301) na ten adres.
+  technical: >
+    Warianty adresu (http/https, www/bez www) kończące się poza {origin}: {count}.
+en:
+  title: Not every version of the address redirects to the site's main address
+  summary: Some versions of the address (with or without www, http or https) lead somewhere other than the site's main address.
+  whatIsWrong: >
+    {count} {count|version of the address|versions of the address} (with or without www, over http or
+    https) {count|does|do} not redirect to {origin}. Details are in the technical appendix.
+  whyItMatters: >
+    If several versions show the same content, Google treats them as copies and picks the address for
+    its results itself, not always the one you want. If a version leads somewhere else or to an error,
+    some customers will not reach your site.
+  howToFix:
+    - Set up a permanent (301) redirect from the other versions of the address to {origin}, for example in the hosting panel.
+    - Check afterwards that every version of the address, with and without www, over http and https, opens {origin}.
+  short: >
+    {count} {count|version of the address does|versions of the address do} not redirect to {origin}.
+    Set up a permanent (301) redirect from {count|it|them} to that address.
+  technical: >
+    Address variants (http/https, www/non-www) ending outside {origin}: {count}.

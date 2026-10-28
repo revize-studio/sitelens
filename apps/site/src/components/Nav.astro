@@ -1,0 +1,234 @@
+---
+import { REPO_URL } from '../config';
+import { routes, useTranslations, type Lang, type PageKey } from '../i18n';
+import Logo from './Logo.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  lang: Lang;
+  page?: PageKey;
+}
+
+const { lang, page = 'home' } = Astro.props;
+const t = useTranslations(lang).nav;
+const other: Lang = lang === 'pl' ? 'en' : 'pl';
+const otherHref = routes[page][other];
+const auditHref = routes.audit[lang];
+---
+
+<div class="nav-wrap">
+  <header class="nav lq lens-wide">
+    <a class="brand" href={routes.home[lang]} aria-label={t.home}><Logo id="logo-nav" /></a>
+
+    <nav class="links" aria-label={t.label}>
+      <ul role="list">
+        {t.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="controls">
+      <a class="check btn btn-primary" href={auditHref}>{t.check}</a>
+      <a class="lang" href={otherHref} hreflang={t.otherLang.hreflang} lang={t.otherLang.hreflang} aria-label={t.otherLang.label}
+        >{t.otherLang.short}</a
+      >
+      <ThemeToggle lang={lang} />
+      <a class="icon-btn lq-btn github" href={REPO_URL} aria-label={t.github}>
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"
+          ></path>
+        </svg>
+      </a>
+      <button class="icon-btn lq-btn menu-btn" type="button" popovertarget="menu" aria-label={t.menuOpen}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path class="top" d="M4 9h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path>
+          <path class="bottom" d="M4 15h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+</div>
+
+<div id="menu" class="menu lq" popover>
+  <nav aria-label={t.label}>
+    <ul role="list">
+      {t.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+      <li class="menu-extra"><a href={auditHref}>{t.check}</a></li>
+      <li class="menu-extra"><a href={otherHref} hreflang={t.otherLang.hreflang} lang={t.otherLang.hreflang}>{t.otherLang.label}</a></li>
+      <li class="menu-extra"><a href={REPO_URL}>GitHub</a></li>
+    </ul>
+  </nav>
+</div>
+
+<style>
+  /* Keeps content from showing through under the iOS status bar while scrolling */
+  :global(body)::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10;
+    height: env(safe-area-inset-top, 0px);
+    background: var(--sl-lg-tint-strong);
+    backdrop-filter: blur(20px) saturate(1.8);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  }
+
+  .nav-wrap {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 9;
+    padding: 12px var(--sl-gutter) 0;
+  }
+
+  /* Clear control glass (.lq); links use --sl-text so they stay readable over any content */
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sl-space-3);
+    max-width: var(--sl-max);
+    height: var(--sl-nav-h);
+    margin: 0 auto;
+    padding: 0 8px 0 20px;
+    border-radius: var(--sl-radius-pill);
+  }
+
+  .brand {
+    display: inline-flex;
+    flex-shrink: 0;
+    margin-right: auto;
+    border-radius: 12px;
+    color: var(--sl-text);
+  }
+  .brand :global(svg) {
+    width: auto;
+    height: 36px;
+    overflow: visible;
+  }
+  .brand:hover { color: var(--sl-text); }
+
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .links a,
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: var(--sl-radius-pill);
+    color: var(--sl-text);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s var(--sl-ease-out);
+  }
+  .links a:hover,
+  .lang:hover {
+    color: var(--sl-text);
+    background: color-mix(in srgb, var(--sl-text) 7%, transparent);
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: var(--sl-space-2);
+  }
+
+  .check {
+    height: 40px;
+    padding: 0 18px;
+    font-size: 15px;
+  }
+
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      box-shadow 0.2s var(--sl-ease-out),
+      transform 0.45s var(--sl-ease-spring),
+      --light 0.7s var(--sl-ease-draw);
+  }
+  .icon-btn:active { transform: scale(0.88); }
+  .icon-btn svg { width: 20px; height: 20px; }
+  .menu-btn { display: none; }
+  /* The two bars cross into a close mark while the menu is open */
+  .menu-btn path {
+    transform-box: view-box;
+    transform-origin: 12px 12px;
+    transition: transform 0.3s var(--sl-ease-out);
+  }
+  :global(:root:has(#menu:popover-open)) .menu-btn .top { transform: rotate(45deg) translateY(3px); }
+  :global(:root:has(#menu:popover-open)) .menu-btn .bottom { transform: rotate(-45deg) translateY(-3px); }
+
+  /* Popover API handles open, Esc and light dismiss, so the menu needs no JS for that */
+  .menu {
+    position: fixed;
+    inset: auto var(--sl-gutter) auto auto;
+    top: calc(env(safe-area-inset-top, 0px) + 12px + var(--sl-nav-h) + 8px);
+    width: min(320px, 100% - 2 * var(--sl-gutter));
+    margin: 0;
+    padding: var(--sl-space-2);
+    border: 0;
+    border-radius: var(--sl-radius-l);
+    color: var(--sl-text);
+    /* Denser than the bar: the menu covers body text, which must not show through */
+    --sl-lq-top: var(--sl-lg-tint-strong);
+    --sl-lq-tint: var(--sl-lg-tint-strong);
+    --sl-lq-blur: 28px;
+    transform-origin: top right;
+    opacity: 0;
+    transform: scale(0.96);
+    transition:
+      opacity 0.2s var(--sl-ease-out),
+      transform 0.2s var(--sl-ease-out),
+      overlay 0.2s allow-discrete,
+      display 0.2s allow-discrete,
+      --light 0.7s var(--sl-ease-draw);
+  }
+  .menu:popover-open {
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    .menu:popover-open {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+  .menu ul { flex-direction: column; }
+  .menu a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 var(--sl-space-4);
+    border-radius: var(--sl-radius-m);
+    color: var(--sl-text);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .menu a:hover { background: color-mix(in srgb, var(--sl-text) 6%, transparent); color: var(--sl-text); }
+
+  @media (max-width: 1023px) {
+    .links { display: none; }
+    .menu-btn { display: grid; }
+  }
+  @media (min-width: 640px) {
+    .menu-extra { display: none; }
+  }
+  @media (max-width: 639px) {
+    .nav { padding-left: 16px; }
+    .brand :global(svg) { height: 32px; }
+    .check, .lang, .github { display: none; }
+  }
+</style>

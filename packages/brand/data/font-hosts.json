@@ -1,0 +1,20 @@
+{
+  "description": "Where font files come from, by host name of the file or of the stylesheet that declares it.",
+  "hosts": {
+    "fonts.gstatic.com": "google",
+    "fonts.googleapis.com": "google",
+    "use.typekit.net": "adobe",
+    "p.typekit.net": "adobe",
+    "fonts.bunny.net": "bunny",
+    "fast.fonts.net": "monotype",
+    "cloud.typography.com": "hoefler",
+    "use.fontawesome.com": "fontawesome",
+    "kit.fontawesome.com": "fontawesome",
+    "ka-f.fontawesome.com": "fontawesome",
+    "cdn.jsdelivr.net": "cdn",
+    "unpkg.com": "cdn",
+    "cdnjs.cloudflare.com": "cdn",
+    "fonts.cdnfonts.com": "cdn"
+  },
+  "iconFonts": "^(font ?awesome|fa-|material (icons|symbols)|dashicons|eicons|icomoon|glyphicons|bootstrap-icons|ionicons|remixicon|tabler-icons|feather|lucide)"
+}

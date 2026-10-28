@@ -1,0 +1,127 @@
+---
+import { routes, useTranslations, type Lang } from '../i18n';
+import CopyCommand from './CopyCommand.astro';
+import MacDemo from './MacDemo.astro';
+import UrlForm from './UrlForm.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).hero;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="ambient hero-light" aria-hidden="true"></div>
+  <div class="container intro">
+    <h1 id="hero-title">{t.title}</h1>
+    <p class="lead">{t.lead}</p>
+
+    <UrlForm lang={lang} id="hero-url" />
+
+    <div class="terminal-way">
+      <p class="terminal-heading">{t.terminal.heading}</p>
+      <CopyCommand
+        command={t.terminal.command}
+        copyLabel={t.terminal.copy}
+        copiedLabel={t.terminal.copied}
+        announcement={t.terminal.copiedAnnouncement}
+      />
+      <a class="guide" href={routes.terminal[lang]}>{t.terminal.guide}</a>
+    </div>
+  </div>
+
+  <div class="container stage-wrap">
+    <MacDemo lang={lang} />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    padding-block: clamp(48px, 7vw, 96px) clamp(40px, 6vw, 88px);
+  }
+  /*
+    Top lights are softer because the headline and lead sit right on them; the halo sits
+    behind the Mac window, and the layer only fades at the bottom (the page starts above).
+  */
+  .hero-light {
+    --soft-1: color-mix(in srgb, var(--sl-glow-1) 55%, transparent);
+    --soft-2: color-mix(in srgb, var(--sl-glow-2) 55%, transparent);
+    inset: -120px calc(50% - 50vw) 0;
+    background:
+      radial-gradient(540px 440px at 8% 300px, var(--soft-1), transparent 70%),
+      radial-gradient(520px 420px at 92% 240px, var(--soft-2), transparent 70%),
+      radial-gradient(1180px 680px at 50% 70%, var(--sl-glow-1), transparent 70%),
+      radial-gradient(560px 480px at 12% 62%, var(--sl-glow-3), transparent 70%),
+      radial-gradient(560px 480px at 88% 58%, var(--sl-glow-2), transparent 70%);
+    -webkit-mask-image: linear-gradient(var(--sl-text) 72%, transparent);
+    mask-image: linear-gradient(var(--sl-text) 72%, transparent);
+  }
+
+  .intro {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+
+  h1 {
+    max-width: 14ch;
+    font-size: var(--sl-fs-display);
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+  }
+  .lead {
+    max-width: 38rem;
+    margin-top: var(--sl-space-6);
+    color: var(--sl-text-2);
+    font-size: var(--sl-fs-sub);
+    line-height: 1.45;
+  }
+  .intro :global(.url-form) { margin-top: var(--sl-space-6); }
+
+  .terminal-way {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sl-space-3) var(--sl-space-4);
+    margin-top: var(--sl-space-6);
+  }
+  .terminal-heading {
+    color: var(--sl-text-2);
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .guide {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .stage-wrap { margin-top: clamp(48px, 6vw, 72px); }
+
+  /* One entrance on load; the headline stays visible from the first frame, so LCP is unaffected */
+  @media (prefers-reduced-motion: no-preference) {
+    .intro > * { animation: intro 1s var(--sl-ease-out) both; }
+    .intro > :nth-child(2) { animation-delay: 0.08s; }
+    .intro > :nth-child(3) { animation-delay: 0.16s; }
+    .intro > :nth-child(4) { animation-delay: 0.24s; }
+    .stage-wrap { animation: stage-in 1.3s var(--sl-ease-out) 0.3s both; }
+  }
+  @keyframes intro {
+    from { opacity: 0.35; filter: blur(10px); transform: translateY(18px); }
+  }
+  @keyframes stage-in {
+    from { opacity: 0; filter: blur(16px); transform: translateY(60px) scale(0.96); }
+  }
+
+  @media (max-width: 719px) {
+    .terminal-way {
+      display: grid;
+      justify-items: stretch;
+      width: 100%;
+    }
+  }
+</style>

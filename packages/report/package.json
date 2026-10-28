@@ -1,0 +1,13 @@
+{
+  "name": "@sitelens/report",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@sitelens/brand": "workspace:*",
+    "@sitelens/core": "workspace:*"
+  }
+}

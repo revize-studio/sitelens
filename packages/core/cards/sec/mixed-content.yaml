@@ -1,0 +1,44 @@
+id: sec/mixed-content
+priority: important
+whoFixes: developer
+effort: small
+review: reviewed
+passed:
+  pl: Wszystkie pliki wczytują się przez szyfrowane połączenie.
+  en: All files load over a secure connection.
+pl:
+  title: Część plików wczytuje się bez szyfrowania
+  summary: Przeglądarka może nie wczytać części zdjęć, stylów lub skryptów, a wtedy strona wygląda lub działa źle.
+  whatIsWrong: >
+    Strona działa przez https, ale {count} {count|plik wczytuje się|pliki wczytują się|plików wczytuje się}
+    przez zwykłe http, bez szyfrowania.
+  whyItMatters: >
+    Przeglądarki blokują takie pliki albo próbują pobrać je przez https i pomijają, gdy się nie da. Na
+    stronie może wtedy brakować zdjęć, a skrypty i style mogą nie działać.
+  howToFix:
+    - Zmień adresy tych plików z http:// na https:// w treści, motywie lub ustawieniach strony.
+    - Sprawdź, czy pliki z innych stron są dostępne przez https. Jeśli nie, przenieś je na swój serwer albo usuń.
+  short: >
+    {count} {count|plik wczytuje się|pliki wczytują się|plików wczytuje się} przez http, bez
+    szyfrowania, i przeglądarka może {count|go|je|je} zablokować. Zmień
+    {count|jego adres|ich adresy|ich adresy} na https.
+  technical: >
+    {count} {count|zasób ładowany|zasoby ładowane|zasobów ładowanych} przez http:// na stronach https,
+    np.:
+en:
+  title: Some files load without encryption
+  summary: The browser may not load some images, styles or scripts, and then the site looks or works wrong.
+  whatIsWrong: >
+    The site works over https, but {count} {count|file loads|files load} over plain http, without
+    encryption.
+  whyItMatters: >
+    Browsers block such files or try to fetch them over https and skip them if that fails. Images may
+    then be missing, and scripts and styles may not work.
+  howToFix:
+    - Change the addresses of these files from http:// to https:// in the content, theme or site settings.
+    - Check that files from other sites are available over https. If not, move them to your own server or remove them.
+  short: >
+    {count} {count|file loads|files load} over http, without encryption, and the browser may block
+    {count|it|them}. Change {count|its address|their addresses} to https.
+  technical: >
+    {count} {count|resource|resources} loaded over http:// on https pages, e.g.:
